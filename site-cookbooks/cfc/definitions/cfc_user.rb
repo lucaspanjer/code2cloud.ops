@@ -5,7 +5,7 @@ define :cfc_user do
   group name
 
   user name do
-    comment "Cloud2Code #{name}"
+    comment "Code2Cloud #{name}"
     gid name
     home dir
     shell "/bin/bash"
