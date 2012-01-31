@@ -1,0 +1,1 @@
+sudo chef-solo -c /opt/code2cloud/chef/solo.rb -j /opt/code2cloud/chef/roles.json

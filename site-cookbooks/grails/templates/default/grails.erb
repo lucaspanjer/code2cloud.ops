@@ -1,0 +1,8 @@
+#!/bin/sh
+
+JAVA_HOME=<%= node.java.java_home %>
+GRAILS_HOME=<%= node.grails.path %>
+DIRNAME=<%= node.grails.bin %>
+. "$DIRNAME/startGrails"
+
+startGrails org.codehaus.groovy.grails.cli.GrailsScriptRunner "$@"

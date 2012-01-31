@@ -1,0 +1,13 @@
+alm.rootDir=<%= node.cfc.server.opt %>
+
+profile.application.host=<%= cfc_profile_host %>
+profile.application.protocol=https
+profile.prefix.path=<%= node.cfc.hub.prefix_path %>
+
+task.database.password=<%= node.cfc.mysql_pw.tasks %>
+task.database.url=jdbc\:mysql\://<%= cfc_role_address("db") %>\:3306
+task.database.username=tasks
+
+wiki.database.password=<%= node.cfc.mysql_pw.wiki %>
+wiki.database.url=jdbc\:mysql\://<%= cfc_role_address("db") %>\:3306
+wiki.database.username=wiki

@@ -1,0 +1,18 @@
+ProxyRequests Off
+
+<VirtualHost *:80>
+        ServerName <%= node.cfc.dmz.servername %>
+        ServerAdmin webmaster@tasktop.com
+
+        ErrorLog /var/log/apache2/code2cloud.error.log
+        # Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
+        LogLevel warn
+        CustomLog /var/log/apache2/code2cloud.access.log combined
+
+        DocumentRoot /home/code2cloud/maintenance
+        <Directory /home/code2cloud/maintenance>
+                Options -Indexes
+                AllowOverride Limit
+        </Directory>
+</VirtualHost>
+

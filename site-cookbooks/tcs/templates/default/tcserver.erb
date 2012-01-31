@@ -1,0 +1,112 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:           tcserver
+# Required-Start:     $remote_fs $network
+# Required-Stop:      $remote_fs $network
+# Default-Start:      2 3 4 5
+# Default-Stop:       0 1 6
+# Short-Description:  Start a tcserver.
+### END INIT INFO
+#
+# ---------------------------------------------------------------------------
+# tc Runtime/Tomcat application server bootup script
+#
+# Copyright 2009 SpringSource Inc. All Rights Reserved.
+# ---------------------------------------------------------------------------
+# chkconfig:
+# description: 	Start up the tc Runtime/Tomcat application server.
+# author: fhanik
+# version: 2.1.2.RELEASE
+# build date: 20110211161710
+
+# Source function library.
+
+#The user account that will run the tcServer instance
+TOMCAT_USER=<%= node.tcs.user %>
+
+#The installation location for the binaries
+TC_SERVER_HOME="<%= node.tcs.home %>"
+
+CATALINA_PID="<%= node.tcs.pidfile %>"
+#INSTANCE_BASE - points to the base directory for your instances
+INSTANCE_BASE=$TC_SERVER_HOME
+
+#The name of the instance we want to stop/start
+INSTANCE_NAME=<%= node.tcs.instance %>
+
+#JAVA_HOME must be visible
+JAVA_HOME=<%= node.java.java_home %>
+
+# DO NOT EDIT BEYOND THIS LINE
+RETVAL=$?
+export INSTANCE_BASE
+export JAVA_HOME
+
+stop() {
+    if [ -x "$TC_SERVER_HOME/tcruntime-ctl.sh" ];
+    then
+        echo "Stopping tcServer"
+        /bin/su $TOMCAT_USER $TC_SERVER_HOME/tcruntime-ctl.sh $INSTANCE_NAME stop
+        RETVAL=$?
+    else
+        echo "Startup script $TC_SERVER_HOME/tcruntime-ctl.sh doesn't exist or is not executable."
+        RETVAL=255
+    fi
+}
+
+#tcruntime-ctl.sh status will exit(0) regardless of status, so we inline our own to do the right thing.
+status() {
+  if [ -f "$CATALINA_PID" ];
+    then
+        PID=`cat "$CATALINA_PID"`
+        #the process file exists, make sure the process is not running
+        LINES=`ps -p $PID`
+        PIDRET=$?
+        if [ $PIDRET -eq 0 ];
+        then
+            echo "STATUS Instance is RUNNING as PID=$PID"
+            exit 0
+        fi
+        rm -f "$CATALINA_PID"
+    fi
+    echo "STATUS Instance is NOT RUNNING"
+    exit 1
+}
+
+
+start() {
+    if [ -x "$TC_SERVER_HOME/tcruntime-ctl.sh" ];
+    then
+        echo "Starting tcServer"
+        nohup /bin/su $TOMCAT_USER $TC_SERVER_HOME/tcruntime-ctl.sh $INSTANCE_NAME start | tee 2>&1
+        RETVAL=$?
+    else
+        echo "Startup script $TC_SERVER_HOME/tcruntime-ctl.sh doesn't exist or is not executable."
+        RETVAL=255
+    fi
+}
+
+
+case "$1" in
+ start)
+        start
+	;;
+ stop)
+        stop
+ 	;;
+ restart)
+        stop
+        start
+        ;;
+ status)
+        status
+        ;;
+ *)
+ 	echo $"Usage: $0 {start|stop|restart|status}"
+	exit 1
+	;;
+esac
+
+exit $RETVAL
+
+

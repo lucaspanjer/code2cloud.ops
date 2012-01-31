@@ -1,0 +1,107 @@
+ProxyRequests Off
+
+<VirtualHost *:80>
+        ServerName r.tasktop.com
+        ServerAdmin dev-c2c@tasktop.com
+
+        ErrorLog /var/log/apache2/code2cloud.error.log
+        # Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
+        LogLevel warn
+        CustomLog /var/log/apache2/code2cloud.access.log combined
+
+        DocumentRoot /home/code2cloud/www-root
+        <Directory /home/code2cloud/www-root>
+                Options -Indexes
+                AllowOverride Limit
+        </Directory>
+
+        ProxyPass /404.html !
+        ProxyPass /500.html !
+        ProxyPass /updateSite !
+
+	RedirectMatch "^/$" https://r.tasktop.com/
+
+        # ProxyErrorOverride On
+        ErrorDocument 404 /404.html
+        ErrorDocument 500 /500.html
+</VirtualHost>
+<VirtualHost *:443>
+        ServerName r.tasktop.com
+        ServerAdmin dev-c2c@tasktop.com
+
+        SSLEngine on
+        SSLCertificateFile /etc/apache2/certs/wildcard.tasktop.com.crt
+        SSLCertificateKeyFile /etc/apache2/certs/wildcard.tasktop.com.key
+        SSLCertificateChainFile /etc/apache2/certs/go_daddy_bundle.crt
+        SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown
+	
+        ErrorLog /var/log/apache2/code2cloud.error.log
+        LogLevel warn
+        CustomLog /var/log/apache2/code2cloud.access.log combined
+
+
+        DocumentRoot /home/code2cloud/www-root
+        <Directory /home/code2cloud/www-root>
+                Options -Indexes
+                AllowOverride Limit
+        </Directory>
+
+        ProxyPass /404.html !
+        ProxyPass /500.html !
+        ProxyPass /updateSite !
+
+        ProxyPass / http://192.168.0.154:8081/
+        ProxyPassReverse / http://192.168.0.154:8081/
+
+        # Disabled, because it was over-broad and causing application issues
+        ErrorDocument 404 /404.html
+        ErrorDocument 500 /500.html
+</VirtualHost>
+<VirtualHost *:80>
+        ServerName q.tasktop.com
+        ServerAdmin dev-c2c@tasktop.com
+
+        ErrorLog /var/log/apache2/code2cloud.error.log
+        # Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
+        LogLevel warn
+        CustomLog /var/log/apache2/code2cloud.access.log combined
+
+        ProxyPass /404.html !
+        ProxyPass /500.html !
+
+        #ProxyPass / http://192.168.0.151/
+        #ProxyPassReverse / http://192.168.0.151/
+
+	RedirectMatch "^/$" https://q.tasktop.com/alm
+        RedirectMatch "^/alm$" https://q.tasktop.com/alm
+        RedirectMatch "^/alm/$" https://q.tasktop.com/alm
+
+</VirtualHost>
+<VirtualHost *:443>
+        ServerName q.tasktop.com
+        ServerAdmin dev-c2c@tasktop.com
+
+        SSLEngine on
+        SSLCertificateFile /etc/apache2/certs/wildcard.tasktop.com.crt
+        SSLCertificateKeyFile /etc/apache2/certs/wildcard.tasktop.com.key
+        SSLCertificateChainFile /etc/apache2/certs/go_daddy_bundle.crt
+        SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown
+	
+        ErrorLog /var/log/apache2/code2cloud.error.log
+        LogLevel warn
+        CustomLog /var/log/apache2/code2cloud.access.log combined
+
+        ProxyPass /404.html !
+        ProxyPass /500.html !
+
+        ProxyPass / http://192.168.0.151/
+        ProxyPassReverse / http://192.168.0.151/
+
+	 RedirectMatch "^/$" https://q.tasktop.com/alm
+        RedirectMatch "^/alm$" https://q.tasktop.com/alm
+        RedirectMatch "^/alm/$" https://q.tasktop.com/alm
+
+        # Disabled, because it was over-broad and causing application issues
+        ErrorDocument 404 /404.html
+        ErrorDocument 500 /500.html
+</VirtualHost>

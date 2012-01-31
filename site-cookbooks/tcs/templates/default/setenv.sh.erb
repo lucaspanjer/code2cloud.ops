@@ -1,0 +1,12 @@
+# Edit this file to set custom options
+# Tomcat accepts two parameters JAVA_OPTS and CATALINA_OPTS
+# JAVA_OPTS are used during START/STOP/RUN
+# CATALINA_OPTS are used during START/RUN
+
+JAVA_HOME="<%= node.java.java_home %>"
+AGENT_PATHS="<%= @node.tcs.env.agent_paths %>"
+JAVA_AGENTS="<%= @node.tcs.env.java_agents %>"
+JAVA_LIBRARY_PATH="<%= @node.tcs.env.java_library_path %>"
+LOG4J_CONFIG="<%= %Q(-Dlog4j.configuration=file://#{node.tcs.log4j_xml}) if ::File.exists?(node.tcs.log4j_xml) %>"
+JVM_OPTS="<%= @node.tcs.env.jvm_opts %> ${LOG4J_CONFIG}"
+JAVA_OPTS="$JVM_OPTS $AGENT_PATHS $JAVA_AGENTS $JAVA_LIBRARY_PATH"

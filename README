@@ -1,0 +1,98 @@
+Vanilla Chef Server install
+---------------------------
+
+From http://wiki.opscode.com/display/chef/Package+Installation+on+Debian+and+Ubuntu
+
+% echo "deb http://apt.opscode.com/ `lsb_release -cs`-0.10 main" | sudo tee /etc/apt/sources.list.d/opscode.list
+% wget -qO - http://apt.opscode.com/packages@opscode.com.gpg.key | sudo apt-key add -
+% apt-get update && apt-get install -y chef chef-server
+
+Knife configuration
+-------------------
+
+ % git clone https://github.com/opscode/cookbooks.git opscode-cookbooks
+ % git clone ssh://q.tasktop.com:2222/code2cloud/code2cloud.chef.git
+ % cd code2cloud.chef
+ % ln -s .chef ~/.chef
+
+The knife config file lives in .chef/knife.rb and meant to be run from your desktop, see comments within.  Upload cookbooks and roles to the server:
+ % ./bin/sync-cookbooks.sh
+ % ./bin/sync-roles.sh tt
+
+Roles
+-----
+chef-repo/roles/{tt,local}/cfc-env.rb contain environment specific attributes, such as passwords, static IPs, etc.
+TODO determine where to keep these artifacts (NOT GIT)
+
+The environment is chosen when uploading the roles:
+ % ./bin/sync-roles.sh qa
+
+Chef Server updates
+-------------------
+
+When changes are made to chef-repo/roles and/or chef-repo/environments:
+% ./bin/sync-roles.sh qa
+
+When changes are made to cookbooks:
+% ./bin/sync-cookbooks.sh
+
+Bootstrap VMs
+-------------
+
+VMs for all roles need a base Ubuntu 10.04 install and:
+- apt-get install -y openssh-server
+- 'hostname -f' needs to be unique for the chef-server (change /etc/hostname and /etc/hosts as needed)
+- XXXX vcloud user/sudo-less ?
+
+On the chef-server (or elsewhere with proper ~/.chef/knife.rb config and connectvity to VMs):
+
+ % knife bootstrap --sudo --ssh-user cfcpxe --ssh-password cfcpxe --run-list 'role[cfc-base]' 192.168.1.243
+
+'cfc-base' can be replaced with any of chef-repo/roles/*.rb
+
+
+Knife ssh & hostnames
+---------------------
+
+The hosts in the mozy env are not in dns.  To make things easier, you can generate entries for /etc/hosts like so:
+
+ % knife -E 'nodes.all { |node| puts [node.ipaddress, node.hostname, node.fqdn].join("\t") }' >> /etc/hosts
+
+You can also use 'knife ssh -a ipaddress ...' instead, but hostname makes things clearing when following the knife output.
+
+Updating VMs
+------------
+
+We don't configure chef-client as a daemon, so if you change a cookbook, role, etc.:
+ % ssh host-name chef-client
+
+The vcloud user is setup with password-less sudo and .ssh/authorized_keys to avoid password prompting.
+You can add your own ssh pub key(s) to: chef-repo/site-cookbooks/cfc/files/default/authorized_keys.vcloud
+
+Example knife usage to deploy a new build:
+
+ % vi roles/qa/cfc-env.rb (and change :build => 3 to 4)
+
+ % ./bin/sync-roles.sh qa
+
+ #put dmz in maint mode
+ % knife ssh role:cfc-dmz -x vcloud 'sudo chef-client -E cfc-maintenance'
+
+ #drop database profile (just for this particular build)
+ % knife ssh role:cfc-db -x vcloud 'echo "drop database profile;" | /usr/bin/mysql profile -u root -p.....'
+
+ #create database profile
+ % knife ssh role:cfc-db -x vcloud 'sudo chef-client'
+
+ #run chef-client on hub, hmaster, task and scm in parallel: downloads build #4 and restarts tcServer
+ % knife ssh tags:alm -x vcloud 'sudo chef-client'
+
+ #put dmz back in normal mode
+ % knife ssh role:cfc-dmz -x vcloud 'sudo chef-client -E cfc-normal'
+
+Note that the knife ssh queries assume 1 chef-server per env.  If you choose to have 1 chef-server with multiple envs, be sure to choose a different query that is unique to the env you want to update!
+
+ToDo
+----
+
+Chef has a feature called "Encrypted Data Bags" - it'd be nice to store all passwords and senstive info there.  The downside to this feature is it requires a shared-secret file to be deployed on all nodes, and this file should not be stored in git.  It's also much easier to use attributes in recipes vs. encrypted data bags.

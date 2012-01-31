@@ -1,0 +1,1 @@
+default[:cfc][:service] = "hslave"

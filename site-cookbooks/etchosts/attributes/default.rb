@@ -1,0 +1,1 @@
+default[:etchosts][:entries] = nil

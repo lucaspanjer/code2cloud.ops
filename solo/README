@@ -1,0 +1,31 @@
+Rather than using a chef server, we can just build nodes with chef solo.
+
+Vanilla Chef install
+---------------------------
+
+From http://wiki.opscode.com/display/chef/Package+Installation+on+Debian+and+Ubuntu
+
+% echo "deb http://apt.opscode.com/ `lsb_release -cs`-0.10 main" | sudo tee /etc/apt/sources.list.d/opscode.list
+% wget -qO - http://apt.opscode.com/packages@opscode.com.gpg.key | sudo apt-key add -
+% sudo apt-get update && sudo apt-get install -y chef
+
+Setup vcloud user with pwd less sudo. Add your laptop's ssh key to its auth-keys
+
+Usage
+* Push the cookbooks/roles/scripts to the node (sync-solo.sh)
+* run the chef-solo.sh script on the node. 
+
+
+BUGS and Manual Steps:
+Need to configure repo for sun java 6:  http://leo.gaggl.com/2011/10/installing-java6-jdk-on-ubuntu-11-10/
+
+I needed to manually run the following to fix ssk key permsisions (should be fixed now):
+sudo chown vcloud:tomcat6 etc/ssh-key.pem*
+sudo chmod g+r etc/ssh-key.pem*
+
+
+set vcloud's key as authorized for builder..
+copy /home/vcloud/.ssh/id_rsa.pub on the main to /etc/ssh/builder/authorized_keys on the buidl machine
+
+setup logs permissions:
+sudo chmod g+rx /var/log/tomcat6/

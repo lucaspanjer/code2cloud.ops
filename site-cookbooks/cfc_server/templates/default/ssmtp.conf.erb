@@ -1,0 +1,8 @@
+root=<%= node.cfc.admin_mail_sender.username %>
+mailhub=smtp.gmail.com:587
+rewriteDomain=
+hostname=<%= node.cfc.admin_mail_sender.username %>
+UseSTARTTLS=YES
+AuthUser=<%= node.cfc.admin_mail_sender.username %>
+AuthPass=<%= node.cfc.admin_mail_sender.password %>
+FromLineOverride=YES

@@ -1,0 +1,11 @@
+# THIS FILE IS MAINTAINED BY CHEF, DO NOT MODIFY AS IT WILL BE OVERWRITTEN
+
+127.0.0.1     localhost
+127.0.1.1     <%= node[:fqdn] %> <%= node[:hostname] %>
+<% if node[:kernel][:modules][:ipv6] %>
+::1 localhost    
+<% end %>
+
+
+
+<%= "#{node[:cfc][:hosts][:hub][:ipaddress]}     #{cfc_role_address("profile")}" %>

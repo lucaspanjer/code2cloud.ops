@@ -1,0 +1,6 @@
+maintainer       "Doug MacEachern"
+maintainer_email "dougm@vmware.com"
+license          "VMware internal"
+description      "Installs and configures Cloud2Code Nexus server"
+version          "0.1"
+depends          "nexus"

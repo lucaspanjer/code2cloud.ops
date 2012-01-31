@@ -1,0 +1,5 @@
+maintainer       "Doug MacEachern"
+maintainer_email "dougm@vmware.com"
+license          "VMware internal"
+description      "Installs Nexus OSS"
+version          "0.1"
