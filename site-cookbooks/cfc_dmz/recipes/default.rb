@@ -85,6 +85,8 @@ ruby_block "adjust HOME" do
   block { ENV['HOME'] = "/home/#{node.cfc.dmz.user}" }
 end
 
+=begin
+
 git_clone = File.join(node.cfc.dmz.home, File.basename(node.cfc.dmz.git_repo))
 
 git git_clone do
@@ -144,3 +146,4 @@ http_request "HEAD site.xml" do
 
   notifies :create, "remote_file[site.zip]", :immediately
 end
+=end

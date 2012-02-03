@@ -15,7 +15,7 @@ action :deploy do
     end
     war << ".war"
   
-    source = [ node.cfc.server.home, "hudson-homes/code2cloud/jobs", node.cfc.server.job, "builds", node.cfc.server.build,
+    source = [ node.cfc.server.home, "hudson-homes/c2c/jobs", node.cfc.server.job, "builds", node.cfc.server.build,
                "archive", root_package, package, "target", war ].join("/")
   
     war = "#{artifact["name"]}.war"
