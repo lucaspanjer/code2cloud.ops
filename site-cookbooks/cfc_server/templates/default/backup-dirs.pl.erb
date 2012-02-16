@@ -6,7 +6,8 @@ my $hostname = `hostname`;
 chop $hostname;
 my $environment = '<%= cfc_role_address("profile") %>';
 my $remote_user = 'cmorgan';
-my $remote_server = 'dev.tasktop.com:2222';
+my $remote_server = 'dev.tasktop.com';
+my $remote_port = '2222';
 my $archive_dir = '<%= node.cfc.server.home %>/backup/archive';
 my $encrypt_key = 'Code2Cloud';
 my $encrypt_pass = '';
@@ -21,8 +22,10 @@ my $pass_export = "export PASSPHRASE=$encrypt_pass &&";
 <% end %>
 
 
+# Make sure there are no empty files on remote (avoids https://q.tasktop.com/alm/#projects/c2c/task/4124)
+print `ssh -p $remote_port $remote_user\@$remote_server 'find /home/backup/$environment/$hostname/dir -size 0 -exec rm {} \\;'`
 print "Sending backups to $remote_server\n";
-print `$pass_export duplicity --name dev-dirs --archive-dir $archive_dir --encrypt-key $encrypt_key <%= dirs %> --exclude '**' / scp://$remote_user\@$remote_server//home/backup/$environment/$hostname/dir`;
+print `$pass_export duplicity --name dev-dirs --archive-dir $archive_dir --encrypt-key $encrypt_key <%= dirs %> --exclude '**' / scp://$remote_user\@$remote_server:$remote_port//home/backup/$environment/$hostname/dir`;
 
 print "Sending backups to s3 \n";
 print `$pass_export $s3_export duplicity --name s3-dirs --archive-dir $archive_dir --encrypt-key $encrypt_key <%= dirs %> --exclude '**' / s3+http://code2cloud.backups/$environment/$hostname/dir`;
