@@ -36,7 +36,7 @@ foreach my $db (@db_names) {
 }
 
 # Make sure there are no empty files on remote (avoids https://q.tasktop.com/alm/#projects/c2c/task/4124)
-print `ssh -p $remote_port $remote_user\@$remote_server 'find /home/backup/$environment/$hostname/dbs -size 0 -exec rm {} \\;'`
+print `ssh -p $remote_port $remote_user\@$remote_server 'find /home/backup/$environment/$hostname/dbs -size 0 -exec rm {} \\;'`;
 print "Sending backups to $remote_server\n";
 print `$pass_export duplicity --name dev-dbs --archive-dir $archive_dir --encrypt-key $encrypt_key $backup_dir/  scp://$remote_user\@$remote_server:$remote_port//home/backup/$environment/$hostname/dbs`;
 
