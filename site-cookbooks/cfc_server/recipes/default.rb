@@ -1,5 +1,10 @@
 #base recipe for hmaster, hub, scm and task
-cfc_user node.tomcat.user
+
+
+# FIXME, not sure why this is needed
+unless platform?(%w{oracleserver})
+  cfc_user node.tomcat.user
+end
 
 tag "alm"
 
@@ -7,9 +12,12 @@ include_recipe "tomcat::default"
 include_recipe "etchosts::default"
 include_recipe "ntp"
 
-package "duplicity"
-package "python-boto" # for duplicity over s3
-package "ssmtp" # For smtp over gmail
+
+unless platform?(%w{oracleserver})
+  package "duplicity"
+  package "python-boto" # for duplicity over s3
+  package "ssmtp" # For smtp over gmail
+end
 
 directory node.cfc.server.home do
   owner node.cfc.user
@@ -44,22 +52,24 @@ link "#{node.cfc.server.opt}/tc_logs" do
   group node.cfc.group
 end
 
-execute "adduser #{node.cfc.user} #{node.tomcat.user}" do
+
+execute "usermod -a -G #{node.tomcat.user} #{node.cfc.user}" do
    # FIXME NOT IF ??
 end
 
-execute "adduser #{node.cfc.user} adm" do
+execute "usermod -a -G adm #{node.cfc.user}" do
    # FIXME NOT IF ??
 end
 
-execute "adduser #{node.tomcat.user} #{node.cfc.user}" do
+execute "usermod -a -G #{node.cfc.user} #{node.tomcat.user}" do
    # FIXME NOT IF ??
 end
 
-directory "#{node.cfc.server.opt}/etc" do
+directory "#{node.cfc.server.opt}/etc/" do
   owner node.cfc.user
   group node.cfc.group
   recursive true
+  action :create
 end
 
 template "#{node.cfc.server.opt}/etc/log4j.xml" do
@@ -75,30 +85,48 @@ directory "#{node.cfc.server.opt}/bin" do
   recursive true
 end
 
-template "#{node.cfc.server.opt}/bin/backup-dirs.pl" do
-  source "backup-dirs.pl.erb"
-  owner node.cfc.user
-  group node.cfc.user
-  mode 0770
-end
+unless platform?(%w{oracleserver})
 
-template "/etc/ssmtp/ssmtp.conf" do
-  source "ssmtp.conf.erb"
-  mode 0774
-end
+  template "#{node.cfc.server.opt}/bin/backup-dirs.pl" do
+    source "backup-dirs.pl.erb"
+    owner node.cfc.user
+    group node.cfc.user
+    mode 0770
+  end
+  
+  template "/etc/ssmtp/ssmtp.conf" do
+    source "ssmtp.conf.erb"
+    mode 0774
+  end
+  
+  template "/etc/ssmtp/revaliases" do
+    source "revaliases.erb"
+    mode 0774
+  end
+  
+  
+  cron "backup-dirs" do
+    hour "1"
+    minute "0"
+    command "#{node.cfc.server.opt}/bin/backup-dirs.pl"
+    user node.cfc.user
+    mailto node.cfc.admin_email
+  end
 
-template "/etc/ssmtp/revaliases" do
-  source "revaliases.erb"
-  mode 0774
-end
-
-
-cron "backup-dirs" do
-  hour "1"
-  minute "0"
-  command "#{node.cfc.server.opt}/bin/backup-dirs.pl"
-  user node.cfc.user
-  mailto node.cfc.admin_email
+  cookbook_file "#{node.cfc.server.opt}/etc/backup_pubkey.txt" do
+    source "backup_pubkey.txt"
+    owner node.cfc.user
+    group node.cfc.user
+  end
+  
+  execute "gpg: import" do
+    not_if "sudo -u #{node.cfc.user} gpg --list-keys #{node.cfc.server.backup.key_name}"
+    #FIXME should use a property for this sig                                                                                                      
+    command "gpg --import #{node.cfc.server.opt}/etc/backup_pubkey.txt && echo D18422C06DA0E931CBEBE73C99F305CB48F1289B:6: | gpg --import-ownertru\
+  st"
+    user node.cfc.user
+    action :run
+  end
 end
 
 cookbook_file "/etc/security/limits.conf" do
@@ -109,20 +137,7 @@ cookbook_file "/etc/pam.d/common-session" do
   mode 0644
 end
 
-cookbook_file "#{node.cfc.server.opt}/etc/backup_pubkey.txt" do
-  source "backup_pubkey.txt"
-  owner node.cfc.user
-  group node.cfc.user
-end
 
-execute "gpg: import" do
-  not_if "sudo -u #{node.cfc.user} gpg --list-keys #{node.cfc.server.backup.key_name}"
-  #FIXME should use a property for this sig                                                                                                      
-  command "gpg --import #{node.cfc.server.opt}/etc/backup_pubkey.txt && echo D18422C06DA0E931CBEBE73C99F305CB48F1289B:6: | gpg --import-ownertru\
-st"
-  user node.cfc.user
-  action :run
-end
 
 if node.cfc.server.build
   artifacts = node.cfc.server.artifacts

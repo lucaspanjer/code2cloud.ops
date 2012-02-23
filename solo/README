@@ -3,13 +3,19 @@ Rather than using a chef server, we can just build nodes with chef solo.
 Vanilla Chef install
 ---------------------------
 
+For Ubuntu based systems:
 From http://wiki.opscode.com/display/chef/Package+Installation+on+Debian+and+Ubuntu
 
 % echo "deb http://apt.opscode.com/ `lsb_release -cs`-0.10 main" | sudo tee /etc/apt/sources.list.d/opscode.list
 % wget -qO - http://apt.opscode.com/packages@opscode.com.gpg.key | sudo apt-key add -
 % sudo apt-get update && sudo apt-get install -y chef
 
+For Red Hat based systems (Oracle Linux)
+
+From http://wiki.opscode.com/display/chef/Workstation+Setup+for+CentOS,+Red+Hat,+Fedora
+
 Setup vcloud user with pwd less sudo. Add your laptop's ssh key to its auth-keys
+
 
 Usage
 * Push the cookbooks/roles/scripts to the node (sync-solo.sh)
