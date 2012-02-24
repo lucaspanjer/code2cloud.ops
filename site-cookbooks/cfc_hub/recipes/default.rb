@@ -12,17 +12,21 @@ include_recipe "openssh"
 
 
 # This is only needed when we deploy the hub on the same VM as other services
-include_recipe "cfc_server::tc-instance"
-link "#{node.cfc.server.opt}/hub_webapps" do
-  to "#{node.cfc.tomcat.instance_base}/webapps"
-  owner node.cfc.user
-  group node.tomcat.group
-end
-
-link "#{node.cfc.server.opt}/hub_tc_logs" do
-  to "#{node.cfc.tomcat.instance_base}/logs"
-  owner node.cfc.user
-  group node.cfc.group
+if node.cfc.hub.has_internal_services
+  override[:cfc][:tomcat][:instance_name] = "hub-tomcat"
+    
+  include_recipe "cfc_server::tc-instance"
+  link "#{node.cfc.server.opt}/hub_webapps" do
+    to "#{node.cfc.tomcat.instance_base}/webapps"
+    owner node.cfc.user
+    group node.tomcat.group
+  end
+  
+  link "#{node.cfc.server.opt}/hub_tc_logs" do
+    to "#{node.cfc.tomcat.instance_base}/logs"
+    owner node.cfc.user
+    group node.cfc.group
+  end
 end
 
 include_recipe "cfc_server"

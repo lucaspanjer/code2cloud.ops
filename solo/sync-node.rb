@@ -54,7 +54,7 @@ Net::SCP.start(node_ip, username) do |scp|
     upload(scp, "#{opscode_cookbooks_dir}/#{cookbook}", "#{host_chef_dir}/cookbooks")
   end
   # All our cookbooks
-  upload(scp, "#{top_dir}/cookbooks/*", "#{host_chef_dir}/cookbooks")
+  upload(scp, "#{top_dir}/site-cookbooks/*", "#{host_chef_dir}/cookbooks")
   # Solo config
   for file in ["chef-solo.sh", "solo.rb"]
     upload(scp, "#{top_dir}/solo/#{file}", "#{host_chef_dir}")
