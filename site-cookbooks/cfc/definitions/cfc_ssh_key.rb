@@ -10,16 +10,11 @@ define :cfc_ssh_key, :type => "rsa", :mkdir => true, :bits => nil do
     only_if { params[:mkdir] }
   end
 
-  ## FIXME this just fails on OL
-#  unless platform?(%w{oracleserver})
-
-    execute "ssh-keygen -t #{params[:type]} -f #{pkey} #{bits} -N ''" do
-      user node.cfc.user
-      group node.cfc.group
-      not_if { File.exists?(pkey) }
-    end
-
- # end
+  execute "ssh-keygen -t #{params[:type]} -f #{pkey} #{bits} -N ''" do
+    user node.cfc.user
+    group node.cfc.group
+    not_if { File.exists?(pkey) }
+  end
 
   ruby_block "store ssh pubkey" do
     block do

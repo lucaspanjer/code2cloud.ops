@@ -2,18 +2,14 @@
 
 
 # FIXME, not sure why this is needed
-unless platform?(%w{oracleserver})
-  cfc_user node.tomcat.user
-end
-
-tag "alm"
+#cfc_user node.tomcat.user
 
 include_recipe "tomcat::default"
 include_recipe "etchosts::default"
 include_recipe "ntp"
 
 
-unless platform?(%w{oracleserver})
+if node.cfc.server.backup.enabled
   package "duplicity"
   package "python-boto" # for duplicity over s3
   package "ssmtp" # For smtp over gmail
@@ -85,7 +81,7 @@ directory "#{node.cfc.server.opt}/bin" do
   recursive true
 end
 
-unless platform?(%w{oracleserver})
+if node.cfc.server.backup.enabled
 
   template "#{node.cfc.server.opt}/bin/backup-dirs.pl" do
     source "backup-dirs.pl.erb"
