@@ -26,10 +26,11 @@ if !File.exists?("#{top_dir}/roles/#{env}")
     exit (1)
 end
 
-Net::SSH.start(node_ip, username) do |ssh|
-  ssh.exec!("mkdir -p #{host_chef_dir}/roles")
-  ssh.exec!("mkdir -p #{host_chef_dir}/cookbooks")
-end 
+#Net::SSH.start(node_ip, username) do |ssh|
+#  ssh.exec!("sudo mkdir -p #{host_chef_dir}/roles")
+#  ssh.exec!("sudo mkdir -p #{host_chef_dir}/cookbooks")
+#  ssh.exec!("sudo chown -R #{host_chef_dir}")
+#end 
 
 
 def upload(scp, fileGlob, remoteDir)
@@ -44,7 +45,7 @@ end
 
 # use a persistent connection to transfer files
 Net::SCP.start(node_ip, username) do |scp|  
-  print "Using '${env}' environment...\n"
+  print "Using #{env} environment...\n"
   # Environment
   upload(scp, "#{top_dir}/roles/#{env}/*.rb", "#{host_chef_dir}/roles")
   # All Roles (some not needed)
