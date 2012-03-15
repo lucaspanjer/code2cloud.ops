@@ -13,6 +13,13 @@ end
 top_dir='/opt/workspace-c2c/code2cloud.chef' # FIXME make general
 opscode_cookbooks_dir="#{top_dir}/../opscode-cookbooks"
 node_ip=ARGV[0]
+node_port=22
+if node_ip.include? ":" then
+  idx = node_ip.index(":")
+  node_port = node_ip[idx+1, node_ip.size()]
+  node_ip = node_ip[0..idx-1]
+end
+
 username='vcloud'
 host_chef_dir='/opt/code2cloud/chef'
 
@@ -44,7 +51,7 @@ def upload(scp, fileGlob, remoteDir)
 end
 
 # use a persistent connection to transfer files
-Net::SCP.start(node_ip, username) do |scp|  
+Net::SCP.start(node_ip, username, :port => node_port) do |scp|  
   print "Using #{env} environment...\n"
   # Environment
   upload(scp, "#{top_dir}/roles/#{env}/*.rb", "#{host_chef_dir}/roles")
