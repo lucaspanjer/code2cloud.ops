@@ -12,8 +12,6 @@ EXISTING_WEBAPPS=`ls $HUDSON_WEBAPPS_DIR/*hudson.war`
 echo 'removing users plugin data'
 rm -rf $HUDSON_BASE_DIR/*/plugins/*
 
-rm -rf $HUDSON_WEBAPPS_DIR/*hudson
-
 echo 'removing existing webapps'
 rm -rf $HUDSON_WEBAPPS_DIR/*hudson
 
