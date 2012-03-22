@@ -11,6 +11,13 @@ template "#{node.cfc.server.opt}/etc/task.properties" do
   notifies :restart, "service[tomcat]"
 end
 
+template "#{node.cfc.server.opt}/bin/liquibase-wiki.rb" do
+  source "liquibase-wiki.rb.erb"
+  owner node.cfc.user
+  group node.tomcat.group
+  mode 0770
+end
+
 cfc_server_deployment "task" do 
   artifacts  [ { "name" => "tasks", "package" => "tasks.web" },
                 { "name" => "wiki", "package" => "wiki.web" } ]

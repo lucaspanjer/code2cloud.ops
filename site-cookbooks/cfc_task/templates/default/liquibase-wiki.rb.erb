@@ -1,0 +1,42 @@
+#!/usr/bin/ruby                                                                                                                                                                    
+
+require 'mysql'
+
+host='<%= cfc_role_address("db") %>'
+user='wiki'
+pwd='<%= node.cfc.mysql_pw.wiki %>'
+webapplibs='/opt/code2cloud/webapps/wiki/WEB-INF/lib/'
+
+con = Mysql.new(host, user, pwd);
+
+rs = con.query('show databases');
+
+rs.each_hash do |row|
+  dbName = row['Database']
+  unless dbName.end_with?('_wiki')
+    next
+  end
+
+  puts "Migrating #{dbName}"
+
+  java = "java -cp #{webapplibs}liquibase-core-2.0.3.jar:#{webapplibs}wiki.server-0.1.0-SNAPSHOT.jar:#{webapplibs}mysql-connector-java-5.1.12.jar liquibase.integration.commandlin\
+e.Main"
+  config = "--changeLogFile=data/liquibase-wiki-db-master.xml --username=#{user} --password=#{pwd} --url=jdbc:mysql://#{host}:3306/#{dbName} --driver=com.mysql.jdbc.Driver"
+
+#  puts `#{java} #{config} changelogSync`                                                                                                                                          
+  puts `#{java} #{config} clearCheckSums`
+  puts `#{java} #{config} update`
+
+  con.set_server_option(Mysql::OPTION_MULTI_STATEMENTS_ON)
+  con.query("use `#{dbName}`; ALTER TABLE AttachmentContent CHANGE `size` `sizeBytes` INT(11) NOT NULL;"){|r| puts r}
+  con.query("use `#{dbName}`; update SEQUENCE set SEQ_COUNT=coalesce((select max(id) id from Page),0) where SEQ_NAME='Page';"){|r| puts r}
+  con.query("use `#{dbName}`; update SEQUENCE set SEQ_COUNT=coalesce((select max(id) id from PageContent), 0) where SEQ_NAME='PageContent';"){|r| puts r}
+  con.query("use `#{dbName}`; update SEQUENCE set SEQ_COUNT=coalesce((select max(id) id from Person), 0) where SEQ_NAME='Person';"){|r| puts r}
+  con.query("use `#{dbName}`; update SEQUENCE set SEQ_COUNT=coalesce((select max(id) id from Attachment), 0) where SEQ_NAME='Attachment';"){|r| puts r}
+  con.query("use `#{dbName}`; update SEQUENCE set SEQ_COUNT=coalesce((select max(id) id from AttachmentContent), 0) where SEQ_NAME='AttachmentContent';"){|r| puts r}
+
+end
+
+
+
+con.close

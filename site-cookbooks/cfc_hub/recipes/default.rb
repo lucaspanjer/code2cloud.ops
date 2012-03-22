@@ -13,7 +13,6 @@ include_recipe "openssh"
 
 # This is only needed when we deploy the hub on the same VM as other services
 if node.cfc.hub.has_internal_services
-  override[:cfc][:tomcat][:instance_name] = "hub-tomcat"
     
   include_recipe "cfc_server::tc-instance"
   link "#{node.cfc.server.opt}/hub_webapps" do
