@@ -18,6 +18,13 @@ template "#{node.cfc.server.opt}/bin/liquibase-wiki.rb" do
   mode 0770
 end
 
+template "#{node.cfc.server.opt}/bin/liquibase-tasks.rb" do
+  source "liquibase-tasks.rb.erb"
+  owner node.cfc.user
+  group node.tomcat.group
+  mode 0770
+end
+
 cfc_server_deployment "task" do 
   artifacts  [ { "name" => "tasks", "package" => "tasks.web" },
                 { "name" => "wiki", "package" => "wiki.web" } ]
