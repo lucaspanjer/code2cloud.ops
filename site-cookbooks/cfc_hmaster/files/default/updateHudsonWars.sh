@@ -1,4 +1,3 @@
-
 #!/bin/sh
 
 #Script to update the existing hudson wars with the new template. Container should already be stopped
