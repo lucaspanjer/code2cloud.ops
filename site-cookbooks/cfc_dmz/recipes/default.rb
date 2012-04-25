@@ -72,17 +72,17 @@ directory www_root do
   mode 0755
 end
 
-template "/home/#{node.cfc.dmz.user}/.netrc" do
+template "#{node.cfc.user_home}/.netrc" do
   source "netrc.erb"
-  owner node.cfc.dmz.user
-  group node.cfc.dmz.user
+  owner node.cfc.user
+  group node.cfc.user
   mode 0600
 end
 
 #hack to make sure libcurl parses the correct .netrc
 process_home = ENV['HOME']
 ruby_block "adjust HOME" do
-  block { ENV['HOME'] = "/home/#{node.cfc.dmz.user}" }
+  block { ENV['HOME'] = "#{node.cfc.user_home}" }
 end
 
 =begin

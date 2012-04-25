@@ -6,6 +6,7 @@ default[:cfc][:server][:version] = "0.1.0-SNAPSHOT"
 default[:cfc][:server][:artifacts] = []
 default[:cfc][:user] = "vcloud"
 default[:cfc][:group] = "vcloud"
+default[:cfc][:user_home] = "/home/#{node.cfc.user}"
 default[:cfc][:server][:backup][:enabled] = true
 #NOTE to get dirs added you should override in the roles (not cookbooks) so that all are merged when multiple roles on the same machine
 default[:cfc][:server][:backup][:directories] = []

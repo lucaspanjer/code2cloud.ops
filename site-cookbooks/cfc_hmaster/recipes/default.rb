@@ -62,9 +62,9 @@ cookbook_file "#{node.cfc.server.opt}/bin/updateHudsonWars.sh" do
   mode 0770
 end
 
-cfc_ssh_key "/home/#{node.cfc.user}/.ssh/id_rsa"
+cfc_ssh_key "#{node.cfc.user_home}/.ssh/id_rsa"
 build_key_file = "#{node.cfc.server.opt}/etc/builder_id_rsa"
-execute "cp /home/#{node.cfc.user}/.ssh/id_rsa #{build_key_file}; chown #{node.tomcat.user}:#{node.tomcat.user} #{build_key_file}" do
+execute "cp #{node.cfc.user_home}/.ssh/id_rsa #{build_key_file}; chown #{node.tomcat.user}:#{node.tomcat.user} #{build_key_file}" do
   creates "#{build_key_file}"
 end
 
