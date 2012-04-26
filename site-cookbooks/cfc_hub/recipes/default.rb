@@ -36,7 +36,7 @@ include_recipe "cfc_server"
     owner node.cfc.user
     group node.tomcat.group
     mode 0660
-    notifies :restart, "service[tomcat]"
+    notifies :restart, "service[tomcat]" #fixme should be hub tomcat in some cases
   end
 end
 
@@ -69,9 +69,16 @@ else
   name = ::File.basename(node.cfc.hub.prefix_path)
 end
 
+
+if node.cfc.hub.has_internal_services
+  serviceName="#{node.cfc.tomcat.instance_name}"
+else
+  serviceName="tomcat"
+end
+
 cfc_server_deployment "hub" do 
   artifacts [ { "name" => name,  "package" => "profile.web", "webapp_dir" => "#{node.cfc.tomcat.instance_webapps}",
-              "service" => "#{node.cfc.tomcat.instance_name}"} ]
+              "service" => serviceName} ]
   action :deploy
   provider "cfc_server_#{node.cfc.server.deploy_type}"
 end                                      
