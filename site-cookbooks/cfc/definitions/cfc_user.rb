@@ -1,6 +1,7 @@
 define :cfc_user do
   name = params[:name]
-  dir  = "/home/#{name}"
+  prefix = node[:cfc][:user_home_prefix]
+  dir  = "#{prefix}/#{name}"
 
   group name
 
@@ -9,14 +10,15 @@ define :cfc_user do
     gid name
     home dir
     shell "/bin/bash"
+    supports :manage_home => true
   end
 
-  directory dir do
-    action :create
-    mode 0700
-    owner name
-    group name
-  end
+#  directory dir do
+#    action :create
+#    mode 0700
+#    owner name
+#    group name
+#  end
 
   if node[:cfc][:artifacts]
     #generate .wgetrc

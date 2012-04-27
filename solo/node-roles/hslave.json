@@ -1,6 +1,5 @@
 
 {
-	"run_list" : ["role[cfc-env]", "role[cfc-base]", "role[cfc-task]", 
-  				"role[cfc-scm]", "role[cfc-hmaster]", "role[cfc-hub]", "role[cfc-dmz]", "role[cfc-nexus]"]
+	"run_list" : ["role[cfc-env]", "role[cfc-base]", "role[cfc-hslave]"]
   
 }

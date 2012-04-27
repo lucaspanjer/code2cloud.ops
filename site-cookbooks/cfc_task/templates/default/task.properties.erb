@@ -1,7 +1,7 @@
 alm.rootDir=<%= node.cfc.server.opt %>
 
 profile.application.host=<%= cfc_profile_host %>
-profile.application.protocol=https
+profile.application.protocol=<%= node.cfc.hub.protocol %>
 profile.prefix.path=<%= node.cfc.hub.prefix_path %>
 
 database.host=<%= cfc_role_address("db") %>

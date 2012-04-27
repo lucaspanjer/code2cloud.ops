@@ -1,6 +1,6 @@
 profile.invitationOnlySignUp=<%= node.cfc.hub.invitation_only %>
 
-profile.application.protocol=https
+profile.application.protocol=<%= node.cfc.hub.protocol %>
 profile.application.host=<%= cfc_role_address("profile") %>
 profile.prefix.path=<%= node.cfc.hub.prefix_path %>
 <% if node.cfc.hub.service_proxy_path %>

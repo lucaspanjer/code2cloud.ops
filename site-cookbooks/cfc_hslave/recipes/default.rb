@@ -1,10 +1,10 @@
 #for service[ssh]
 include_recipe "openssh"
-include_recipe "maven"
+#include_recipe "maven"
 include_recipe "etchosts::default"
 
 
-cfc_user "builder"
+cfc_user node.cfc.hslave.build_user
 
 ## FIXME this does not work with chef solo (the search)
 #add hmaster and hub to authorized_keys
@@ -21,26 +21,28 @@ cfc_user "builder"
 #  dir "/etc/ssh"
 #end
 
-cookbook_file "/home/builder/.gitconfig" do
+cookbook_file "#{node.cfc.user_home_prefix}/#{node.cfc.hslave.build_user}/.gitconfig" do
   source "gitconfig"
 end
 
-cookbook_file "/etc/ssh/sshd_config" do
-  owner "root"
-  group "root"
-  mode 0644
-  notifies :restart, "service[ssh]"
+unless platform?("oracle")
+  cookbook_file "/etc/ssh/sshd_config" do
+    owner "root"
+    group "root"
+    mode 0644
+    notifies :restart, "service[ssh]"
+  end
 end
 
-m2 = "/home/builder/.m2"
+m2 = "/#{node.cfc.user_home_prefix}/#{node.cfc.hslave.build_user}/.m2"
 
 directory m2 do
-  owner "builder"
-  group "builder"
+  owner node.cfc.hslave.build_user
+  group node.cfc.hslave.build_user
 end
 
-link "/home/c2c" do
-  to "/home/builder"
+link "#{node.cfc.user_home_prefix}/c2c" do
+  to "#{node.cfc.user_home_prefix}/builder"
 end
 
 template "#{m2}/settings.xml" do
@@ -56,14 +58,14 @@ template "/etc/environment" do
 end
 
 directory "/opt/c2c" do
-  owner "builder"
-  group "builder"
+  owner node.cfc.hslave.build_user
+  group node.cfc.hslave.build_user
 end
 
 remote_file "/opt/c2c/slave.jar" do
   source "#{cfc_hudson_url}/jnlpJars/slave.jar"
-  owner "builder"
-  group "builder"
+  owner node.cfc.hslave.build_user
+  group node.cfc.hslave.build_user
   mode 0644
   backup false
 end

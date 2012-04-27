@@ -1,7 +1,7 @@
 #!/bin/sh
 
-setenv http_proxy www-proxy.us.oracle.com:80
-setenv https_proxy www-proxy.us.oracle.com:80
+export http_proxy=www-proxy.us.oracle.com:80
+export https_proxy=www-proxy.us.oracle.com:80
 
 sudo rpm -Uvh http://rbel.frameos.org/rbel6
 
@@ -35,5 +35,8 @@ EOF
 sudo patch /usr/lib64/ruby/gems/1.8/gems/chef-0.10.8/lib/chef/platform.rb platform.patch
 
 sudo /usr/sbin/useradd vcloud -d /scratch/vcloud
+sudo mkdir -p /opt/code2cloud/chef/roles
+sudo mkdir -p /opt/code2cloud/chef/cookbooks
+sudo chown -R vcloud /opt/code2cloud
 
 

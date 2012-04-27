@@ -42,7 +42,8 @@
 		    <sshUser>builder</sshUser>
 		        <sshKeyFilePath>/opt/code2cloud/etc/builder_id_rsa</sshKeyFilePath>
           <projectIdentifier>${profile.application.identifier}</projectIdentifier>
-</com.tasktop.c2c.server.hudson.plugin.cloud.C2CSlaveCloud>
+          <remoteFs><%= node.cfc.user_home_prefix %>/c2c</remoteFs>
+	</com.tasktop.c2c.server.hudson.plugin.cloud.C2CSlaveCloud>
   </clouds>
 
   <slaves/>
