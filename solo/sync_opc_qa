@@ -1,0 +1,3 @@
+./sync-node.rb slc00rlw.us.oracle.com hub opc
+./sync-node.rb slc00tbe.us.oracle.com all-internal-services opc
+./sync-node.rb slc01qlk.us.oracle.com hslave opc

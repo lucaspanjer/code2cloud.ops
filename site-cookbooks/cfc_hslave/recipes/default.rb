@@ -42,14 +42,14 @@ directory m2 do
 end
 
 link "#{node.cfc.user_home_prefix}/c2c" do
-  to "#{node.cfc.user_home_prefix}/builder"
+  to "#{node.cfc.user_home_prefix}/#{node.cfc.hslave.build_user}"
 end
 
 template "#{m2}/settings.xml" do
   source "m2_settings.xml.erb"
   mode 0600
-  owner "builder"
-  group "builder"
+  owner node.cfc.hslave.build_user
+  group node.cfc.hslave.build_user
 end
 
 template "/etc/environment" do

@@ -14,5 +14,6 @@ default[:cfc][:server][:backup][:directories] = []
 default[:cfc][:server][:backup][:key_name] = "Code2Cloud"
 default[:cfc][:server][:s3][:access_key_id] = ""
 default[:cfc][:server][:s3][:access_key_secret] = ""
+default[:cfc][:server][:email_log_errors_to_admin] = true
 override[:tomcat][:java_options] = "-Xmx2048M -Xss192K -XX:MaxPermSize=512M -Dlog4j.configuration=file://#{node.cfc.server.opt}/etc/log4j.xml"
 
