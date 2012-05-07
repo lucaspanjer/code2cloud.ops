@@ -7,7 +7,7 @@ action :deploy do
     Chef::Log.warn("No build selected. Not deploying artifacts.")
   else
   new_resource.artifacts.each do |artifact|
-    root_package = "com.tasktop.c2c.server"
+    root_package = node.cfc.server.root_package || "com.tasktop.c2c.server"
     package = "#{root_package}.#{artifact["package"]}"
   
     war = artifact["war"] || artifact["package"]
