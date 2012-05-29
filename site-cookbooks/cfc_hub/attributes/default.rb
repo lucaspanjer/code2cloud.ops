@@ -11,7 +11,7 @@ default[:cfc][:hub][:remember_me_key] = "XXX"
 default[:cfc][:hub][:has_internal_services] = false
   # FIXME will not work
 if attribute?("cfc.hub.has_internal_services")
- override[:cfc][:tomcat][:instance_name] = "hub-tomcat"
+  override[:cfc][:tomcat][:instance_name] = "hub-tomcat"
 end
 default[:cfc][:hub][:jdbc_type] = "mysql"
 
