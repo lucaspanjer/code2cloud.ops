@@ -34,7 +34,7 @@ unless platform?("oracle")
   end
 end
 
-m2 = "/#{node.cfc.user_home_prefix}/#{node.cfc.hslave.build_user}/.m2"
+m2 = "#{node.cfc.user_home_prefix}/#{node.cfc.hslave.build_user}/.m2"
 
 directory m2 do
   owner node.cfc.hslave.build_user
