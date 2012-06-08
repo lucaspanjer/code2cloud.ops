@@ -10,7 +10,7 @@ Dir.glob("#{git_homes}/*") do |proj_git_home|
       Dir.mkdir("#{proj_git_home}/.ssh/")
     end
     filename = "#{proj_git_home}/.ssh/config"
-    content = "Host *\n    StrictHostKeyChecking\n"
+    content = "Host *\n    StrictHostKeyChecking no\n"
     File.open(filename, 'w') {|f| f.write(content) }
     print `ssh-keygen -t rsa -f #{proj_git_home}/.ssh/id_rsa -N "" -C "Used by Code2Cloud to fetch external source repositories"`
 
