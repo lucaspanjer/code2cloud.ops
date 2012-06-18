@@ -1,7 +1,6 @@
 #!/usr/bin/ruby
 
-#git_homes='/home/code2cloud/git_root'
-git_homes='/opt/cloudalm/data/git-root'
+git_homes='/home/code2cloud/git-root'
 
 Dir.glob("#{git_homes}/*") do |proj_git_home|
     print "Processing #{proj_git_home}\n"
