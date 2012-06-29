@@ -25,14 +25,6 @@ action :deploy do
     webapp = artifact["location"] || "#{webapp_dir}/#{war}"
     service = artifact["service"] || "tomcat"
   
-    remote_file "download-#{war}" do
-      path local
-      source remote
-      mode "0770"
-      owner node.tomcat.user
-      group node.tomcat.group
-      action "nothing"
-    end
   
     directory "exploded-#{war}" do
       path "#{webapp_dir}/#{artifact["name"]}"
@@ -56,16 +48,14 @@ action :deploy do
       end
 
   
-    http_request "HEAD #{war}" do
-      message ""
-      url remote
-      action :head
-      if ::File.exists?(webapp)
-        headers "If-Modified-Since" => ::File.mtime(webapp).httpdate
-      end
-  
-      #getDeploymentArtifacts
-      notifies :create, resources(:remote_file => "download-#{war}"), :immediately
+   
+    remote_file "download-#{war}" do
+       path local
+       source remote
+       mode "0770"
+       owner node.tomcat.user
+       group node.tomcat.group
+       action :create
   
       unless artifact["location"] #skip deploy for hudson.war
         #preDeploy
