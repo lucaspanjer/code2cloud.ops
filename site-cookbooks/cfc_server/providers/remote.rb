@@ -47,29 +47,53 @@ action :deploy do
         action :nothing
       end
 
-  
+    remote_file "download-#{war}" do
+         path local
+         source remote
+         mode "0770"
+         owner node.tomcat.user
+         group node.tomcat.group
+         action :create
+    
+        unless artifact["location"] #skip deploy for hudson.war
+          #preDeploy
+          notifies :stop, resources(:service => "#{service}"), :immediately
+    
+          #doDeploy
+          notifies :delete, resources(:directory => "exploded-#{war}"), :immediately
+          notifies :run, resources(:execute => "deploy-#{war}"), :immediately
+    
+          #postDeploy
+          notifies :start, resources(:service => "#{service}"), :delayed  
+        end
+      end
       
    Chef::Log.info("Deploying from [#{remote}] to [#{webapp_dir}/#{war}]")
-    remote_file "download-#{war}" do
-       path local
-       source remote
-       mode "0770"
-       owner node.tomcat.user
-       group node.tomcat.group
-       action :create
+   
+         # FIXME this execute resource is a hack becaue I can't figure out how to notify from outside a resource.
+       execute "Deploy" do
+         command "echo Deploying #{war}"
+         #getDeploymentArtifacts
+         notifies :create, resources(:remote_file => "download-#{war}"), :immediately
+
+     
+         unless artifact["location"] #skip deploy for hudson.war
+           #preDeploy
+           notifies :stop, resources(:service => "#{service}"), :immediately
+     
+           #doDeploy
+           notifies :delete, resources(:directory => "exploded-#{war}"), :immediately
+           notifies :run, resources(:execute => "deploy-#{war}"), :immediately
+     
+           #postDeploy
+           notifies :start, resources(:service => "#{service}"), :delayed  
+         end
+         if artifact["location"]
+           notifies :run, resources(:execute => "cp-#{war}"), :immediately
+         end
+       end
+       
   
-      unless artifact["location"] #skip deploy for hudson.war
-        #preDeploy
-        notifies :stop, resources(:service => "#{service}"), :immediately
-  
-        #doDeploy
-        notifies :delete, resources(:directory => "exploded-#{war}"), :immediately
-        notifies :run, resources(:execute => "deploy-#{war}"), :immediately
-  
-        #postDeploy
-        notifies :start, resources(:service => "#{service}"), :delayed  
-      end
-    end
   end
   end
 end
