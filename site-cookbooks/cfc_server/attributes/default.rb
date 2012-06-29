@@ -3,6 +3,7 @@ default[:cfc][:server][:opt] = "/opt/code2cloud"
 default[:cfc][:server][:job] = "Server"
 default[:cfc][:server][:build] = nil #artifacts are not deployed unless build# is configured
 default[:cfc][:server][:version] = "0.1.0-SNAPSHOT"
+default[:cfc][:server][:root_dir] = "com.tasktop.c2c.server"
 default[:cfc][:server][:root_package] = "com.tasktop.c2c.server"
 default[:cfc][:server][:artifacts] = []
 default[:cfc][:artifacts][:base_url] = "fixme"

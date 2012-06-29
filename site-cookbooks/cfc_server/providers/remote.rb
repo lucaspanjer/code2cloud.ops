@@ -7,6 +7,7 @@ action :deploy do
     Chef::Log.warn("No build selected. Not deploying artifacts.")
   else
   new_resource.artifacts.each do |artifact|
+    root_dir = node.cfc.server.root_dir || "com.tasktop.c2c.server"
     root_package = node.cfc.server.root_package || "com.tasktop.c2c.server"
     package = "#{root_package}.#{artifact["package"]}"
   
@@ -17,12 +18,11 @@ action :deploy do
     war << ".war"
   
     remote = [ cfc_hudson_url, "job", node.cfc.server.job, node.cfc.server.build,
-               "artifact", root_package, package, "target", war ].join("/")
+               "artifact", root_dir, package, "target", war ].join("/")
   
     local = artifact["location"] || "#{node.cfc.server.home}/#{artifact["name"]}.war"
     war = "#{artifact["name"]}.war"
     webapp_dir = artifact["webapp_dir"] || "#{node.tomcat.webapp_dir}"
-    webapp = artifact["location"] || "#{webapp_dir}/#{war}"
     service = artifact["service"] || "tomcat"
   
   
@@ -48,7 +48,8 @@ action :deploy do
       end
 
   
-   
+      
+   Chef::Log.info("Deploying from [#{remote}] to [#{webapp_dir}/#{war}]")
     remote_file "download-#{war}" do
        path local
        source remote
