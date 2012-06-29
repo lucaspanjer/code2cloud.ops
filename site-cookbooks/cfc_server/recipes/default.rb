@@ -29,13 +29,15 @@ directory node.cfc.server.opt do
   recursive true
 end
 
-## TEMP remove when we drop that path from property configs
-link "/opt/cloudalm" do
-  to node.cfc.server.opt
-  owner node.cfc.user
-  group node.tomcat.group
+node.cfc.server.opt_sym_links.each do |opt_link|
+  link opt_link do
+    to node.cfc.server.opt
+    owner node.cfc.user
+    group node.tomcat.group
+  end
 end
 
+  
 link "#{node.cfc.server.opt}/webapps" do
   to node.tomcat.webapp_dir
   owner node.cfc.user

@@ -13,7 +13,7 @@ default[:cfc][:hub][:has_internal_services] = false
 if attribute?("cfc.hub.has_internal_services")
   override[:cfc][:tomcat][:instance_name] = "hub-tomcat"
 end
-default[:cfc][:hub][:jdbc_type] = "mysql"
+
 
 
 

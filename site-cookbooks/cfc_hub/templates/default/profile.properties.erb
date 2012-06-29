@@ -10,7 +10,7 @@ ssh.server.publicPort=<%= node.cfc.hub.public_ssh_port %>
 ssh.server.port=<%= node.cfc.hub.internal_ssh_port %>
 
 alm.database.password=<%= node.cfc.mysql_pw.profile %>
-alm.database.url=jdbc\:<%= node.cfc.hub.jdbc_type %>\://<%= cfc_role_address("db") %>\:3306/profile
+alm.database.url=jdbc\:<%= node.cfc.server.jdbc_type %>\://<%= cfc_role_address("db") %>\:<%= node.cfc.server.jdbc_port %>/profile
 alm.database.username=profile
 
 alm.mailSender.javaMailProperties[mail.smtp.starttls.enable]=true

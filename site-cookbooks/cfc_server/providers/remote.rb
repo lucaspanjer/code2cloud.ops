@@ -53,19 +53,7 @@ action :deploy do
          mode "0770"
          owner node.tomcat.user
          group node.tomcat.group
-         action :create
-    
-        unless artifact["location"] #skip deploy for hudson.war
-          #preDeploy
-          notifies :stop, resources(:service => "#{service}"), :immediately
-    
-          #doDeploy
-          notifies :delete, resources(:directory => "exploded-#{war}"), :immediately
-          notifies :run, resources(:execute => "deploy-#{war}"), :immediately
-    
-          #postDeploy
-          notifies :start, resources(:service => "#{service}"), :delayed  
-        end
+         action :nothing
       end
       
    Chef::Log.info("Deploying from [#{remote}] to [#{webapp_dir}/#{war}]")

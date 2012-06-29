@@ -1,0 +1,5 @@
+
+{
+	"run_list" : ["role[cfc-env]", "role[cfc-base]", "role[cfc-task]"]
+  
+}

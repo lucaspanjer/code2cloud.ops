@@ -10,7 +10,7 @@ if ARGV.length != 3
   exit(1)
 end
 
-top_dir='/opt/workspace-c2c/code2cloud.chef' # FIXME make general
+top_dir='/opt/workspace/code2cloud.chef' # FIXME make general
 opscode_cookbooks_dir="#{top_dir}/../opscode-cookbooks"
 node_ip=ARGV[0]
 node_port=22

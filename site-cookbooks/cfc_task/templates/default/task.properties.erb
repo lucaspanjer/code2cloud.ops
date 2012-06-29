@@ -7,9 +7,9 @@ profile.prefix.path=<%= node.cfc.hub.prefix_path %>
 database.host=<%= cfc_role_address("db") %>
 
 task.database.password=<%= node.cfc.mysql_pw.tasks %>
-task.database.url=jdbc\:mysql\://<%= cfc_role_address("db") %>\:3306
+task.database.url=jdbc\:<%= node.cfc.server.jdbc_type %>\://<%= cfc_role_address("db") %>\:<%= node.cfc.server.jdbc_port %>
 task.database.username=tasks
 
 wiki.database.password=<%= node.cfc.mysql_pw.wiki %>
-wiki.database.url=jdbc\:mysql\://<%= cfc_role_address("db") %>\:3306
+wiki.database.url=jdbc\:<%= node.cfc.server.jdbc_type %>\://<%= cfc_role_address("db") %>\:<%= node.cfc.server.jdbc_port %>
 wiki.database.username=wiki
