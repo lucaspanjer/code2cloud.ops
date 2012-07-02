@@ -1,3 +1,5 @@
+include_recipe "cfc_server"
+
 hudson_war = "#{node.cfc.server.opt}/configuration/template/hudson-war"
 
 directory hudson_war do
@@ -5,10 +7,6 @@ directory hudson_war do
   group node.tomcat.group
   recursive true
 end
-
-#cfc_disk node.cfc.server.home #fdisk,etc /dev/sdb & mount
-
-include_recipe "cfc_server"
 
 template "#{node.cfc.server.opt}/etc/hmaster.properties" do
   source "hmaster.properties.erb"
@@ -39,7 +37,6 @@ remote_directory hudson_home do
   owner node.tomcat.user
   group node.tomcat.user
   mode 0755
-  #not_if { File.directory?(hudson_home) }
 end
 
 template "#{hudson_home}/hudson.tasks.Mailer.xml" do

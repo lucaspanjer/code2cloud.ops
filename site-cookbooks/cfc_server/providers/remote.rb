@@ -40,12 +40,6 @@ action :deploy do
       #group node.tomcat.group
       action :nothing
     end
-    
-    location = artifact["location"]
-      execute "cp-#{war}" do
-        command "mv  #{local} #{location}"
-        action :nothing
-      end
 
     remote_file "download-#{war}" do
          path local
@@ -75,9 +69,6 @@ action :deploy do
      
            #postDeploy
            notifies :start, resources(:service => "#{service}"), :delayed  
-         end
-         if artifact["location"]
-           notifies :run, resources(:execute => "cp-#{war}"), :immediately
          end
        end
        
