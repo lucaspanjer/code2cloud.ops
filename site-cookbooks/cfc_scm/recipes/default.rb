@@ -2,20 +2,11 @@
 
 include_recipe "cfc_server"
 
-#find git binary locations
-git = {}
-{ :git_core => ["/usr/local/libexec/git-core", "/usr/lib/git-core"],
-  :git_bin  => ["/usr/local/bin", "/usr/bin"] }.each do |key,paths|
-
-  git[key] = paths.select { |path| File.exists?("#{path}/git") }.first
-end
-
 template "#{node.cfc.server.opt}/etc/scm.properties" do
   source "scm.properties.erb"
   owner node.cfc.user
   group node.tomcat.group
   mode 0660
-  variables git
   notifies :restart, "service[tomcat]"
 end
 
