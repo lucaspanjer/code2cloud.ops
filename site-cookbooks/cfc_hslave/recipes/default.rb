@@ -25,13 +25,11 @@ cookbook_file "#{node.cfc.user_home_prefix}/#{node.cfc.hslave.build_user}/.gitco
   source "gitconfig"
 end
 
-unless platform?("oracle")
-  cookbook_file "/etc/ssh/sshd_config" do
-    owner "root"
-    group "root"
-    mode 0644
-    notifies :restart, "service[ssh]"
-  end
+cookbook_file "/etc/ssh/sshd_config" do
+  owner "root"
+  group "root"
+  mode 0644
+  notifies :restart, "service[ssh]"
 end
 
 m2 = "#{node.cfc.user_home_prefix}/#{node.cfc.hslave.build_user}/.m2"

@@ -19,8 +19,9 @@ default[:cfc][:server][:s3][:access_key_id] = ""
 default[:cfc][:server][:s3][:access_key_secret] = ""
 default[:cfc][:server][:email_log_errors_to_admin] = false
 default[:cfc][:server][:opt_sym_links] = []
-default[:cfc][:server][:jdbc_type] = "mysql"
+default[:cfc][:server][:jdbc_type] = "mysql\\:"
 default[:cfc][:server][:jdbc_port] = "3306"
+default[:cfc][:server][:jdbc_path] = ""
   
 override[:tomcat][:java_options] = "-Xmx2048M -Xss192K -XX:MaxPermSize=512M -Dlog4j.configuration=file://#{node.cfc.server.opt}/etc/log4j.xml"
 

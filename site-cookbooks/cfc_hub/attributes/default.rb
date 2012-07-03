@@ -9,6 +9,7 @@ default[:cfc][:hub][:internal_ssh_port] = 2222
 default[:cfc][:hub][:service_proxy_path] = nil
 default[:cfc][:hub][:remember_me_key] = "XXX"
 default[:cfc][:hub][:has_internal_services] = false
+default[:cfc][:hub][:jdbc_path] = "/profile"
   # FIXME will not work
 if attribute?("cfc.hub.has_internal_services")
   override[:cfc][:tomcat][:instance_name] = "hub-tomcat"
