@@ -1,2 +1,6 @@
 default[:cfc][:service] = "hslave"
 default[:cfc][:hslave][:build_user] = "builder"
+default[:cfc][:hslave][:maven][:url] = "http://mirror.cc.columbia.edu/pub/software/apache/maven/binaries/apache-maven-3.0.4-bin.tar.gz"
+default[:cfc][:hslave][:maven][:package] = "apache-maven-3.0.4-bin.tar.gz"
+default[:cfc][:hslave][:maven][:root_dir] = "/usr/local/apache-maven"
+default[:cfc][:hslave][:maven][:bin] = "/usr/local/apache-maven/apache-maven-3.0.4/bin/mvn"
