@@ -62,3 +62,12 @@ JVM_TMP=<%= node["tomcat"]["tmp_dir"] %>
 # NOTE: authbind works only with IPv4.  Do not enable it when using IPv6.
 # (yes/no, default: no)
 AUTHBIND=<%= node["cfc"]["tomcat"]["authbind"] %>
+<% if node["cfc"]["server"]["http_proxy"] -%>
+HTTP_PROXY=<%= node["cfc"]["server"]["http_proxy"] %>
+http_proxy=<%= node["cfc"]["server"]["http_proxy"] %>
+<%- end %>
+<% if node["cfc"]["server"]["https_proxy"] -%>
+HTTPS_PROXY=<%= node["cfc"]["server"]["https_proxy"] %>
+https_proxy=<%= node["cfc"]["server"]["https_proxy"] %>
+<%- end %>
+

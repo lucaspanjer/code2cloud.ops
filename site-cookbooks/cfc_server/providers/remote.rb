@@ -53,7 +53,7 @@ action :deploy do
    Chef::Log.info("Deploying from [#{remote}] to [#{webapp_dir}/#{war}]")
    
          # FIXME this execute resource is a hack becaue I can't figure out how to notify from outside a resource.
-       execute "Deploy" do
+       execute "Deploy-#{war}" do
          command "echo Deploying #{war}"
          #getDeploymentArtifacts
          notifies :create, resources(:remote_file => "download-#{war}"), :immediately
