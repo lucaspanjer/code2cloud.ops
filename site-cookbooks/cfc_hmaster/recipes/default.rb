@@ -16,6 +16,13 @@ template "#{node.cfc.server.opt}/etc/hmaster.properties" do
   notifies :restart, "service[tomcat]"
 end
 
+template "#{node.cfc.server.opt}/bin/updateHudsonWars.sh" do
+  source "updateHudsonWars.sh.erb"
+  owner node.cfc.user
+  group node.tomcat.group
+  mode 0770
+end
+
 directory node.cfc.hmaster.builds_dir do
   owner node.tomcat.user
   group node.tomcat.group
