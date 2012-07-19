@@ -60,12 +60,6 @@ template "#{hudson_home}/config.xml" do
   mode 0660
 end
 
-cookbook_file "#{node.cfc.server.opt}/bin/updateHudsonWars.sh" do
-  owner node.cfc.user
-  group node.cfc.group
-  mode 0770
-end
-
 cfc_ssh_key "#{node.cfc.user_home}/.ssh/id_rsa"
 build_key_file = "#{node.cfc.server.opt}/etc/builder_id_rsa"
 execute "cp #{node.cfc.user_home}/.ssh/id_rsa #{build_key_file}; chown #{node.tomcat.user}:#{node.tomcat.user} #{build_key_file}" do

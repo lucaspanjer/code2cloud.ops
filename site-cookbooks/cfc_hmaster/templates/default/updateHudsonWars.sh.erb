@@ -37,7 +37,7 @@ do
 
     jar -uf hudson.war WEB-INF/web.xml
     mv hudson.war $WEBAPP
-    chown  tomcat6:tomcat6 $WEBAPP 
+    chown <%= node.cfc.user %>:<%= node.cfc.user %> $WEBAPP 
     rm -rf $TEMP_WAR_LOCATION
 done
 
