@@ -6,6 +6,8 @@ http_proxy=<%= node["cfc"]["server"]["http_proxy"] %>
 HTTPS_PROXY=<%= node["cfc"]["server"]["https_proxy"] %>
 https_proxy=<%= node["cfc"]["server"]["https_proxy"] %>
 <%- end %>
+NO_PROXY=<%= cfc_role_address("profile") %>
+no_proxy=<%= cfc_role_address("profile") %>
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games"
 JAVA_HOME="<%= node.java.java_home %>"
 GRAILS_HOME="<%= node.grails.path %>"
