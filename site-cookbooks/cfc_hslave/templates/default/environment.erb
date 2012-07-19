@@ -1,3 +1,11 @@
+<% if node["cfc"]["server"]["http_proxy"] -%>
+HTTP_PROXY=<%= node["cfc"]["server"]["http_proxy"] %>
+http_proxy=<%= node["cfc"]["server"]["http_proxy"] %>
+<%- end %>
+<% if node["cfc"]["server"]["https_proxy"] -%>
+HTTPS_PROXY=<%= node["cfc"]["server"]["https_proxy"] %>
+https_proxy=<%= node["cfc"]["server"]["https_proxy"] %>
+<%- end %>
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games"
 JAVA_HOME="<%= node.java.java_home %>"
 GRAILS_HOME="<%= node.grails.path %>"
