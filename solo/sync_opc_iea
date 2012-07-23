@@ -1,0 +1,6 @@
+./sync-node.rb slc02usk hub opc-iea
+./sync-node.rb slc03gip filesystem-service opc-iea
+./sync-node.rb slc02usl db-backed-services opc-iea
+./sync-node.rb slc03giq hmaster opc-iea
+
+
