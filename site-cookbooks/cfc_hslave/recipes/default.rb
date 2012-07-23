@@ -52,11 +52,6 @@ template "#{m2}/settings.xml" do
   group node.cfc.hslave.build_user
 end
 
-template "/etc/environment" do
-  source "environment.erb"
-  mode 0644
-end
-
 directory "/opt/c2c" do
   owner node.cfc.hslave.build_user
   group node.cfc.hslave.build_user

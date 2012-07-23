@@ -136,11 +136,16 @@ cookbook_file "/etc/pam.d/common-session" do
 end
 
 
-
 if node.cfc.server.build
   artifacts = node.cfc.server.artifacts
 else
   artifacts = []
 end
+
+template "/etc/environment" do
+  source "environment.erb"
+  mode 0644
+end
+
 
 
