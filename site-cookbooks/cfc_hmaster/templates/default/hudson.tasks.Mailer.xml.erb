@@ -2,7 +2,7 @@
 <hudson.tasks.Mailer_-DescriptorImpl>
   <hudsonUrl><%= node.cfc.hub.protocol %>://${profile.hostname}<%= node.cfc.hub.prefix_path %>/s/${profile.application.identifier}/hudson/</hudsonUrl>
   <adminAddress>Code2Cloud Builder &lt;noreply@tasktop.com&gt;</adminAddress>
-  <useSsl>true</useSsl>
+  <useSsl><%= node.cfc.mail_sender.starttls %></useSsl>
   <charset>UTF-8</charset>
   <smtpHost><%= node.cfc.mail_sender.host %></smtpHost>
   <smtpAuthUsername><%= node.cfc.mail_sender.username %></smtpAuthUsername>
