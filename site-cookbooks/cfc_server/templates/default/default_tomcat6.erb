@@ -70,4 +70,11 @@ http_proxy=<%= node["cfc"]["server"]["http_proxy"] %>
 HTTPS_PROXY=<%= node["cfc"]["server"]["https_proxy"] %>
 https_proxy=<%= node["cfc"]["server"]["https_proxy"] %>
 <%- end %>
+<% if node["cfc"]["server"]["no_proxy_prefix"] -%>
+NO_PROXY=<%= node["cfc"]["server"]["no_proxy_prefix"] %><%= cfc_role_address("profile") %>,<%= cfc_role_address("profile") %>
+no_proxy=<%= node["cfc"]["server"]["no_proxy_prefix"] %><%= cfc_role_address("profile") %>,<%= cfc_role_address("profile") %>
+<%- else %>
+NO_PROXY=<%= cfc_role_address("profile") %>
+no_proxy=<%= cfc_role_address("profile") %>
+<%- end %>
 
