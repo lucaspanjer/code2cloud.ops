@@ -19,5 +19,3 @@ gem install chef --no-ri --no-rdoc
 mkdir -p /opt/code2cloud/chef/roles
 mkdir -p /opt/code2cloud/chef/cookbooks
 chown -R vcloud /opt/code2cloud
-
-
