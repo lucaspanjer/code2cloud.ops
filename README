@@ -11,8 +11,8 @@ Knife configuration
 -------------------
 
  % git clone https://github.com/opscode/cookbooks.git opscode-cookbooks
- % git clone ssh://q.tasktop.com:2222/code2cloud/code2cloud.chef.git
- % cd code2cloud.chef
+ % git clone ssh://q.tasktop.com:2222/c2c/code2cloud.ops.git
+ % cd code2cloud.ops
  % ln -s .chef ~/.chef
 
 The knife config file lives in .chef/knife.rb and meant to be run from your desktop, see comments within.  Upload cookbooks and roles to the server:
