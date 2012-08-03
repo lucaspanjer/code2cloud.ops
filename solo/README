@@ -27,8 +27,9 @@ I needed to manually run the following to fix SSH key permissions (should be fix
 sudo chown vcloud:tomcat6 etc/ssh-key.pem*
 sudo chmod g+r etc/ssh-key.pem*
 
+h2. Hudson Slaves.
 set vcloud user's key as authorized for builder user.
-copy /home/vcloud/.ssh/id_rsa.pub on the main to /etc/ssh/builder/authorized_keys on the build machine
+copy /home/vcloud/.ssh/id_rsa.pub on the profile and hudson master VMs to /etc/ssh/builder/authorized_keys for the builder user (slave) VM.
 
 setup logs permissions:
 sudo chmod g+rx /var/log/tomcat6/
