@@ -1,14 +1,14 @@
-<% if node["cfc"]["server"]["http_proxy"] -%>
-HTTP_PROXY=<%= node["cfc"]["server"]["http_proxy"] %>
-http_proxy=<%= node["cfc"]["server"]["http_proxy"] %>
+<% if node["cfc"]["proxy_environment"]["http_proxy"] -%>
+HTTP_PROXY=<%= node["cfc"]["proxy_environment"]["http_proxy"] %>
+http_proxy=<%= node["cfc"]["proxy_environment"]["http_proxy"] %>
 <%- end %>
-<% if node["cfc"]["server"]["https_proxy"] -%>
-HTTPS_PROXY=<%= node["cfc"]["server"]["https_proxy"] %>
-https_proxy=<%= node["cfc"]["server"]["https_proxy"] %>
+<% if node["cfc"]["proxy_environment"]["https_proxy"] -%>
+HTTPS_PROXY=<%= node["cfc"]["proxy_environment"]["https_proxy"] %>
+https_proxy=<%= node["cfc"]["proxy_environment"]["https_proxy"] %>
 <%- end %>
-<% if node["cfc"]["server"]["no_proxy_prefix"] -%>
-NO_PROXY=<%= node["cfc"]["server"]["no_proxy_prefix"] %><%= cfc_role_address("profile") %>,<%= cfc_role_address("profile") %>
-no_proxy=<%= node["cfc"]["server"]["no_proxy_prefix"] %><%= cfc_role_address("profile") %>,<%= cfc_role_address("profile") %>
+<% if node["cfc"]["proxy_environment"]["no_proxy_prefix"] -%>
+NO_PROXY=<%= node["cfc"]["proxy_environment"]["no_proxy_prefix"] %><%= cfc_role_address("profile") %>,<%= cfc_role_address("profile") %>
+no_proxy=<%= node["cfc"]["proxy_environment"]["no_proxy_prefix"] %><%= cfc_role_address("profile") %>,<%= cfc_role_address("profile") %>
 <%- else %>
 NO_PROXY=<%= cfc_role_address("profile") %>
 no_proxy=<%= cfc_role_address("profile") %>
