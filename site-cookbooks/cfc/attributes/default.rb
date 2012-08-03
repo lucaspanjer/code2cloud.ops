@@ -15,3 +15,7 @@ default[:cfc][:mail_sender][:starttls] = "true"
 default[:cfc][:mail_sender][:from] = "\"Code2Cloud Team\" <noreply@tasktop.com>"
 default[:cfc][:artifacts][:base_url] = "https://q.tasktop.com/alm/s/c2c"
 default[:cfc][:hudson_url] = "#{node.cfc.artifacts.base_url}/hudson"
+
+default[:cfc][:http_proxy] = false
+default[:cfc][:https_proxy] = false
+default[:cfc][:no_proxy_prefix] = false

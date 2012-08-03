@@ -1,5 +1,5 @@
 name "cfc-base"
-run_list "role[cfc-env]", "cfc_java", "cfc::authorized_keys" 
+run_list "role[cfc-env]", "cfc_java", "cfc::authorized_keys", "cfc::proxy_environment" 
 
 override_attributes \
 :java => {
