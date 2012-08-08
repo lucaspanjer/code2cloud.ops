@@ -3,6 +3,7 @@ include_recipe "openssh"
 #include_recipe "maven"
 include_recipe "etchosts::default"
 
+package "ant"
 
 cfc_user node.cfc.hslave.build_user
 
