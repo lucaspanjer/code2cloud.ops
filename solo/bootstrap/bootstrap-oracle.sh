@@ -15,7 +15,7 @@ cd rubygems-1.8.10
 ruby setup.rb --no-format-executable
 gem install chef --no-ri --no-rdoc
 
-/usr/sbin/useradd vcloud -d /scratch/vcloud
+/usr/sbin/useradd vcloud -d /home/vcloud
 mkdir -p /opt/code2cloud/chef/roles
 mkdir -p /opt/code2cloud/chef/cookbooks
 chown -R vcloud /opt/code2cloud
