@@ -5,9 +5,6 @@ use strict;
 my $hostname = `hostname`;
 chop $hostname;
 my $environment = '<%= cfc_role_address("profile") %>';
-my $remote_user = 'cmorgan';
-my $remote_server = 'dev.tasktop.com';
-my $remote_port = '2222';
 my $backup_dir = '<%= node.cfc.server.home %>/backup/dbs';
 my $archive_dir = '<%= node.cfc.server.home %>/backup/archive';
 my $encrypt_key = 'Code2Cloud';
@@ -35,10 +32,6 @@ foreach my $db (@db_names) {
     `mysqldump -u root -p$mysql_root_pwd $db > $backup_dir/$db.backup.sql`;
 }
 
-# Make sure there are no empty files on remote (avoids https://q.tasktop.com/alm/#projects/c2c/task/4124)
-print `ssh -p $remote_port $remote_user\@$remote_server 'find /home/backup/$environment/$hostname/dbs -size 0 -exec rm {} \\;'`;
-print "Sending backups to $remote_server\n";
-print `$pass_export duplicity --name dev-dbs --archive-dir $archive_dir --encrypt-key $encrypt_key $backup_dir/  scp://$remote_user\@$remote_server:$remote_port//home/backup/$environment/$hostname/dbs`;
 
 print "Sending backups to s3 \n";
 print `$pass_export $s3_export duplicity --name s3-dbs --archive-dir $archive_dir --encrypt-key $encrypt_key $backup_dir  s3+http://code2cloud.backups/$environment/$hostname/dbs`;
