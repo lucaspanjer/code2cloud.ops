@@ -1,6 +1,6 @@
 default[:cfc][:backup_mount] = "/home/backup"
 default[:cfc][:backup_device] = nil
-default[:cfc][:authorized_keys] = ["vcloud"]
+default[:cfc][:authorized_keys] = [{:name => "vcloud", :keys => []}]
 
 default[:cfc][:admin_mail_sender][:host] = "smtp.gmail.com"
 default[:cfc][:admin_mail_sender][:username] = "test@tasktop.com"

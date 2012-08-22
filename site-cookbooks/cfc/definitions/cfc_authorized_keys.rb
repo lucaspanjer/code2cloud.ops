@@ -1,8 +1,8 @@
 require 'etc'
 
-define :cfc_authorized_keys, :cookbook => nil, :dir => nil, :keys => nil do
+define :cfc_authorized_keys, :dir => nil do
 
-  name = params[:name]
+  name = params[:username]
   dir = params[:dir] || node[:cfc][:authorized_keys_dir]
 
   if dir
@@ -23,15 +23,6 @@ define :cfc_authorized_keys, :cookbook => nil, :dir => nil, :keys => nil do
       owner name
       mode 0600
       content params[:keys].join("\n")
-    end
-  else
-    cookbook_file "#{dotssh}/authorized_keys" do
-      action :create
-      owner name
-      mode 0600
-      source "authorized_keys.#{name}"
-      backup false
-      cookbook params[:cookbook]
     end
   end
 end
