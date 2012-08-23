@@ -30,18 +30,32 @@ template "#{node.cfc.tomcat.instance_base}/conf/server.xml" do
   #notifies :restart, resources(:service => "tomcat")
 end
 
-template "#{node.cfc.tomcat.instance_base}/default" do
-  source "default_tomcat6.erb"
-  owner node.tomcat.user
-  group node.tomcat.group
-  mode "0644"
-  #notifies :restart, resources(:service => "tomcat")
-end
-
-template "/etc/init.d/#{node.cfc.tomcat.instance_name}" do
-  source "service.erb"
-  mode "0755"
-  #notifies :restart, "service[#{node.cfc.tomcat.instance_name}]"
+if  (platform?("oracleserver", "oracle"))
+  template "/etc/init.d/#{node.cfc.tomcat.instance_name}" do
+        source "service.oracle.erb"
+        mode "0755"
+      end 
+      
+  template "#{node.cfc.tomcat.instance_base}/conf/tomcat6.conf" do
+    source "default_tomcat6.erb"
+    owner node.tomcat.user
+    group node.tomcat.group
+    mode "0644"
+    #notifies :restart, resources(:service => "tomcat")
+  end
+else
+  template "/etc/init.d/#{node.cfc.tomcat.instance_name}" do
+      source "service.erb"
+      mode "0755"
+    end 
+    
+  template "#{node.cfc.tomcat.instance_base}/default" do
+    source "default_tomcat6.erb"
+    owner node.tomcat.user
+    group node.tomcat.group
+    mode "0644"
+    #notifies :restart, resources(:service => "tomcat")
+  end
 end
 
 service node.cfc.tomcat.instance_name do
