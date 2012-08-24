@@ -1,4 +1,4 @@
-cfc_user node.cfc.dmz.user
+#cfc_user node.cfc.dmz.user
 
 include_recipe "apache2"
 
@@ -8,10 +8,33 @@ file "#{node.apache.dir}/mods-available/proxy.conf" do
 end
 
 modules = %w(alias auth_basic authn_file authz_default authz_groupfile authz_host authz_user autoindex
-             cgid deflate dir env mime negotiation proxy_http proxy reqtimeout rewrite setenvif status ssl)
+             cgid deflate dir env mime negotiation proxy_http proxy reqtimeout rewrite setenvif status)
 
 modules.each do |name|
   apache_module name
+end
+
+if node.cfc.dmz.ssl
+  if platform?("oracle")
+    include_recipe "apache2::mod_ssl"
+  end
+  
+  apache_module "ssl"
+  
+  template "#{node.apache.dir}/certs/go_daddy_bundle.crt" do
+    source "go_daddy_bundle.crt.erb"
+    notifies :restart, "service[apache2]"
+  end
+  
+  template "#{node.apache.dir}/certs/wildcard.tasktop.com.crt" do
+    source "wildcard.tasktop.com.crt.erb"
+    notifies :restart, "service[apache2]"
+  end
+  
+  template "#{node.apache.dir}/certs/wildcard.tasktop.com.key" do
+    source "wildcard.tasktop.com.key.erb"
+    notifies :restart, "service[apache2]"
+  end
 end
 
 cookbook_file "#{node.apache.dir}/conf.d/cfc_dmz.conf" do
@@ -25,21 +48,6 @@ directory "#{node.apache.dir}/certs" do
   recursive true
 end
 
-template "#{node.apache.dir}/certs/go_daddy_bundle.crt" do
-  source "go_daddy_bundle.crt.erb"
-  notifies :restart, "service[apache2]"
-end
-
-template "#{node.apache.dir}/certs/wildcard.tasktop.com.crt" do
-  source "wildcard.tasktop.com.crt.erb"
-  notifies :restart, "service[apache2]"
-end
-
-template "#{node.apache.dir}/certs/wildcard.tasktop.com.key" do
-  source "wildcard.tasktop.com.key.erb"
-  notifies :restart, "service[apache2]"
-end
-
 #disable the default site
 apache_site "000-default" do
   enable false
@@ -51,7 +59,7 @@ end
   template "#{node.apache.dir}/sites-available/#{site}" do
     source "site-#{mode}.erb"
     mode 0644
-    variables :prefix => node.cfc[:hub] ? node.cfc.hub.prefix_path : "/"
+    variables :prefix => node.cfc[:hub] ? (node.cfc.hub.prefix_path+"/") : "/"
   end
 
   apache_site site do

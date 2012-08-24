@@ -23,10 +23,14 @@ ProxyRequests Off
         ProxyPass <%= @prefix %> http://<%= cfc_role_address("hub") %>:8081<%= @prefix %>
         ProxyPassReverse <%= @prefix %> http://<%= cfc_role_address("hub") %>:8081<%= @prefix %>
 
+		<% if node.cfc.dmz.ssl %>
+
         RedirectMatch "^/$" https://<%= node.cfc.dmz.servername %><%= @prefix %>
         <% if @prefix != "/" %>
         RedirectMatch "^<%= @prefix %>$" https://<%= node.cfc.dmz.servername %><%= @prefix %>
         RedirectMatch "^<%= @prefix %>/$" https://<%= node.cfc.dmz.servername %><%= @prefix %>
+        <% end %>
+        
         <% end %>
 
         # Disabled, because it was over-broad and causing application issues
@@ -34,6 +38,8 @@ ProxyRequests Off
         ErrorDocument 404 /404.html
         ErrorDocument 500 /500.html
 </VirtualHost>
+
+<% if node.cfc.dmz.ssl %>
 <VirtualHost *:443>
         ServerName <%= node.cfc.dmz.servername %>
         ServerAdmin webmaster@tasktop.com
@@ -74,3 +80,4 @@ ProxyRequests Off
         ErrorDocument 404 /404.html
         ErrorDocument 500 /500.html
 </VirtualHost>
+<% end %>
