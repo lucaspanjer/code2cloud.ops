@@ -36,6 +36,7 @@
   <!-- JMX Support for the Tomcat server. Documentation at /docs/non-existent.html -->
   <Listener className="org.apache.catalina.mbeans.ServerLifecycleListener" />
   <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
+  <%= node["cfc"]["server"]["tomcat"]["jmx_config"] %>
 
   <!-- Global JNDI resources
        Documentation at /docs/jndi-resources-howto.html

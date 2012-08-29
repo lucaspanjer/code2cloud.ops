@@ -25,3 +25,7 @@ default[:cfc][:server][:jdbc_path] = ""
   
 override[:tomcat][:java_options] = "-Xmx2048M -Xss192K -XX:MaxPermSize=512M -Dlog4j.configuration=file://#{node.cfc.server.opt}/etc/log4j.xml"
 
+default[:cfc][:server][:tomcat][:jmx_config] = ""
+default[:cfc][:server][:tomcat][:catalina][:jmx_remote] = ""
+default[:cfc][:server][:tomcat][:catalina][:jmx_remote_authenticate] = ""
+default[:cfc][:server][:tomcat][:catalina][:jmx_remote_ssl] = "" 

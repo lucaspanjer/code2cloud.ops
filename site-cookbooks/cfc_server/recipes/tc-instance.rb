@@ -22,6 +22,14 @@ execute "copy config" do
   group node.tomcat.group
 end
 
+template "#{node.cfc.tomcat.instance_base}/conf/catalina.properties" do
+  source "catalina.properties.erb"
+  owner node.tomcat.user
+  group node.tomcat.group
+  mode "0644"
+  #notifies :restart, resources(:service => "tomcat")
+end
+
 template "#{node.cfc.tomcat.instance_base}/conf/server.xml" do
   source "server.xml.erb"
   owner node.tomcat.user
