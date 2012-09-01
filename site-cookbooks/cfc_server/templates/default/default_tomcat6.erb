@@ -27,6 +27,9 @@ CATALINA_HOME=<%= node["tomcat"]["home"] %>
 # Default: /var/lib/tomcat6
 CATALINA_BASE=<%= node["cfc"]["tomcat"]["instance_base"] %>
 
+# C2C added, only needed for Oracle/redhad with two tomcats
+CATALINA_PID=/var/run/<%= node["cfc"]["tomcat"]["instance_name"] %>.pid
+
 # You may pass JVM startup parameters to Java here. If unset, the default
 # options (-Djava.awt.headless=true -Xmx128m) will be used.
 JAVA_OPTS="<%= node["tomcat"]["java_options"] %>"

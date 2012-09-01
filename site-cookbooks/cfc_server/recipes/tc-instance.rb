@@ -44,6 +44,11 @@ if  (platform?("oracleserver", "oracle"))
         mode "0755"
       end 
       
+  template "/etc/init.d/tomcat6" do
+          source "tomcat6.service.oracle.erb"
+          mode "0755"
+        end
+      
   template "#{node.cfc.tomcat.instance_base}/conf/tomcat6.conf" do
     source "default_tomcat6.erb"
     owner node.tomcat.user
