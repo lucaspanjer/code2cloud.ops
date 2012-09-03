@@ -27,3 +27,7 @@ github.consumerSecret=<%= node.cfc.github.consumer_secret %>
 
 github.textEncryptor.password=ThisIsMyGiantPassword.ItDoesntMakeSenseButThisIsIt
 github.textEncryptor.salt=CAFEBABE00DEADBEEF00214748364700FACE0FFEE7
+
+<% for prop in node.cfc.hub.additional_properties %>
+<%= prop %>
+<% end %>

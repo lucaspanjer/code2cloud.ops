@@ -64,6 +64,8 @@ TOMCAT_USER="${TOMCAT_USER:-tomcat}"
 # Define the tomcat log file
 TOMCAT_LOG="${TOMCAT_LOG:-/var/log/tomcat6/${NAME}-initd.log}"
 
+SHUTDOWN_WAIT="${SHUTDOWN_WAIT:120}"
+
 RETVAL="0"
 
 function parseOptions() {
