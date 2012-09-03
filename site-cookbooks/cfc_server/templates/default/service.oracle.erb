@@ -49,12 +49,6 @@ if [ -r "$TOMCAT_CFG" ]; then
     . $TOMCAT_CFG
 fi
 
-DEFAULT=<%= node["cfc"]["tomcat"]["instance_base"] %>/default
-# overwrite settings from default file
-if [ -f "$DEFAULT" ]; then
-	. "$DEFAULT"
-fi
-
 # Define which connector port to use
 CONNECTOR_PORT="${CONNECTOR_PORT:-8080}"
 
@@ -195,32 +189,11 @@ function status()
    elif [ "$RETVAL" -eq "1" ]; then
       log_failure_msg "PID file exists, but process is not running"
    else 
-      checklockfile
-      if [ "$RETVAL" -eq "2" ]; then
-         log_failure_msg "${NAME} lockfile exists but process is not running"
-      else
-         pid="$(/usr/bin/pgrep -d , -u ${TOMCAT_USER} -G ${TOMCAT_USER} java)"
-         if [ -z "$pid" ]; then
              log_success_msg "${NAME} is stopped"
              RETVAL="3"
-         else
-             log_success_msg "${NAME} (pid $pid) is running..."
-             RETVAL="0"
-         fi
-      fi
   fi
 }
 
-function checklockfile()
-{
-   if [ -f /var/lock/subsys/${NAME} ]; then
-      pid="$(/usr/bin/pgrep -d , -u ${TOMCAT_USER} -G ${TOMCAT_USER} java)"
-# The lockfile exists but the process is not running
-      if [ -z "$pid" ]; then
-         RETVAL="2"
-      fi
-   fi
-}
 
 function checkpidfile()
 {
@@ -229,6 +202,7 @@ function checkpidfile()
       if [ -d "/proc/${kpid}" ]; then
 # The pid file exists and the process is running
           RETVAL="0"
+          return
       else
 # The pid file exists but the process is not running
          RETVAL="1"
