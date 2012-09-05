@@ -1,0 +1,5 @@
+default[:ant][:url] = "http://apache.parentingamerica.com/ant/binaries/apache-ant-1.8.4-bin.tar.gz"
+default[:ant][:install_dir] = "apache-ant-1.8.4"
+default[:ant][:package] = "apache-ant-1.8.4-bin.tar.gz"
+default[:ant][:root_dir] = "/usr/local/ant"
+default[:ant][:bin] = "/usr/local/bin/ant"
