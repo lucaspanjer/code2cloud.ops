@@ -6,6 +6,7 @@ default[:cfc][:server][:version] = "0.1.0-SNAPSHOT"
 default[:cfc][:server][:root_dir] = "com.tasktop.c2c.server"
 default[:cfc][:server][:root_package] = "com.tasktop.c2c.server"
 default[:cfc][:server][:artifacts] = []
+default[:cfc][:server][:deploy] = false
 default[:cfc][:artifacts][:base_url] = "fixme"
 default[:cfc][:user] = "vcloud"
 default[:cfc][:group] = "vcloud"
