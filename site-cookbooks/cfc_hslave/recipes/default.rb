@@ -63,6 +63,7 @@ remote_file "/opt/c2c/slave.jar" do
   group node.cfc.hslave.build_user
   mode 0644
   backup false
+  action :create_if_missing
 end
 
 # Maven (TODO, move to opscode cookbooks maven package for oracle platform?)
