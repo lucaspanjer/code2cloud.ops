@@ -38,6 +38,8 @@ action :deploy do
       if location
         cookbook_file location do
           source source
+          user node.tomcat.user
+          group node.tomcat.group
           action :nothing
         end
       end
