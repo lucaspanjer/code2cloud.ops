@@ -1,3 +1,6 @@
+
+node.override[:tomcat][:java_options] = node[:cfc][:hudson][:tomcat][:jvm_options] + " -Dlog4j.configuration=file://#{node.cfc.server.opt}/etc/log4j.xml"
+  
 include_recipe "cfc_server"
 
 hudson_war = "#{node.cfc.server.opt}/configuration/template/hudson-war"
