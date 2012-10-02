@@ -6,21 +6,6 @@ include_recipe "etchosts::default"
 
 cfc_user node.cfc.hslave.build_user
 
-## FIXME this does not work with chef solo (the search)
-#add hmaster and hub to authorized_keys
-#pubkeys = []
-#search(:node, "role:cfc-hmaster OR role:cfc-hub").each do |host|
-#  next unless host[:cfc][:ssh_pubkey]
-#  if key = host[:cfc][:ssh_pubkey]["/home/vcloud/.ssh/id_rsa"]
-#    pubkeys << key
-#  end
-#end
-#
-#cfc_authorized_keys "builder" do
-#  keys pubkeys
-#  dir "/etc/ssh"
-#end
-
 package "git"
 
 cookbook_file "#{node.cfc.user_home_prefix}/#{node.cfc.hslave.build_user}/.gitconfig" do
@@ -31,7 +16,7 @@ cookbook_file "/etc/ssh/sshd_config" do
   owner "root"
   group "root"
   mode 0644
-  notifies :restart, "service[ssh]"
+  notifies :restart, resources(:service => "ssh")
 end
 
 m2 = "#{node.cfc.user_home_prefix}/#{node.cfc.hslave.build_user}/.m2"
