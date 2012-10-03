@@ -2,7 +2,7 @@
 
 require 'rubygems'
 
-usage ="build-deployment <roles-filename> <env-filename> <output-filename> \n"
+usage ="build-deployment <runlist-filename> <env-filename> <output-filename> \n"
 
 if ARGV.length != 3 
   print usage;
@@ -15,11 +15,16 @@ opscode_cookbooks_dir="#{top_dir}/../opscode-cookbooks"
 cookbooks="apt apache2 chef-server emacs git java mysql openssh postfix ssh_known_hosts sudo tomcat jpackage maven ntp openssl"
 
 env=ARGV[1]
-node_role = ARGV[0]
+node_runlist = ARGV[0]
 output_file = ARGV[2]
 
 if !File.exists?(env)
   print "#{env} environment does not exist"
+  exit (1)
+end
+
+if !File.exists?(node_runlist)
+  print "#{node_runlist} runlist does not exist"
   exit (1)
 end
 
@@ -44,5 +49,5 @@ FileUtils.cp_r(Dir.glob("#{top_dir}/site-cookbooks/*"), "#{output_file}/cookbook
 for file in ["chef-solo.sh", "solo.rb"]
   FileUtils.cp("#{top_dir}/solo/#{file}", "#{output_file}")
 end
-FileUtils.cp("#{top_dir}/solo/node-roles/#{node_role}.json", "#{output_file}/roles.json")
+FileUtils.cp(node_runlist, "#{output_file}/roles.json")
 
