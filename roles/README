@@ -1,7 +1,0 @@
-Example to bootstrap a new VM with chef-client and run list:
-
- 
-
-Where 'cfc-base' would be one of the roles defined in this directory.
-
-Note that we currently are using the Chef DSL to create roles, we could use pure JSON instead.  And the .json roles could be generated.
