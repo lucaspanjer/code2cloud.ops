@@ -45,6 +45,6 @@ cert_file="#{cert_dir}/self.crt"
 key_file="#{cert_dir}/self.key"
 unless File.exists?(cert_file)
   execute "create self-signed cert" do
-    command "openssl req -new -x509 -nodes -out #{cert_file} -keyout #{key_file} -subj '/C=US/ST=California/L=San Francisco/CN=*'"
+    command "openssl req -new -x509 -nodes -days 3000 -out #{cert_file} -keyout #{key_file} -subj '/C=US/ST=California/L=San Francisco/CN=*'"
   end
 end
