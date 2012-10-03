@@ -44,7 +44,7 @@ for cookbook in cookbooks.split(" ")
   FileUtils.cp_r("#{opscode_cookbooks_dir}/#{cookbook}", "#{output_file}/cookbooks")
 end
 # All our cookbooks
-FileUtils.cp_r(Dir.glob("#{top_dir}/site-cookbooks/*"), "#{output_file}/cookbooks")
+FileUtils.cp_r(Dir.glob("#{top_dir}/cookbooks/*"), "#{output_file}/cookbooks")
 
 for file in ["chef-solo.sh", "solo.rb"]
   FileUtils.cp("#{top_dir}/solo/#{file}", "#{output_file}")
