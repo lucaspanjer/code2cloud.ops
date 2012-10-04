@@ -14,6 +14,6 @@ keystore = "#{node.java.java_home}/lib/security/jssecacerts"
 
 # This will create the keystore if needed, and import our cert into it
 execute "add cert to keystore" do
-  command "/usr/java/jdk1.6.0_35/jre/bin/keytool -importcert -file #{pemFile} -keystore #{keystore} -storepass changeit <<EOF\nyes\nEOF"
+  command "#{node.java.java_home}/bin/keytool -importcert -file #{pemFile} -keystore #{keystore} -storepass changeit <<EOF\nyes\nEOF"
   returns [0,1]
 end
