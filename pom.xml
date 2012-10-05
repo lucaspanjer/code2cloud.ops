@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.tasktop.c2c</groupId>
+	<artifactId>c2c-ops</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<chef.env>local</chef.env>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.opscode</groupId>
+			<artifactId>opscode-cookbooks</artifactId>
+			<version>0.10.0-c2c-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin> <!-- First extract the base chef stuff and let assemblies build on them -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<id>unpack-wrapper</id>
+						<phase>package</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/</outputDirectory>
+							<artifactItems>
+								<artifactItem>
+									<groupId>com.opscode</groupId>
+									<artifactId>opscode-cookbooks</artifactId>
+									<version>0.10.0-c2c-SNAPSHOT</version>
+									<classifier>base</classifier>
+									<type>tar.gz</type>
+									<outputDirectory />
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/base.xml</descriptor> <!-- Used by depended projects -->
+						<descriptor>src/main/assembly/hmaster.xml</descriptor>
+						<descriptor>src/main/assembly/hslave.xml</descriptor>
+						<descriptor>src/main/assembly/hub.xml</descriptor>
+						<descriptor>src/main/assembly/scm.xml</descriptor>
+						<descriptor>src/main/assembly/taskAndWiki.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>

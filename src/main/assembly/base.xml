@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+
+	<id>base</id>
+
+	<formats>
+		<format>tar.gz</format>
+	</formats>
+
+	<files>
+		<file>
+			<source>${basedir}/src/main/chef/solo/chef-solo.sh</source>
+			<fileMode>0771</fileMode>			
+		</file>
+	</files>
+	<includeBaseDirectory>true</includeBaseDirectory>
+	<baseDirectory>chef</baseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>${basedir}/src/main/chef/cookbooks</directory>
+			<outputDirectory>cookbooks</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>${basedir}/src/main/chef/roles</directory>
+			<outputDirectory>roles</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>${basedir}/src/main/chef/environments/${chef.env}</directory>
+			<includes>
+				<include>cfc-env.rb</include>
+			</includes>
+			<outputDirectory>roles</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>${basedir}/src/main/chef/solo</directory>
+			<includes>
+				<include>solo.rb</include>
+			</includes>
+			<outputDirectory>/</outputDirectory>
+		</fileSet>
+		<fileSet> <!-- Get the base files. This must be last because it will *not* overwrite -->
+			<directory>${project.build.directory}/opscode-cookbooks</directory>
+			<outputDirectory>cookbooks</outputDirectory>
+		</fileSet>
+					
+	</fileSets>
+
+</assembly>
