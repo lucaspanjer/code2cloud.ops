@@ -9,6 +9,7 @@
 
 	<properties>
 		<chef.env>local</chef.env>
+		<assembly>base</assembly>
 	</properties>
 	
 	<dependencies>
@@ -55,12 +56,7 @@
 				<version>2.3</version>
 				<configuration>
 					<descriptors>
-						<descriptor>src/main/assembly/base.xml</descriptor> <!-- Used by depended projects -->
-						<descriptor>src/main/assembly/hmaster.xml</descriptor>
-						<descriptor>src/main/assembly/hslave.xml</descriptor>
-						<descriptor>src/main/assembly/hub.xml</descriptor>
-						<descriptor>src/main/assembly/scm.xml</descriptor>
-						<descriptor>src/main/assembly/taskAndWiki.xml</descriptor>
+						<descriptor>src/main/assembly/${assembly}.xml</descriptor> 
 					</descriptors>
 				</configuration>
 				<executions>
