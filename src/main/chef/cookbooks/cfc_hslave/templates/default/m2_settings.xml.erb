@@ -3,6 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
  <localRepository>/home/c2c/m2/repository</localRepository>
+ <% if  node.cfc.nexus.enable -%>
  <profiles>
     <profile>
       <id>nexus</id>
@@ -30,4 +31,5 @@
     <!--make the profile active all the time -->
     <activeProfile>nexus</activeProfile>
   </activeProfiles>
-</settings>
+<% end -%>
+ </settings>
