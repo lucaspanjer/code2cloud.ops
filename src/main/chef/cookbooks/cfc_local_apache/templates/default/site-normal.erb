@@ -3,8 +3,8 @@ ProxyRequests Off
 <VirtualHost *:80>
         ServerName localhost
         ServerAdmin root@localhost
-        ProxyPass <%= @prefix %> http://127.0.0.1:8080<%= @prefix %>
-        ProxyPassReverse <%= @prefix %> http://127.0.0.1:8080<%= @prefix %>
+        ProxyPass <%= @prefix %> http://127.0.0.1:<%= @port %><%= @prefix %>
+        ProxyPassReverse <%= @prefix %> http://127.0.0.1:<%= @port %><%= @prefix %>
 </VirtualHost>
 <VirtualHost *:443>
         ServerName localhost
@@ -15,6 +15,6 @@ ProxyRequests Off
         SSLCertificateKeyFile /etc/httpd/certs/self.key
         #SSLCertificateChainFile /etc/httpd/certs/go_daddy_bundle.crt
 
-        ProxyPass <%= @prefix %> http://127.0.0.1:8080<%= @prefix %>
-        ProxyPassReverse <%= @prefix %> http://127.0.0.1:8080<%= @prefix %>
+        ProxyPass <%= @prefix %> http://127.0.0.1:<%= @port %><%= @prefix %>
+        ProxyPassReverse <%= @prefix %> http://127.0.0.1:<%= @port %><%= @prefix %>
 </VirtualHost>

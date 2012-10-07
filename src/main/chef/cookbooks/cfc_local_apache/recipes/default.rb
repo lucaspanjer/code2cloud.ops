@@ -25,7 +25,8 @@ site = "site-normal"
 template "#{node.apache.dir}/sites-available/#{site}" do
   source "site-normal.erb"
   mode 0644
-  variables :prefix => node.cfc[:hub] ? (node.cfc.hub.prefix_path+"/") : "/"
+  variables :prefix => (node.cfc[:hub] ? (node.cfc.hub.prefix_path+"/") : "/"), 
+    :port => node.cfc.hub.has_internal_services ? "8081" : "8080"
 end
 
 apache_site site do
