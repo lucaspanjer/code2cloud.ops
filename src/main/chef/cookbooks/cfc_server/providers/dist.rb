@@ -1,7 +1,6 @@
-#FIXME this does deployment regardless.
 action :deploy do
   if !node.cfc.server.deploy
-    Chef::Log.warn("No build selected. Not deploying artifacts.")
+    Chef::Log.warn("Skipping deploying artifacts")
   else
     new_resource.artifacts.each do |artifact|
       root_package = "com.tasktop.c2c.server"
@@ -13,13 +12,21 @@ action :deploy do
       end
       war << ".war"
 
-      source = war
-
+      source = "/opt/code2cloud/chef/"+war
+      
+      if !::File.exist? source
+        Chef::Log.warn("#{source} not found, skipping deploy")
+        next
+      end
+      
       war = "#{artifact["name"]}.war"
       webapp_dir = artifact["webapp_dir"] || "#{node.tomcat.webapp_dir}"
       webapp = artifact["location"] || "#{webapp_dir}/#{war}"
       service = artifact["service"] || "tomcat"
 
+      # TODO : reorg to get combine local/war deploy, cp not move, check md5 between source and dest 
+      # 
+        
       directory "exploded-#{war}" do
         path "#{webapp_dir}/#{artifact["name"]}"
         recursive true
@@ -27,25 +34,22 @@ action :deploy do
       end
 
       destWar = "#{webapp_dir}/#{war}"
-      cookbook_file destWar do
-        source source
-        user node.tomcat.user
-        group node.tomcat.group
+
+      execute "mv to #{destWar}" do
+        command "mv #{source} #{destWar} && chown #{node.tomcat.user}:#{node.tomcat.user} #{destWar}"
         action :nothing
       end
 
       location = artifact["location"]
       if location
-        cookbook_file location do
-          source source
-          user node.tomcat.user
-          group node.tomcat.group
+        execute location do
+          command "mv #{source} #{location} && chown #{node.tomcat.user}:#{node.tomcat.user} #{location}"
           action :nothing
         end
       end
 
-      # FIXME this execute resource is a hack becaue I can't figure out how to notify from outside a resource.
-      execute "Deploy" do
+      # NOTE this execute resource is used to notify other resources inside.
+      execute "Deploy #{war}" do
         command "echo Deploying #{war}"
         #getDeploymentArtifacts (nothing to do)
 
@@ -55,13 +59,13 @@ action :deploy do
 
           #doDeploy
           notifies :delete, resources(:directory => "exploded-#{war}"), :immediately
-          notifies :create, resources(:cookbook_file => destWar), :immediately
+          notifies :run, resources(:execute => "mv to #{destWar}"), :immediately
 
           #postDeploy
           notifies :start, resources(:service => "#{service}"), :delayed
         end
         if artifact["location"]
-          notifies :create, resources(:cookbook_file => location), :immediately
+          notifies :run, resources(:execute => location), :immediately
         end
       end
     end

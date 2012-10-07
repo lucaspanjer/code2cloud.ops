@@ -74,8 +74,8 @@ package "zip"
 
 cfc_server_deployment "hmaster" do 
   artifacts [ { "name" => "hudson-config",  "package" => "hudson.configuration.web" },
-  { "name" => "hudson",  "package" => "hudson.web", "war" => "hudson",
-    "versioned" => false, "location" => "#{hudson_war}/hudson.war" } ]
+  { "name" => "hudson-war",  "package" => "hudson.web", "war" => "hudson-war",
+    "location" => "#{hudson_war}/hudson.war" } ]
   action :deploy
   provider "cfc_server_#{node.cfc.server.deploy_type}"
 end 
