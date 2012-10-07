@@ -13,60 +13,60 @@ action :deploy do
       war << ".war"
 
       source = "/opt/code2cloud/chef/"+war
-      
+
       if !::File.exist? source
         Chef::Log.warn("#{source} not found, skipping deploy")
         next
       end
-      
+
       war = "#{artifact["name"]}.war"
       webapp_dir = artifact["webapp_dir"] || "#{node.tomcat.webapp_dir}"
       webapp = artifact["location"] || "#{webapp_dir}/#{war}"
       service = artifact["service"] || "tomcat"
 
-      # TODO : reorg to get combine local/war deploy, cp not move, check md5 between source and dest 
-      # 
-        
-      directory "exploded-#{war}" do
-        path "#{webapp_dir}/#{artifact["name"]}"
-        recursive true
-        action :nothing
+      needService = false
+      if artifact["location"]
+        dest = artifact["location"]
+      else
+        needService=true
+        dest = "#{webapp_dir}/#{war}"
       end
+      
+      sourceMd5=`md5sum #{source}`.split(' ')[0] # FIXME get before space
+      destMd5=`md5sum #{dest}`.split(' ')[0]
+      
+      if sourceMd5 == destMd5
+        Chef::Log.warn("#{source} and #{dest} same, skipping deploy")
+        next
+      end 
 
-      destWar = "#{webapp_dir}/#{war}"
-
-      execute "mv to #{destWar}" do
-        command "mv #{source} #{destWar} && chown #{node.tomcat.user}:#{node.tomcat.user} #{destWar}"
-        action :nothing
-      end
-
-      location = artifact["location"]
-      if location
-        execute location do
-          command "mv #{source} #{location} && chown #{node.tomcat.user}:#{node.tomcat.user} #{location}"
+      if needService
+        directory "exploded-#{war}" do
+          path "#{webapp_dir}/#{artifact["name"]}"
+          recursive true
           action :nothing
         end
+      end
+
+      execute "cp to #{dest}" do
+        command "cp #{source} #{dest} && chown #{node.tomcat.user}:#{node.tomcat.user} #{dest}"
+        action :nothing
       end
 
       # NOTE this execute resource is used to notify other resources inside.
       execute "Deploy #{war}" do
         command "echo Deploying #{war}"
-        #getDeploymentArtifacts (nothing to do)
-
-        unless artifact["location"] #skip deploy for hudson.war
+        if needService
           #preDeploy
           notifies :stop, resources(:service => "#{service}"), :immediately
-
           #doDeploy
           notifies :delete, resources(:directory => "exploded-#{war}"), :immediately
-          notifies :run, resources(:execute => "mv to #{destWar}"), :immediately
-
           #postDeploy
           notifies :start, resources(:service => "#{service}"), :delayed
         end
-        if artifact["location"]
-          notifies :run, resources(:execute => location), :immediately
-        end
+        #doDeploy
+        notifies :run, resources(:execute => "cp to #{dest}"), :immediately
+
       end
     end
   end
