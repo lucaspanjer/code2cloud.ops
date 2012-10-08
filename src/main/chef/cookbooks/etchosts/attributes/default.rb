@@ -1,1 +1,1 @@
-default[:etchosts][:entries] = nil
+default[:etchosts][:entries] = []

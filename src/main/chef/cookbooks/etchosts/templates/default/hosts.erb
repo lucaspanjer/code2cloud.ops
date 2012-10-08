@@ -6,6 +6,8 @@
 ::1 localhost    
 <% end %>
 
-
+<% for @entry in node[:etchosts][:entries] %>
+<%= @entry %>
+<% end %>
 
 <%= "#{node[:cfc][:hosts][:hub][:ipaddress]}     #{cfc_role_address("profile")}" %>
