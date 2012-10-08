@@ -47,7 +47,7 @@ action :deploy do
     
     #FIXME do an if modified check
     # FIXME this execute resource is a hack becaue I can't figure out how to notify from outside a resource.
-    execute "Deploy" do
+    execute "Deploy  #{war}" do
       command "echo Deploying #{war}"
       #getDeploymentArtifacts (nothing to do)
   
