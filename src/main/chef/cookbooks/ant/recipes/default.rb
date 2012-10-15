@@ -4,13 +4,13 @@ directory "#{node.ant.root_dir}" do
 end
 
 
-remote_file "#{node.ant.root_dir}/#{node.ant.package}" do
+remote_file "/opt/code2cloud/chef/#{node.ant.package}" do
   source node.ant.url
   action :create_if_missing
   mode 0644
 end
 
-execute "tar xzvf #{node.ant.package}" do
+execute "tar xzvf /opt/code2cloud/chef/#{node.ant.package}" do
   cwd node.ant.root_dir
   not_if { File.exists?(node.ant.install_dir)}
 end

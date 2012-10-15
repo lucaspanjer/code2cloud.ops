@@ -42,7 +42,7 @@ directory "/opt/c2c" do
   group node.cfc.hslave.build_user
 end
 
-remote_file "/opt/c2c/slave.jar" do
+remote_file "/opt/code2cloud/chef/slave.jar" do
   source "#{cfc_hudson_url}/jnlpJars/slave.jar"
   owner node.cfc.hslave.build_user
   group node.cfc.hslave.build_user
@@ -51,11 +51,17 @@ remote_file "/opt/c2c/slave.jar" do
   action :create_if_missing
 end
 
+execute "copy slave.jar to /opt/c2c/slave.jar" do
+  command "cp /opt/code2cloud/chef/slave.jar /opt/c2c/slave.jar"
+  not_if {File.exists?("/opt/c2c/slave.jar")}
+end
+
 # Maven (TODO, move to opscode cookbooks maven package for oracle platform?)
-remote_file "/opt/code2cloud/#{node.cfc.hslave.maven.package}" do
+remote_file "/opt/code2cloud/chef/#{node.cfc.hslave.maven.package}" do
   source node.cfc.hslave.maven.url
   action :create_if_missing
   mode 0644
+  action :create_if_missing
 end
 
 directory node.cfc.hslave.maven.root_dir do
@@ -64,7 +70,7 @@ directory node.cfc.hslave.maven.root_dir do
   mode 0755
 end
 
-execute "tar -zxf /opt/code2cloud/#{node.cfc.hslave.maven.package}" do
+execute "tar -zxf /opt/code2cloud/chef/#{node.cfc.hslave.maven.package}" do
   cwd node.cfc.hslave.maven.root_dir
   user node.cfc.user
   not_if { File.exists?(node.cfc.hslave.maven.bin) }
