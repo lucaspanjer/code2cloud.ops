@@ -12,7 +12,7 @@ end
 
 execute "tar xzvf /opt/code2cloud/chef/#{node.ant.package}" do
   cwd node.ant.root_dir
-  not_if { File.exists?(node.ant.install_dir)}
+  not_if { File.exists?("#{node.ant.root_dir}/#{node.ant.install_dir}")}
 end
 
 execute "ln -s #{node.ant.root_dir}/#{node.ant.install_dir}/bin/ant #{node.ant.bin}" do
