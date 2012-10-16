@@ -1,5 +1,8 @@
 ProxyRequests Off
 
+LogFormat "%h %l %u %t \"%r\" %>s %b" common
+CustomLog logs/c2c.access.log common
+
 <VirtualHost *:80>
         ServerName localhost
         ServerAdmin root@localhost
@@ -13,7 +16,6 @@ ProxyRequests Off
         SSLEngine on
         SSLCertificateFile /etc/httpd/certs/self.crt
         SSLCertificateKeyFile /etc/httpd/certs/self.key
-        #SSLCertificateChainFile /etc/httpd/certs/go_daddy_bundle.crt
 
         ProxyPass <%= @prefix %> http://127.0.0.1:<%= @port %><%= @prefix %>
         ProxyPassReverse <%= @prefix %> http://127.0.0.1:<%= @port %><%= @prefix %>
