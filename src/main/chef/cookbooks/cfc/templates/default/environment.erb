@@ -1,10 +1,10 @@
 <% if node["cfc"]["proxy_environment"]["http_proxy"] -%>
-HTTP_PROXY=<%= node["cfc"]["proxy_environment"]["http_proxy"] %>
-http_proxy=<%= node["cfc"]["proxy_environment"]["http_proxy"] %>
+HTTP_PROXY=<%= node["cfc"]["proxy_environment"]["http_proxy"] %>:<%= node["cfc"]["proxy_environment"]["http_proxy_port"] %>
+http_proxy=<%= node["cfc"]["proxy_environment"]["http_proxy"] %>:<%= node["cfc"]["proxy_environment"]["http_proxy_port"] %>
 <%- end %>
 <% if node["cfc"]["proxy_environment"]["https_proxy"] -%>
-HTTPS_PROXY=<%= node["cfc"]["proxy_environment"]["https_proxy"] %>
-https_proxy=<%= node["cfc"]["proxy_environment"]["https_proxy"] %>
+HTTPS_PROXY=<%= node["cfc"]["proxy_environment"]["https_proxy"] %>:<%= node["cfc"]["proxy_environment"]["https_proxy_port"] %>
+https_proxy=<%= node["cfc"]["proxy_environment"]["https_proxy"] %>:<%= node["cfc"]["proxy_environment"]["https_proxy_port"] %>
 <%- end %>
 <% if node["cfc"]["proxy_environment"]["no_proxy_prefix"] -%>
 NO_PROXY=<%= node["cfc"]["proxy_environment"]["no_proxy_prefix"] %><%= cfc_role_address("profile") %>,<%= cfc_role_address("profile") %>

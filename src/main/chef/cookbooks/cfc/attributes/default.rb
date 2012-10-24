@@ -17,5 +17,7 @@ default[:cfc][:artifacts][:base_url] = "https://q.tasktop.com/alm/s/c2c"
 default[:cfc][:hudson_url] = "#{node.cfc.artifacts.base_url}/hudson"
 
 default[:cfc][:proxy_environment][:http_proxy] = false
+default[:cfc][:proxy_environment][:http_proxy_port] = 80
 default[:cfc][:proxy_environment][:https_proxy] = false
+default[:cfc][:proxy_environment][:https_proxy_port] = 80
 default[:cfc][:proxy_environment][:no_proxy_prefix] = false

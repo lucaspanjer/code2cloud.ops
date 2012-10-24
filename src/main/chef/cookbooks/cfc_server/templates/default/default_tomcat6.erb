@@ -66,12 +66,12 @@ JVM_TMP=<%= node["tomcat"]["tmp_dir"] %>
 # (yes/no, default: no)
 AUTHBIND=<%= node["cfc"]["tomcat"]["authbind"] %>
 <% if node["cfc"]["server"]["http_proxy"] -%>
-HTTP_PROXY=<%= node["cfc"]["server"]["http_proxy"] %>
-http_proxy=<%= node["cfc"]["server"]["http_proxy"] %>
+HTTP_PROXY=<%= node["cfc"]["server"]["http_proxy"] %>:<%= node["cfc"]["proxy_environment"]["http_proxy_port"] %>
+http_proxy=<%= node["cfc"]["server"]["http_proxy"] %>:<%= node["cfc"]["proxy_environment"]["http_proxy_port"] %>
 <%- end %>
 <% if node["cfc"]["server"]["https_proxy"] -%>
-HTTPS_PROXY=<%= node["cfc"]["server"]["https_proxy"] %>
-https_proxy=<%= node["cfc"]["server"]["https_proxy"] %>
+HTTPS_PROXY=<%= node["cfc"]["server"]["https_proxy"] %>:<%= node["cfc"]["proxy_environment"]["https_proxy_port"] %>
+https_proxy=<%= node["cfc"]["server"]["https_proxy"] %>:<%= node["cfc"]["proxy_environment"]["https_proxy_port"] %>
 <%- end %>
 <% if node["cfc"]["server"]["no_proxy_prefix"] -%>
 NO_PROXY=<%= node["cfc"]["server"]["no_proxy_prefix"] %><%= cfc_role_address("profile") %>,<%= cfc_role_address("profile") %>
