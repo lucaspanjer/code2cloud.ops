@@ -10,6 +10,7 @@ include_recipe "openssh"
 #  notifies :restart, "service[ssh]"
 #end
 
+node.override[:etchosts][:hub_entry] = false
 
 # This is only needed when we deploy the hub on the same VM as other services
 if node.cfc.hub.has_internal_services
