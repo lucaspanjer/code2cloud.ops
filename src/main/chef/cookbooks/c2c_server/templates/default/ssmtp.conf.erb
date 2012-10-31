@@ -1,0 +1,8 @@
+root=<%= node.c2c.admin_mail_sender.username %>
+mailhub=smtp.gmail.com:587
+rewriteDomain=
+hostname=<%= node.c2c.admin_mail_sender.username %>
+UseSTARTTLS=YES
+AuthUser=<%= node.c2c.admin_mail_sender.username %>
+AuthPass=<%= node.c2c.admin_mail_sender.password %>
+FromLineOverride=YES

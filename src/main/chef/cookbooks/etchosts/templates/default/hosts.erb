@@ -9,5 +9,5 @@
 <%= @entry %>
 <% end %>
 <% if node[:etchosts][:hub_entry] %>
-<%= "#{node[:cfc][:hosts][:hub][:ipaddress]}     #{cfc_role_address("profile")}" %>
+<%= "#{node[:c2c][:hosts][:hub][:ipaddress]}     #{c2c_role_address("profile")}" %>
 <% end %>

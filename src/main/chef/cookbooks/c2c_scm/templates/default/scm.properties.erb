@@ -1,0 +1,16 @@
+alm.rootDir=<%= node.c2c.server.opt %>
+alm.dataDir=<%= node.c2c.server.home %>
+
+maven.repo.base=<%= node.c2c.server.home %>/maven-repo/
+
+git.root=<%= node.c2c.server.home %>/git-root
+
+profile.application.protocol=<%= node.c2c.hub.protocol %>
+profile.application.host=<%= c2c_role_address("profile") %>
+profile.prefix.path=<%= node.c2c.hub.prefix_path %>
+<% if node.c2c.hub.service_proxy_path %>
+profile.serviceProxy.path=<%= node.c2c.hub.service_proxy_path %>
+<% end %>
+ssh.server.publicPort=<%= node.c2c.hub.public_ssh_port %>
+ssh.server.port=<%= node.c2c.hub.internal_ssh_port %>
+

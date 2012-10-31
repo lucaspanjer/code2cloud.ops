@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<hudson.tasks.Mailer_-DescriptorImpl>
+  <hudsonUrl><%= node.c2c.hub.protocol %>://${profile.hostname}<%= node.c2c.hub.prefix_path %>/s/${profile.application.identifier}/hudson/</hudsonUrl>
+  <adminAddress>Code2Cloud Builder &lt;noreply@tasktop.com&gt;</adminAddress>
+  <useSsl><%= node.c2c.mail_sender.starttls %></useSsl>
+  <charset>UTF-8</charset>
+  <smtpHost>DISABLED</smtpHost>
+  <smtpAuthUsername>DISABLED</smtpAuthUsername>
+  <smtpAuthPassword>DISABLED</smtpAuthPassword>
+</hudson.tasks.Mailer_-DescriptorImpl>

@@ -1,0 +1,7 @@
+GRANT ALL PRIVILEGES ON <%= @database %>.* TO 'profile'@'%' IDENTIFIED BY '<%= node.c2c.mysql_pw.profile %>';
+
+GRANT ALL PRIVILEGES ON `%_tasks`.* TO 'tasks'@'%' IDENTIFIED BY '<%= node.c2c.mysql_pw.tasks %>';
+
+GRANT ALL PRIVILEGES ON `%_wiki`.* TO 'wiki'@'%' IDENTIFIED BY '<%= node.c2c.mysql_pw.wiki %>';
+
+FLUSH PRIVILEGES;

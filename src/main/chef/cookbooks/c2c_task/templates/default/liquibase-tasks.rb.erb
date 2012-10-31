@@ -1,0 +1,32 @@
+#!/usr/bin/ruby                                                                                                                                                                    
+
+require 'mysql'
+
+host='<%= c2c_role_address("db") %>'
+user='tasks'
+pwd='<%= node.c2c.mysql_pw.tasks %>'
+webapplibs='/opt/code2cloud/webapps/tasks/WEB-INF/lib/'
+
+con = Mysql.new(host, user, pwd);
+
+rs = con.query('show databases');
+
+rs.each_hash do |row|
+  dbName = row['Database']
+  unless dbName.end_with?('_tasks')
+    next
+  end
+
+  puts "Migrating #{dbName}"
+
+  java = "java -cp #{webapplibs}liquibase-core-2.0.3.jar:#{webapplibs}tasks.server-0.1.0-SNAPSHOT.jar:#{webapplibs}mysql-connector-java-5.1.12.jar liquibase.integration.commandline.Main"
+  config = "--changeLogFile=data/liquibase-task-db-master.xml --username=#{user} --password=#{pwd} --url=jdbc:mysql://#{host}:3306/#{dbName} --driver=com.mysql.jdbc.Driver"
+
+#  puts `#{java} #{config} changelogSync`                                                                                                                                          
+  puts `#{java} #{config} clearCheckSums`
+  puts `#{java} #{config} update`
+end
+
+
+
+con.close

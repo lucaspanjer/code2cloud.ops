@@ -1,0 +1,33 @@
+profile.invitationOnlySignUp=<%= node.c2c.hub.invitation_only %>
+
+profile.application.protocol=<%= node.c2c.hub.protocol %>
+profile.application.host=<%= c2c_role_address("profile") %>
+profile.prefix.path=<%= node.c2c.hub.prefix_path %>
+<% if node.c2c.hub.service_proxy_path %>
+profile.serviceProxy.path=<%= node.c2c.hub.service_proxy_path %>
+<% end %>
+ssh.server.publicPort=<%= node.c2c.hub.public_ssh_port %>
+ssh.server.port=<%= node.c2c.hub.internal_ssh_port %>
+
+alm.database.password=<%= node.c2c.mysql_pw.profile %>
+alm.database.url=jdbc\:<%= node.c2c.server.jdbc_type %>//<%= c2c_role_address("db") %>\:<%= node.c2c.server.jdbc_port %><%= node.c2c.hub.jdbc_path %>
+alm.database.username=profile
+
+alm.mailSender.javaMailProperties[mail.smtp.starttls.enable]=<%= node.c2c.mail_sender.starttls %>
+alm.mailSender.port=<%= node.c2c.mail_sender.port %>
+alm.mailSender.host=<%= node.c2c.mail_sender.host %>
+alm.mailSender.username=<%= node.c2c.mail_sender.username %>
+alm.mailSender.password=<%= node.c2c.mail_sender.password %>
+alm.mailSender.from=<%= node.c2c.mail_sender.from %>
+
+alm.rememberMeServices.key=<%= node.c2c.hub.remember_me_key %>
+
+github.consumerKey=<%= node.c2c.github.consumer_key %>
+github.consumerSecret=<%= node.c2c.github.consumer_secret %>
+
+github.textEncryptor.password=ThisIsMyGiantPassword.ItDoesntMakeSenseButThisIsIt
+github.textEncryptor.salt=CAFEBABE00DEADBEEF00214748364700FACE0FFEE7
+
+<% for prop in node.c2c.hub.additional_properties %>
+<%= prop %>
+<% end %>

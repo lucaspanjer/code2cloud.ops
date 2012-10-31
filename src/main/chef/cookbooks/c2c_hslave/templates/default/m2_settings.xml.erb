@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/settings/1.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+<!-- This file is geneated by Chef -->
+ <localRepository>/home/c2c/m2/repository</localRepository>
+ <% if  node.c2c.nexus.enable -%>
+ <profiles>
+    <profile>
+      <id>nexus</id>
+      <!--Enable snapshots for the built in central repo to direct -->
+      <!--all requests to nexus via the mirror -->
+      <repositories>
+        <repository>
+          <id>central</id>
+          <url>http://<%= c2c_role_address("nexus") %>:<%= node.c2c.nexus.port %>/nexus/content/groups/public</url>
+          <releases><enabled>true</enabled></releases>
+          <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+      </repositories>
+     <pluginRepositories>
+        <pluginRepository>
+          <id>central</id>
+          <url>http://<%= c2c_role_address("nexus") %>:<%= node.c2c.nexus.port %>/nexus/content/groups/public</url>
+          <releases><enabled>true</enabled></releases>
+          <snapshots><enabled>true</enabled></snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+  <activeProfiles>
+    <!--make the profile active all the time -->
+    <activeProfile>nexus</activeProfile>
+  </activeProfiles>
+<% end -%>
+<proxies>
+<% if node["c2c"]["proxy_environment"]["http_proxy"] -%>
+   <proxy>
+      <active>true</active>
+      <protocol>http</protocol>
+      <host><%= node["c2c"]["proxy_environment"]["http_proxy"] %></host>
+      <port><%= node["c2c"]["proxy_environment"]["http_proxy_port"] %></port>
+      <% if node["c2c"]["proxy_environment"]["no_proxy_prefix"] -%>
+   	  <nonProxyHosts><%= node["c2c"]["proxy_environment"]["no_proxy_prefix"] %><%= c2c_role_address("profile") %>|<%= c2c_role_address("profile") %></nonProxyHosts>
+	  <%- else %>		
+	  <nonProxyHosts><%= c2c_role_address("profile") %></nonProxyHosts>
+	  <%- end %>
+    </proxy>
+<%- end %>
+<% if node["c2c"]["proxy_environment"]["https_proxy"] -%>
+   <proxy>
+      <active>true</active>
+      <protocol>https</protocol>
+      <host><%= node["c2c"]["proxy_environment"]["https_proxy"] %></host>
+      <port><%= node["c2c"]["proxy_environment"]["https_proxy_port"] %></port>
+      <% if node["c2c"]["proxy_environment"]["no_proxy_prefix"] -%>
+   	  <nonProxyHosts><%= node["c2c"]["proxy_environment"]["no_proxy_prefix"] %><%= c2c_role_address("profile") %>|<%= c2c_role_address("profile") %></nonProxyHosts>
+	  <%- else %>		
+	  <nonProxyHosts><%= c2c_role_address("profile") %></nonProxyHosts>
+	  <%- end %>
+    </proxy>
+<%- end %>
+  </proxies>
+ </settings>

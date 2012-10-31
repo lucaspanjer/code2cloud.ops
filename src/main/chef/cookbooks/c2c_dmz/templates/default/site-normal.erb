@@ -1,0 +1,83 @@
+ProxyRequests Off
+
+<VirtualHost *:80>
+        ServerName <%= node.c2c.dmz.servername %>
+        ServerAdmin webmaster@tasktop.com
+
+        ErrorLog /var/log/apache2/code2cloud.error.log
+        # Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
+        LogLevel warn
+        CustomLog /var/log/apache2/code2cloud.access.log combined
+
+        # Turn this back to updateSite when enabled
+        DocumentRoot /home/code2cloud/www-root
+        <Directory /home/code2cloud/www-root>
+                Options -Indexes
+                AllowOverride Limit
+        </Directory>
+
+        ProxyPass /404.html !
+        ProxyPass /500.html !
+        ProxyPass /updateSite !
+
+        ProxyPass <%= @prefix %> http://<%= c2c_role_address("hub") %>:8081<%= @prefix %>
+        ProxyPassReverse <%= @prefix %> http://<%= c2c_role_address("hub") %>:8081<%= @prefix %>
+
+		<% if node.c2c.dmz.ssl %>
+
+        RedirectMatch "^/$" https://<%= node.c2c.dmz.servername %><%= @prefix %>
+        <% if @prefix != "/" %>
+        RedirectMatch "^<%= @prefix %>$" https://<%= node.c2c.dmz.servername %><%= @prefix %>
+        RedirectMatch "^<%= @prefix %>/$" https://<%= node.c2c.dmz.servername %><%= @prefix %>
+        <% end %>
+        
+        <% end %>
+
+        # Disabled, because it was over-broad and causing application issues
+        # ProxyErrorOverride On
+        ErrorDocument 404 /404.html
+        ErrorDocument 500 /500.html
+</VirtualHost>
+
+<% if node.c2c.dmz.ssl %>
+<VirtualHost *:443>
+        ServerName <%= node.c2c.dmz.servername %>
+        ServerAdmin webmaster@tasktop.com
+
+        SSLEngine on
+        SSLCertificateFile /etc/apache2/certs/wildcard.tasktop.com.crt
+        SSLCertificateKeyFile /etc/apache2/certs/wildcard.tasktop.com.key
+        SSLCertificateChainFile /etc/apache2/certs/go_daddy_bundle.crt
+        SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown
+	
+        ErrorLog /var/log/apache2/code2cloud.error.log
+        # Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
+        LogLevel warn
+        CustomLog /var/log/apache2/code2cloud.access.log combined
+
+        # Turn this back to updateSite when enabled
+        DocumentRoot /home/code2cloud/www-root
+        <Directory /home/code2cloud/www-root>
+                Options -Indexes
+                AllowOverride Limit
+        </Directory>
+
+        ProxyPass /404.html !
+        ProxyPass /500.html !
+        ProxyPass /updateSite !
+
+        ProxyPass <%= @prefix %> http://<%= c2c_role_address("hub") %>:8081<%= @prefix %>
+        ProxyPassReverse <%= @prefix %> http://<%= c2c_role_address("hub") %>:8081<%= @prefix %>
+
+        RedirectMatch "^/$" https://<%= node.c2c.dmz.servername %><%= @prefix %>
+        <% if @prefix != "/" %>
+        RedirectMatch "^<%= @prefix %>$" https://<%= node.c2c.dmz.servername %><%= @prefix %>
+        RedirectMatch "^<%= @prefix %>/$" https://<%= node.c2c.dmz.servername %><%= @prefix %>
+        <% end %>
+
+        # Disabled, because it was over-broad and causing application issues
+        # ProxyErrorOverride On
+        ErrorDocument 404 /404.html
+        ErrorDocument 500 /500.html
+</VirtualHost>
+<% end %>

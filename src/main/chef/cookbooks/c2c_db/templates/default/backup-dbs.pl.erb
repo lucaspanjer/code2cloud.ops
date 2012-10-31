@@ -1,0 +1,41 @@
+#!/usr/bin/perl                                                                                                                                          
+use warnings;
+use strict;
+
+my $hostname = `hostname`;
+chop $hostname;
+my $environment = '<%= c2c_role_address("profile") %>';
+my $backup_dir = '<%= node.c2c.server.home %>/backup/dbs';
+my $archive_dir = '<%= node.c2c.server.home %>/backup/archive';
+my $encrypt_key = 'Code2Cloud';
+my $encrypt_pass = '';
+my $s3_access_key_id = '<%= node.c2c.server.s3.access_key_id %>';
+my $s3_access_key_secret = '<%= node.c2c.server.s3.access_key_secret %>';
+my $s3_export = "export AWS_ACCESS_KEY_ID=$s3_access_key_id && export AWS_SECRET_ACCESS_KEY=$s3_access_key_secret &&";
+my $pass_export = "export PASSPHRASE=$encrypt_pass &&";
+
+
+my $mysql_root_pwd = '<%= node.mysql.server_root_password %>';
+
+print "Ensure backup dir exists\n";
+`mkdir -p $backup_dir`;
+
+print "Dumping databases...\n";
+my @db_names = `echo "show databases;" | mysql -u root -p$mysql_root_pwd`;
+foreach my $db (@db_names) {
+    chop $db;
+    next if $db eq 'Database';
+    next if $db eq 'information_schema';
+
+    print "* $db\n";
+
+    `mysqldump -u root -p$mysql_root_pwd $db > $backup_dir/$db.backup.sql`;
+}
+
+
+print "Sending backups to s3 \n";
+print `$pass_export $s3_export duplicity --name s3-dbs --archive-dir $archive_dir --encrypt-key $encrypt_key $backup_dir  s3+http://code2cloud.backups/$environment/$hostname/dbs`;
+
+`rm -rf $backup_dir/*.backup.sql`;
+
+print "Done.\n";

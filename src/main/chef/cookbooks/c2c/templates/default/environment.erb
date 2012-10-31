@@ -1,0 +1,18 @@
+<% if node["c2c"]["proxy_environment"]["http_proxy"] -%>
+HTTP_PROXY=<%= node["c2c"]["proxy_environment"]["http_proxy"] %>:<%= node["c2c"]["proxy_environment"]["http_proxy_port"] %>
+http_proxy=<%= node["c2c"]["proxy_environment"]["http_proxy"] %>:<%= node["c2c"]["proxy_environment"]["http_proxy_port"] %>
+<%- end %>
+<% if node["c2c"]["proxy_environment"]["https_proxy"] -%>
+HTTPS_PROXY=<%= node["c2c"]["proxy_environment"]["https_proxy"] %>:<%= node["c2c"]["proxy_environment"]["https_proxy_port"] %>
+https_proxy=<%= node["c2c"]["proxy_environment"]["https_proxy"] %>:<%= node["c2c"]["proxy_environment"]["https_proxy_port"] %>
+<%- end %>
+<% if node["c2c"]["proxy_environment"]["no_proxy_prefix"] -%>
+NO_PROXY=<%= node["c2c"]["proxy_environment"]["no_proxy_prefix"] %><%= c2c_role_address("profile") %>,<%= c2c_role_address("profile") %>
+no_proxy=<%= node["c2c"]["proxy_environment"]["no_proxy_prefix"] %><%= c2c_role_address("profile") %>,<%= c2c_role_address("profile") %>
+<%- else %>
+NO_PROXY=<%= c2c_role_address("profile") %>
+no_proxy=<%= c2c_role_address("profile") %>
+<%- end %>
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games"
+JAVA_HOME="<%= node.java.java_home %>"
+GRAILS_HOME="<%= node.grails.path %>"

@@ -1,10 +1,10 @@
-include_attribute "cfc_server"
+include_attribute "c2c_server"
 
 #http://nexus.sonatype.org/downloads/older/nexus-oss-webapp-1.9.1.1-bundle.tar.gz
-default[:nexus][:port] = "7070"# FIXME "#{node[:cfc][:nexus][:port]}"
+default[:nexus][:port] = "7070"# FIXME "#{node[:c2c][:nexus][:port]}"
 default[:nexus][:host] = "0.0.0.0"
-default[:nexus][:work] = "#{node.cfc.server.home}/m2-repo"
-default[:nexus][:root_dir] = "#{node.cfc.server.opt}"
+default[:nexus][:work] = "#{node.c2c.server.home}/m2-repo"
+default[:nexus][:root_dir] = "#{node.c2c.server.opt}"
 default[:nexus][:user] = "vcloud" #XXX >> role
 default[:nexus][:jsw_arch] = "linux-x86-64" #XXX
 default[:nexus][:mirror] = "http://sonatype.org/downloads/older"

@@ -33,7 +33,7 @@
 		<fileSet>
 			<directory>${basedir}/src/main/chef/environments/${chef.env}</directory>
 			<includes>
-				<include>cfc-env.rb</include>
+				<include>c2c-env.rb</include>
 			</includes>
 			<outputDirectory>roles</outputDirectory>
 		</fileSet>

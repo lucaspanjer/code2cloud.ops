@@ -1,2 +1,0 @@
-default[:cfc][:service] = "scm"
-

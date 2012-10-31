@@ -19,4 +19,4 @@ default[:tcs][:env][:java_library_path] = ""
 default[:tcs][:env][:jvm_opts] = ""
 
 #base url where we can download tc-server.tar.gz
-default[:tcs][:mirror] = "http://#{URI.parse(Chef::Config[:chef_server_url]).host}/cfc"
+default[:tcs][:mirror] = "http://#{URI.parse(Chef::Config[:chef_server_url]).host}/c2c"
