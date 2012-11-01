@@ -1,6 +1,7 @@
 ProxyRequests Off
+ProxyPreserveHost On
 
-LogFormat "%h %l %u %t \"%r\" %>s %b" common
+LogFormat "%h %t \"%r\" %>s %b %D" common
 CustomLog logs/c2c.access.log common
 
 <VirtualHost *:80>
