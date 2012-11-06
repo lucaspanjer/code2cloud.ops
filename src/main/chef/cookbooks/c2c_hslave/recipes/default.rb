@@ -49,6 +49,7 @@ remote_file "/opt/code2cloud/chef/slave.jar" do
   mode 0644
   backup false
   action :create_if_missing
+  not_if {File.exists?("/opt/c2c/slave.jar")}
 end
 
 execute "copy slave.jar to /opt/c2c/slave.jar" do
@@ -62,6 +63,7 @@ remote_file "/opt/code2cloud/chef/#{node.c2c.hslave.maven.package}" do
   action :create_if_missing
   mode 0644
   action :create_if_missing
+  not_if { File.exists?(node.c2c.hslave.maven.bin) }
 end
 
 directory node.c2c.hslave.maven.root_dir do
