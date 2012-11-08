@@ -6,6 +6,12 @@ HUDSON_BASE_DIR=<%= node.c2c.hmaster.builds_dir %>/
 HUDSON_TEMPLATE_WAR=<%= node.c2c.server.opt %>/configuration/template/hudson-war/hudson.war
 HUDSON_WEBAPPS_DIR=<%= node.c2c.server.opt %>/webapps
 
+  <% if node.java.java_home =~ /jre$/  -%>
+JAVA_BIN=<%= node.java.java_home.gsub("jre","bin") %>
+  <% else -%>
+JAVA_BIN=<%= node.java.java_home %>/bin
+  <% end -%>
+
 EXISTING_WEBAPPS=`ls $HUDSON_WEBAPPS_DIR/*hudson.war`
 
 echo 'removing users plugin data'
@@ -17,9 +23,9 @@ rm -rf $HUDSON_WEBAPPS_DIR/*hudson
 for WEBAPP in $EXISTING_WEBAPPS
 do
 	<% if node.c2c.hub.prefix_path = "" -%>
-    APPID=${WEBAPP#$HUDSON_WEBAPPS_DIR/s#}
+    APPID=${WEBAPP#$HUDSON_WEBAPPS_DIR/<%= node.c2c.hudson.path %>#}
     <% else -%>
-    APPID=${WEBAPP#$HUDSON_WEBAPPS_DIR<%= node.c2c.hub.prefix_path %>#s#}
+    APPID=${WEBAPP#$HUDSON_WEBAPPS_DIR<%= node.c2c.hub.prefix_path %>#<%= node.c2c.hudson.path %>#}
     <% end -%>
     APPID=${APPID%#hudson.war}
 
@@ -29,13 +35,12 @@ do
     mkdir $TEMP_WAR_LOCATION
     cp $HUDSON_TEMPLATE_WAR $TEMP_WAR_LOCATION
     cd $TEMP_WAR_LOCATION
-    jar -xf hudson.war WEB-INF/web.xml
+    $JAVA_BIN/jar -xf hudson.war WEB-INF/web.xml
     
     # Place the hudson home for this app in the web.xml
     sed "s,<env-entry-value>,<env-entry-value>$HUDSON_BASE_DIR$APPID ," WEB-INF/web.xml > WEB-INF/web.xml.mod
     mv  WEB-INF/web.xml.mod  WEB-INF/web.xml
-
-    jar -uf hudson.war WEB-INF/web.xml
+    $JAVA_BIN/jar -uf hudson.war WEB-INF/web.xml
     mv hudson.war $WEBAPP
     chown <%= node.tomcat.user %>:<%= node.tomcat.user %> $WEBAPP 
     rm -rf $TEMP_WAR_LOCATION
