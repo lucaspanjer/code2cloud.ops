@@ -27,13 +27,6 @@
 			<outputDirectory>roles</outputDirectory>
 		</fileSet>
 		<fileSet>
-			<directory>${basedir}/src/main/chef/environments/${chef.env}</directory>
-			<includes>
-				<include>c2c-env.rb</include>
-			</includes>
-			<outputDirectory>roles</outputDirectory>
-		</fileSet>
-		<fileSet>
 			<directory>${basedir}/src/main/chef/solo</directory>
 			<includes>
 				<include>solo.rb</include>
