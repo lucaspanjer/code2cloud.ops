@@ -10,15 +10,8 @@
 	<properties>
 		<chef.env>local</chef.env>
 		<assembly>base</assembly>
+		<wars.version>1.1.0-SNAPSHOT</wars.version>
 	</properties>
-	
-	<dependencies>
-		<dependency>
-			<groupId>com.opscode</groupId>
-			<artifactId>opscode-cookbooks</artifactId>
-			<version>0.10.0-c2c-SNAPSHOT</version>
-		</dependency>
-	</dependencies>
 	
 	<distributionManagement>
 		<repository>
@@ -91,6 +84,52 @@
 			</extension>
 		</extensions>
 	</build>
+	
+	<profiles>
+		<profile>
+			<id>dist</id>
+			<dependencies>
+				<dependency>
+					<groupId>com.tasktop.c2c.server</groupId>
+					<artifactId>profile.web</artifactId>
+					<version>${wars.version}</version>
+					<type>war</type>
+				</dependency>
+				<dependency>
+					<groupId>com.tasktop.c2c.server</groupId>
+					<artifactId>tasks.web</artifactId>
+					<version>${wars.version}</version>
+					<type>war</type>
+				</dependency>
+				<dependency>
+					<groupId>com.tasktop.c2c.server</groupId>
+					<artifactId>wiki.web</artifactId>
+					<version>${wars.version}</version>
+					<type>war</type>
+				</dependency>
+				<dependency>
+					<groupId>com.tasktop.c2c.server</groupId>
+					<artifactId>services.web</artifactId>
+					<version>${wars.version}</version>
+					<type>war</type>
+				</dependency>
+				<dependency>
+					<groupId>com.tasktop.c2c.server</groupId>
+					<artifactId>hudson-war</artifactId>
+					<version>${wars.version}</version>
+					<type>war</type>
+				</dependency>
+				<dependency>
+					<groupId>com.tasktop.c2c.server</groupId>
+					<artifactId>hudson.configuration.web</artifactId>
+					<version>${wars.version}</version>
+					<type>war</type>
+				</dependency>
+	
+			</dependencies>
+		</profile>
+	</profiles>
+	
 
 
 </project>
