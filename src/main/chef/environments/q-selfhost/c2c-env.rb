@@ -9,11 +9,6 @@ override_attributes \
   :server_repl_password => "REDACTED",
 },
 :c2c => {
-  :server => {
-    :deploy_type => "local",
-    :job => "Server",
-    :build => 1832,
-  },
   :hosts => {
      "hub"           => { :ipaddress => "192.168.0.151", :description => "Hub node" },
      "nexus"         => { :ipaddress => "192.168.0.151",  :description => "Nexus Repository" },
@@ -29,10 +24,6 @@ override_attributes \
     "profile" => "REDACTED",
     "tasks" => "REDACTED",
     "wiki" => "REDACTED",
-  },
-  :artifacts => {
-    :http_user => "testuser",
-    :http_password => "REDACTED"
   },
   :github => {
     :consumer_key => "a30115eb45f34f83a4a5",

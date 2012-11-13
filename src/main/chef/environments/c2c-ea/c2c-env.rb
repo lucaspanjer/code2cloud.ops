@@ -9,11 +9,6 @@ override_attributes \
   :server_repl_password => "REDACTED",
 },
 :c2c => {
-  :server => {
-    :deploy_type => "remote",
-    :job => "Server",
-    :build => false, #1861,
-  },
   :hosts => {
      "hub"           => { :ipaddress => "192.168.0.154", :description => "Hub node" },
      "nexus"         => { :ipaddress => "192.168.0.154",  :description => "Nexus Repository" },

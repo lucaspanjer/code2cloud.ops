@@ -1,6 +1,0 @@
-
-{
-	"run_list" : ["role[c2c-env]", "role[c2c-base]", "role[c2c-db]", "role[c2c-task]", 
-  				"role[c2c-scm]", "role[c2c-hmaster]", "role[c2c-hub]"]
-  
-}
