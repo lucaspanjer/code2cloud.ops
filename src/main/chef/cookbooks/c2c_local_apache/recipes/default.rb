@@ -22,18 +22,27 @@ end
 
 site = "site-normal"
 
+if platform?("oracle")
+  cert_dir="/etc/httpd/certs"
+  log_dir="/var/log/httpd/"
+else
+  cert_dir="/etc/apache2/certs"
+  log_dir="/var/log/apache2/"
+end
+
 template "#{node.apache.dir}/sites-available/#{site}" do
   source "site-normal.erb"
   mode 0644
   variables :prefix => (node.c2c[:hub] ? (node.c2c.hub.prefix_path+"/") : "/"), 
-    :port => node.c2c.hub.has_internal_services ? "8081" : "8080"
+    :port => node.c2c.hub.has_internal_services ? "8081" : "8080",
+    :cert_dir => cert_dir,
+    :log_dir => log_dir
 end
 
 apache_site site do
   enable true
 end
 
-cert_dir="/etc/httpd/certs"
 cert_hostname = c2c_role_address("profile")
 if (node.c2c.hub.wildcard_dns)
   cert_hostname = "*."+cert_hostname

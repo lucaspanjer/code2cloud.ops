@@ -1,7 +1,10 @@
 GRANT ALL PRIVILEGES ON <%= @database %>.* TO 'profile'@'%' IDENTIFIED BY '<%= node.c2c.mysql_pw.profile %>';
+GRANT ALL PRIVILEGES ON <%= @database %>.* TO 'profile'@'localhost' IDENTIFIED BY '<%= node.c2c.mysql_pw.profile %>';
 
 GRANT ALL PRIVILEGES ON `%_tasks`.* TO 'tasks'@'%' IDENTIFIED BY '<%= node.c2c.mysql_pw.tasks %>';
+GRANT ALL PRIVILEGES ON `%_tasks`.* TO 'tasks'@'localhost' IDENTIFIED BY '<%= node.c2c.mysql_pw.tasks %>';
 
 GRANT ALL PRIVILEGES ON `%_wiki`.* TO 'wiki'@'%' IDENTIFIED BY '<%= node.c2c.mysql_pw.wiki %>';
+GRANT ALL PRIVILEGES ON `%_wiki`.* TO 'wiki'@'localhost' IDENTIFIED BY '<%= node.c2c.mysql_pw.wiki %>';
 
 FLUSH PRIVILEGES;

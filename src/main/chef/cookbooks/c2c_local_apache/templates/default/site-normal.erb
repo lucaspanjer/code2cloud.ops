@@ -2,7 +2,7 @@ ProxyRequests Off
 ProxyPreserveHost On
 
 LogFormat "%h %t \"%r\" %>s %b %D" common
-CustomLog logs/c2c.access.log common
+CustomLog <%= @log_dir %>c2c.access.log common
 
 <VirtualHost *:80>
         ServerName localhost
@@ -15,8 +15,8 @@ CustomLog logs/c2c.access.log common
         ServerAdmin root@localhost
 
         SSLEngine on
-        SSLCertificateFile /etc/httpd/certs/self.crt
-        SSLCertificateKeyFile /etc/httpd/certs/self.key
+        SSLCertificateFile <%= @cert_dir %>/self.crt
+        SSLCertificateKeyFile <%= @cert_dir %>/self.key
 
         ProxyPass <%= @prefix %> http://127.0.0.1:<%= @port %><%= @prefix %>
         ProxyPassReverse <%= @prefix %> http://127.0.0.1:<%= @port %><%= @prefix %>
