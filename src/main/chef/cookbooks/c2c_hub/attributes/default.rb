@@ -12,6 +12,7 @@ default[:c2c][:hub][:remember_me_key] = "XXX"
 default[:c2c][:hub][:has_internal_services] = false
 default[:c2c][:hub][:jdbc_path] = "/profile"
 default[:c2c][:hub][:additional_properties] = []
+default[:c2c][:hub][:etc_hosts_entry] = true
   # FIXME will not work
 if attribute?("c2c.hub.has_internal_services")
   override[:c2c][:tomcat][:instance_name] = "hub-tomcat"

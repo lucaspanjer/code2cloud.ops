@@ -10,7 +10,7 @@ include_recipe "openssh"
 #  notifies :restart, "service[ssh]"
 #end
 
-node.override[:etchosts][:hub_entry] = false
+node.override[:etchosts][:hub_entry] = node.c2c.hub.etc_hosts_entry
 
 # This is only needed when we deploy the hub on the same VM as other services
 if node.c2c.hub.has_internal_services
