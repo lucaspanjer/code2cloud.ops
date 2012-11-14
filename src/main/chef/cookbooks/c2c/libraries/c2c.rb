@@ -1,6 +1,6 @@
-def c2c_search(query)
-  return Chef::Search::Query.new.search(:node, query).first
-end
+#def c2c_search(query)
+#  return Chef::Search::Query.new.search(:node, query).first
+#end
 
 #return the ipaddress for the given role name (e.g. "hub", "db", "dmz")
 def c2c_role_address(name)
@@ -10,10 +10,10 @@ def c2c_role_address(name)
   end
 
   #fallback to role based search
-  role_node = c2c_search("role:c2c-#{name}").first
-  if role_node
-    return role_node.ipaddress
-  end
+ # role_node = c2c_search("role:c2c-#{name}").first
+ # if role_node
+ #   return role_node.ipaddress
+ # end
 
   #worstcase, depend on dns
   return name
