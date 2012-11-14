@@ -13,5 +13,5 @@ default[:c2c][:dmz][:user] = "apache"
 default[:c2c][:dmz][:servername] = "c2c.tasktop.com"
 default[:c2c][:dmz][:mode] = "normal"
 default[:c2c][:dmz][:home] = "#{node.c2c.server.home}"
-default[:c2c][:dmz][:git_repo] = "#{c2c.artifacts.base_url}/scm/code2cloud.static.git"
+#default[:c2c][:dmz][:git_repo] = "#{c2c.artifacts.base_url}/scm/code2cloud.static.git"
 default[:c2c][:dmz][:ssl] = false
