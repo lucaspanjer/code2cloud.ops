@@ -31,6 +31,10 @@ override_attributes \
       :remember_me_key => "p923875614k6j/14m43iotgha''423j56;11",
       :has_internal_services => true,
       :protocol => "http",
+      :additional_properties => [
+      "alm.hudsonSlave.build.directoriesToClean=/tmp"
+    ]
+
     },
   :github => {
     :consumer_key => "LOCAL",
