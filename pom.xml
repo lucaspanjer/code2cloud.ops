@@ -13,6 +13,14 @@
 		<wars.version>1.1.0-SNAPSHOT</wars.version>
 	</properties>
 	
+	<repositories>
+		<repository>
+			<id>code2cloud-internal</id>
+			<name>Code2Cloud internal repo</name>
+			<url>https://q.tasktop.com/alm/s/c2c/maven</url>
+		</repository>
+	</repositories>
+	
 	<distributionManagement>
 		<repository>
 			<id>code2cloud-internal</id>
