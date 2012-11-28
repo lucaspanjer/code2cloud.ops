@@ -5,7 +5,7 @@ override_attributes \
   :java_home => "/usr/lib/jvm/jdk1.6.0_37"
 },
 :mysql => {
-  :bind_address => "127.0.0.1",
+  :bind_address => "0.0.0.0",
   :server_root_password => "welcome1",
   :server_debian_password => "welcome1",
   :server_repl_password => "welcome1",
