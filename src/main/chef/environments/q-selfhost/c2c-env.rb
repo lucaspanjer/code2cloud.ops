@@ -3,12 +3,21 @@ name "c2c-env"
 # ROLE for Code2Cloud Dev environment properties (https://q.tasktop.com/alm)x
 
 override_attributes \
+:java => {
+  :java_home => "/usr/lib/jvm/java-6-sun/jre"
+},
 :mysql => {
   :server_root_password => "REDACTED",
   :server_debian_password => "REDACTED",
   :server_repl_password => "REDACTED",
 },
 :c2c => {
+  :server => {
+      :s3 => {
+        :access_key_id => "AKIAI6FIC7DBENCWERKA",
+        :access_key_secret => "REDACTED",
+      },
+  },
   :hosts => {
      "hub"           => { :ipaddress => "192.168.0.151", :description => "Hub node" },
      "nexus"         => { :ipaddress => "192.168.0.151",  :description => "Nexus Repository" },
@@ -29,13 +38,14 @@ override_attributes \
     :consumer_key => "a30115eb45f34f83a4a5",
     :consumer_secret => "REDACTED"
   },
-  :dmz => {
-    :servername => "q.tasktop.com",
-    :go_daddy_bundle_crt => "REDACTED"
-  },
   :hub => {
-    :prefix_path => "alm",
-    :invitation_only => true
+    :prefix_path => "/alm",
+    :invitation_only => true,
+    :remember_me_key => "p928375614k6j/14m43iotgha''423j56;11",
+    :has_internal_services => true,
+    :additional_properties => [
+      "alm.hudsonSlave.build.directoriesToClean=/tmp"
+    ]
   },
   :nexus => {
     :port => "7070"
