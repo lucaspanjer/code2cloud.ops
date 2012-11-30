@@ -14,7 +14,7 @@ override_attributes \
   :hosts => {
       "hub"           => { :ipaddress => "127.0.0.1", :description => "Hub node" },
       "db"            => { :ipaddress => "127.0.0.1",  :description => "Database Server" },
-      "profile"       => { :ipaddress => "c2c.local", :description => "Public facing profile host" },
+      "profile"       => { :ipaddress => "c2c.dev", :description => "Public facing profile host" },
     },
    :server => {
       :backup => { :enabled => false},
