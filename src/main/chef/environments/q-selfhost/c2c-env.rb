@@ -11,6 +11,9 @@ override_attributes \
   :server_debian_password => "REDACTED",
   :server_repl_password => "REDACTED",
 },
+:tomcat => {
+  :second_service => true
+},
 :c2c => {
   :server => {
       :s3 => {

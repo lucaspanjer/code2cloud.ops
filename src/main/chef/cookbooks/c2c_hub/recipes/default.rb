@@ -11,25 +11,13 @@ include_recipe "openssh"
 #end
 
 node.override[:etchosts][:hub_entry] = node.c2c.hub.etc_hosts_entry
-
+  
 # This is only needed when we deploy the hub on the same VM as other services
 if node.c2c.hub.has_internal_services
-  node.override["c2c"]["tomcat"]["instance_name"] = "hub-tomcat"  
-  node.override["c2c"]["tomcat"]["instance_base"] =  "/var/lib/#{node.c2c.tomcat.instance_name}"
-  node.override["c2c"]["tomcat"]["instance_webapps"] =  "#{node.c2c.tomcat.instance_base}/webapps"
-
-  include_recipe "c2c_server::tc-instance"
-
   link "#{node.c2c.server.opt}/hub_webapps" do
-    to "#{node.c2c.tomcat.instance_base}/webapps"
+    to "#{node.tomcat.second_webapp_dir}"
     owner node.c2c.user
     group node.tomcat.group
-  end
-  
-  link "#{node.c2c.server.opt}/hub_tc_logs" do
-    to "#{node.c2c.tomcat.instance_base}/logs"
-    owner node.c2c.user
-    group node.c2c.group
   end
 end
 
@@ -76,14 +64,13 @@ end
 
 
 if node.c2c.hub.has_internal_services
-  serviceName="#{node.c2c.tomcat.instance_name}"
+  webappDir="#{node.tomcat.second_webapp_dir}"
 else
-  serviceName="tomcat"
+  webappDir="#{node.tomcat.webapp_dir}"
 end
 
 c2c_server_deployment "hub" do 
-  artifacts [ { "name" => name,  "package" => "profile.web", "webapp_dir" => "#{node.c2c.tomcat.instance_webapps}",
-              "service" => serviceName} ]
+  artifacts [ { "name" => name,  "package" => "profile.web", "webapp_dir" => webappDir} ]
   action :deploy
   provider "c2c_server_#{node.c2c.server.deploy_type}"
 end                                      

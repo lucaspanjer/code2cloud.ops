@@ -10,6 +10,9 @@ override_attributes \
   :server_debian_password => "welcome1",
   :server_repl_password => "welcome1",
 },
+:tomcat => {
+  :second_service => true
+},
 :c2c => {
   :hosts => {
       "hub"           => { :ipaddress => "127.0.0.1", :description => "Hub node" },
