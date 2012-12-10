@@ -47,7 +47,10 @@ override_attributes \
     :remember_me_key => "p928375614k6j/14m43iotgha''423j56;11",
     :has_internal_services => true,
     :additional_properties => [
-      "alm.hudsonSlave.build.directoriesToClean=/tmp"
+      "alm.hudsonSlave.build.directoriesToClean=/tmp",
+      "alm.databaseBacked.maxTenantsPerNode=100",
+      "alm.diskBacked.maxTenantsPerNode=100",
+      "alm.hudsonMaster.maxTenantsPerNode=100"
     ]
   },
   :nexus => {
