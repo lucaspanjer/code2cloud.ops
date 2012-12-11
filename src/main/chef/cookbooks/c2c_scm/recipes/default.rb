@@ -1,5 +1,7 @@
 #c2c_disk node.c2c.server.home #fdisk,etc /dev/sdb & mount
 
+node.override[:tomcat][:http_connection_timeout] = "3600000"
+
 include_recipe "c2c_server"
 
 template "#{node.c2c.server.opt}/etc/scm.properties" do
@@ -8,14 +10,6 @@ template "#{node.c2c.server.opt}/etc/scm.properties" do
   group node.tomcat.group
   mode 0660
   notifies :restart, "service[tomcat]"
-end
-
-template "#{node.tomcat.config_dir}/server.xml" do
-  source "server.xml.erb"
-  owner node.tomcat.user
-  group node.tomcat.group
-  mode 0660
-  #notifies :restart, "service[tomcat]"
 end
 
 directory "#{node.c2c.server.home}/git-root" do
