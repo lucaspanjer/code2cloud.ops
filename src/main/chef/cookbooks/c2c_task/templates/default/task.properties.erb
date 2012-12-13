@@ -8,8 +8,8 @@ database.host=<%= c2c_role_address("db") %>
 
 task.database.password=<%= node.c2c.mysql_pw.tasks %>
 task.database.url=jdbc\:<%= node.c2c.server.jdbc_type %>//<%= c2c_role_address("db") %>\:<%= node.c2c.server.jdbc_port %><%= node.c2c.server.jdbc_path %>
-task.database.username=tasks
+task.database.username=<%= node.c2c.db.task.username %>
 
 wiki.database.password=<%= node.c2c.mysql_pw.wiki %>
 wiki.database.url=jdbc\:<%= node.c2c.server.jdbc_type %>//<%= c2c_role_address("db") %>\:<%= node.c2c.server.jdbc_port %><%= node.c2c.server.jdbc_path %>
-wiki.database.username=wiki
+wiki.database.username=<%= node.c2c.db.wiki.username %>
