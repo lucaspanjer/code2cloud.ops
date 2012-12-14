@@ -19,8 +19,8 @@ template "#{node.c2c.server.opt}/etc/hmaster.properties" do
   notifies :restart, "service[tomcat]"
 end
 
-template "#{node.c2c.server.opt}/bin/updateHudsonWars.sh" do
-  source "updateHudsonWars.sh.erb"
+template "#{node.c2c.server.opt}/bin/updateHudsonWars.rb" do
+  source "updateHudsonWars.rb.erb"
   owner node.c2c.user
   group node.tomcat.group
   mode 0770
@@ -72,10 +72,16 @@ end
 
 package "zip"
 
+if node.c2c.hudson.update_hudson_wars
+  hudson_war_artifact = { "name" => "hudson-war",  "package" => "hudson.web", "war" => "hudson-war",
+  "location" => "#{hudson_war}/hudson.war", "script" => "#{node.c2c.server.opt}/bin/updateHudsonWars.rb" } 
+  else
+  hudson_war_artifact = { "name" => "hudson-war",  "package" => "hudson.web", "war" => "hudson-war",
+  "location" => "#{hudson_war}/hudson.war" } 
+end
+
 c2c_server_deployment "hmaster" do 
-  artifacts [ { "name" => "hudson-config",  "package" => "hudson.configuration.web" },
-  { "name" => "hudson-war",  "package" => "hudson.web", "war" => "hudson-war",
-    "location" => "#{hudson_war}/hudson.war" } ]
+  artifacts [ { "name" => "hudson-config",  "package" => "hudson.configuration.web" }, hudson_war_artifact]
   action :deploy
   provider "c2c_server_#{node.c2c.server.deploy_type}"
 end 
