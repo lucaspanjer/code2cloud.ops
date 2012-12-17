@@ -53,6 +53,9 @@ override_attributes \
       "alm.hudsonMaster.maxTenantsPerNode=100"
     ]
   },
+  :hudson => {
+    :update_plugins => false # We have custom gerrit plugin enabled for c2c project
+  },
   :nexus => {
     :port => "7070"
     },
