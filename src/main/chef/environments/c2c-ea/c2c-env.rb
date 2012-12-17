@@ -25,10 +25,6 @@ override_attributes \
     "tasks" => "REDACTED",
     "wiki" => "REDACTED",
   },
-  :artifacts => {
-    :http_user => "testuser",
-    :http_password => "REDACTED"
-  },
   :github => {
     :consumer_key => "a30115eb45f34f83a4a5",
     :consumer_secret => "REDACTED"

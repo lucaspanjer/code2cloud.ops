@@ -19,6 +19,14 @@
 			<fileMode>0771</fileMode>			
 		</file>
 	</files>
+	<dependencySets>
+		<dependencySet>
+			<includes>
+				<include>com.tasktop.c2c.server:slave-jar:jar</include>
+			</includes>
+			<outputDirectory>/</outputDirectory>
+		</dependencySet>
+	</dependencySets>
 	<includeBaseDirectory>true</includeBaseDirectory>
 	<baseDirectory>chef</baseDirectory>
 	<fileSets>

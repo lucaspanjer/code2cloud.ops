@@ -26,11 +26,3 @@ def c2c_profile_host
 
   c2c_role_address("dmz") #should only reach in local env
 end
-
-def c2c_hudson_url
-  hudson_url = URI.parse(node.c2c.hudson_url)
-  if node.c2c.artifacts[:http_user]
-    hudson_url.userinfo = node.c2c.artifacts.http_user + ":" + node.c2c.artifacts.http_password
-  end
-  hudson_url
-end

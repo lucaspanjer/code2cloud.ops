@@ -20,20 +20,4 @@ define :c2c_user do
 #    group name
 #  end
 
-  if node[:c2c][:artifacts]
-    #generate .wgetrc
-    wgetrc = []
-
-    %w(http_user http_password http_proxy https_proxy).each do |key|
-      next unless val = node[:c2c][:artifacts][key.to_sym]
-      wgetrc << "#{key} = #{val}"
-    end
-
-    file "#{dir}/.wgetrc" do
-      content wgetrc.join("\n")
-      mode 0400
-      owner name
-      group name
-    end
-  end
 end

@@ -13,8 +13,6 @@ default[:c2c][:mail_sender][:username] = "c2c-sender@tasktop.com"
 default[:c2c][:mail_sender][:password] = "c2c12345c2c"
 default[:c2c][:mail_sender][:starttls] = "true"
 default[:c2c][:mail_sender][:from] = "\"Code2Cloud Team\" <noreply@tasktop.com>"
-default[:c2c][:artifacts][:base_url] = "https://q.tasktop.com/alm/s/c2c"
-default[:c2c][:hudson_url] = "#{node.c2c.artifacts.base_url}/hudson"
 
 default[:c2c][:proxy_environment][:http_proxy] = false
 default[:c2c][:proxy_environment][:http_proxy_port] = 80

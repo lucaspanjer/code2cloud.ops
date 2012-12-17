@@ -24,6 +24,7 @@
 		<dependencySet>
 			<includes>
 				<include>*:war</include>
+				<include>*:jar</include>
 			</includes>
 			<outputDirectory>/</outputDirectory>
 		</dependencySet>

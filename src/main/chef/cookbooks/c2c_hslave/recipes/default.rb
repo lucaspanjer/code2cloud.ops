@@ -42,18 +42,8 @@ directory "/opt/c2c" do
   group node.c2c.hslave.build_user
 end
 
-remote_file "/opt/code2cloud/chef/slave.jar" do
-  source "#{c2c_hudson_url}/jnlpJars/slave.jar"
-  owner node.c2c.hslave.build_user
-  group node.c2c.hslave.build_user
-  mode 0644
-  backup false
-  action :create_if_missing
-  not_if {File.exists?("/opt/c2c/slave.jar")}
-end
-
 execute "copy slave.jar to /opt/c2c/slave.jar" do
-  command "cp /opt/code2cloud/chef/slave.jar /opt/c2c/slave.jar"
+  command "cp /opt/code2cloud/chef/slave-jar-#{node.c2c.server.version}.jar /opt/c2c/slave.jar"
   not_if {File.exists?("/opt/c2c/slave.jar")}
 end
 
