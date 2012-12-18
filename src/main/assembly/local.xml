@@ -53,6 +53,10 @@
 			</includes>
 			<outputDirectory>roles</outputDirectory>
 		</fileSet>
+		<fileSet>
+			<directory>${basedir}/src/main/chef/environments/${chef.env}/data_bags</directory>
+			<outputDirectory>/data_bags</outputDirectory>
+		</fileSet>
 		<fileSet> <!-- Get the base files. This must be last because it will *not* overwrite -->
 			<directory>${project.build.directory}/opscode-cookbooks</directory>
 			<outputDirectory>cookbooks</outputDirectory>

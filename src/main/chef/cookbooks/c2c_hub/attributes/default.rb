@@ -1,6 +1,5 @@
 default[:c2c][:service] = "hub"
 default[:c2c][:github][:consumer_key] = nil
-default[:c2c][:github][:consumer_secret] = nil
 default[:c2c][:hub][:prefix_path] = ""
 default[:c2c][:hub][:protocol] = "https"
 default[:c2c][:hub][:wildcard_dns] = false

@@ -1,15 +1,10 @@
 name "c2c-env"
 
-# ROLE for Code2Cloud Dev environment properties (https://q.tasktop.com/alm)x
+# ROLE for Code2Cloud Dev environment properties (https://q.tasktop.com/alm)
 
 override_attributes \
 :java => {
   :java_home => "/usr/lib/jvm/java-6-sun/jre"
-},
-:mysql => {
-  :server_root_password => "REDACTED",
-  :server_debian_password => "REDACTED",
-  :server_repl_password => "REDACTED",
 },
 :tomcat => {
   :second_service => true
@@ -17,8 +12,7 @@ override_attributes \
 :c2c => {
   :server => {
       :s3 => {
-        :access_key_id => "AKIAI6FIC7DBENCWERKA",
-        :access_key_secret => "REDACTED",
+        :access_key_id => "AKIAI6FIC7DBENCWERKA"
       },
   },
   :hosts => {
@@ -32,14 +26,8 @@ override_attributes \
      "task"          => { :ipaddress => "192.168.0.151", :description => "Task node" },
      "profile"       => { :ipaddress => "q.tasktop.com", :description => "Public facing profile host" },
    },
-  :mysql_pw => {
-    "profile" => "REDACTED",
-    "tasks" => "REDACTED",
-    "wiki" => "REDACTED",
-  },
   :github => {
-    :consumer_key => "a30115eb45f34f83a4a5",
-    :consumer_secret => "REDACTED"
+    :consumer_key => "a30115eb45f34f83a4a5"
   },
   :hub => {
     :prefix_path => "/alm",

@@ -5,10 +5,7 @@ override_attributes \
   :java_home => "/usr/lib/jvm/jdk1.6.0_37"
 },
 :mysql => {
-  :bind_address => "0.0.0.0",
-  :server_root_password => "welcome1",
-  :server_debian_password => "welcome1",
-  :server_repl_password => "welcome1",
+  :bind_address => "0.0.0.0"
 },
 :tomcat => {
   :second_service => true
@@ -23,11 +20,6 @@ override_attributes \
       :backup => { :enabled => false},
       :email_log_errors_to_admin => false, 
     },
-  :mysql_pw => {
-    "profile" => "welcome1",
-    "tasks" => "welcome1",
-    "wiki" => "welcome1",
-   },
   :hub => {
       :prefix_path => "",
       :invitation_only => false,

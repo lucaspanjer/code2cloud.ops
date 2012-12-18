@@ -5,6 +5,9 @@ directory "#{node.c2c.server.opt}/sql" do
    recursive true
  end
  
+ 
+ profileDBPassword=data_bag_item("secrets", "passwords")["profile"]
+ 
  [ "setupLocalServiceHosts.sql"].each do |sql_file|
    template "#{node.c2c.server.opt}/sql/#{sql_file}" do
      source "#{sql_file}.erb"
@@ -15,7 +18,7 @@ directory "#{node.c2c.server.opt}/sql" do
    end
    
    execute "Maybe run #{sql_file}" do
-     command "mysql -u profile -p#{node.c2c.mysql_pw.profile} profile < #{node.c2c.server.opt}/sql/#{sql_file} && " + 
+     command "mysql -u profile -p#{profileDBPassword} profile < #{node.c2c.server.opt}/sql/#{sql_file} && " + 
      "sudo -u vcloud touch #{node.c2c.server.opt}/sql/#{sql_file}.ran" 
      creates "#{node.c2c.server.opt}/sql/#{sql_file}.ran"
    end

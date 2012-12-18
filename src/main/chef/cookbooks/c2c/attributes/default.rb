@@ -10,7 +10,6 @@ default[:c2c][:admin_email] = "clint.morgan@tasktop.com"
 default[:c2c][:mail_sender][:host] = "smtp.gmail.com"
 default[:c2c][:mail_sender][:port] = "587"
 default[:c2c][:mail_sender][:username] = "c2c-sender@tasktop.com"
-default[:c2c][:mail_sender][:password] = "c2c12345c2c"
 default[:c2c][:mail_sender][:starttls] = "true"
 default[:c2c][:mail_sender][:from] = "\"Code2Cloud Team\" <noreply@tasktop.com>"
 

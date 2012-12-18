@@ -4,5 +4,5 @@ rewriteDomain=
 hostname=<%= node.c2c.admin_mail_sender.username %>
 UseSTARTTLS=YES
 AuthUser=<%= node.c2c.admin_mail_sender.username %>
-AuthPass=<%= node.c2c.admin_mail_sender.password %>
+AuthPass=<%= @admin_mail_sender_password %>
 FromLineOverride=YES

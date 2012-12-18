@@ -4,7 +4,7 @@ require 'mysql'
 
 host='<%= c2c_role_address("db") %>'
 user='tasks'
-pwd='<%= node.c2c.mysql_pw.tasks %>'
+pwd='<%= @tasksPwd %>'
 webapplibs='/opt/code2cloud/webapps/tasks/WEB-INF/lib/'
 
 con = Mysql.new(host, user, pwd);

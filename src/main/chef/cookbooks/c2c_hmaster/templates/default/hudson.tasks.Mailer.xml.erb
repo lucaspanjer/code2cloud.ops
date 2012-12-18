@@ -4,7 +4,7 @@
   <adminAddress>Code2Cloud Builder &lt;noreply@tasktop.com&gt;</adminAddress>
   <useSsl><%= node.c2c.mail_sender.starttls %></useSsl>
   <charset>UTF-8</charset>
-  <smtpHost>DISABLED</smtpHost>
-  <smtpAuthUsername>DISABLED</smtpAuthUsername>
-  <smtpAuthPassword>DISABLED</smtpAuthPassword>
+  <smtpHost><%= node.c2c.mail_sender.host %></smtpHost>
+  <smtpAuthUsername><%= node.c2c.mail_sender.username %></smtpAuthUsername>
+  <smtpAuthPassword><%= @c2c_mail_sender_password %></smtpAuthPassword>
 </hudson.tasks.Mailer_-DescriptorImpl>

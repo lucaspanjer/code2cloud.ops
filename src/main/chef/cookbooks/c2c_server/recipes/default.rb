@@ -85,15 +85,20 @@ end
 
 if node.c2c.server.backup.enabled
 
+  s3_access_key_secret=data_bag_item("secrets", "passwords")["s3_access_key_secret"]
   template "#{node.c2c.server.opt}/bin/backup-dirs.pl" do
     source "backup-dirs.pl.erb"
+    variables :s3_access_key_secret => s3_access_key_secret
     owner node.c2c.user
     group node.c2c.user
     mode 0770
   end
   
+  admin_mail_sender_password=data_bag_item("secrets", "passwords")["admin_mail_sender_password"]
+
   template "/etc/ssmtp/ssmtp.conf" do
     source "ssmtp.conf.erb"
+    variables :admin_mail_sender_password => admin_mail_sender_password
     mode 0774
   end
   

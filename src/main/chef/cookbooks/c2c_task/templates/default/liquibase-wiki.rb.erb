@@ -4,7 +4,7 @@ require 'mysql'
 
 host='<%= c2c_role_address("db") %>'
 user='wiki'
-pwd='<%= node.c2c.mysql_pw.wiki %>'
+pwd='<%= @wikiPwd %>'
 webapplibs='/opt/code2cloud/webapps/wiki/WEB-INF/lib/'
 
 con = Mysql.new(host, user, pwd);

@@ -10,12 +10,12 @@ my $archive_dir = '<%= node.c2c.server.home %>/backup/archive';
 my $encrypt_key = 'Code2Cloud';
 my $encrypt_pass = '';
 my $s3_access_key_id = '<%= node.c2c.server.s3.access_key_id %>';
-my $s3_access_key_secret = '<%= node.c2c.server.s3.access_key_secret %>';
+my $s3_access_key_secret = '<%= @s3_access_key_secret %>';
 my $s3_export = "export AWS_ACCESS_KEY_ID=$s3_access_key_id && export AWS_SECRET_ACCESS_KEY=$s3_access_key_secret &&";
 my $pass_export = "export PASSPHRASE=$encrypt_pass &&";
 
 
-my $mysql_root_pwd = '<%= node.mysql.server_root_password %>';
+my $mysql_root_pwd = '<%= @serverRootPwd %>';
 
 print "Ensure backup dir exists\n";
 `mkdir -p $backup_dir`;

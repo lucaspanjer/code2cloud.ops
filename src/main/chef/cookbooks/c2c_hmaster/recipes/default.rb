@@ -49,8 +49,11 @@ remote_directory hudson_home do
   mode 0755
 end
 
+c2c_mail_sender_password=  data_bag_item("secrets", "passwords")["c2c_mail_sender_password"]
+
 template "#{hudson_home}/hudson.tasks.Mailer.xml" do
   source "hudson.tasks.Mailer.xml.erb"
+  variables :c2c_mail_sender_password => c2c_mail_sender_password
   owner node.c2c.user
   group node.tomcat.group
   mode 0660
