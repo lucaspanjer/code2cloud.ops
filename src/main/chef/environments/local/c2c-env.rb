@@ -50,6 +50,6 @@ override_attributes \
                    },{
       :name => "builder",
       # NOTE this is the autgenerated key, will change with each build.
-        :keys => ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjfjPBDGj5EkyUVTr7eL+i8dmu/trdANtG0vKAobKIUitYhY4zTjKJlAlS8360rXQHWaTmueigQptUTUflow3ttOWoRoYBS8nWj32nBVrZh1rOW0PZngVrhCrvQ7wYl9xvAVz8pcLCpYxR3EYwIdRTTa8T4ZGazYwxeZ6LMchOTjvSoqdPY5nqZ7h48KmftXgXdD9oPLxNrtjVxFPwVSulhM2xPXQvPtoKSFrjzpJ17AwRd14RrLzJSYKbhhCFkfyUgDswPzJgNzOnaLg/e6s0/aMu6JxV31n6T6mcQv/raet93PsO7S1jnI2AH9mRXipKZNCcraQSPuGhcwrW9mGB vcloud@dev"]
+        :keys => ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDSBy7TLkjBYVt0CKvuUOdn1jNpq4ZQigBq8JVtfFVYL/D3pc+zpNCdI9oBT46wwanHLDDbLb0z+doxY3iaIHCUYvlxdmjNT18VGcustwyku1ojlaVAORNkQief//fLrVj081eUcXiPZFxj89A6rPyyAE7F0SSBtq+JL8WNq9iIrvCFysrkB20XImcwk61AQAFAV9XXckMYS2PbEXN0Wf6mmmW2g7G1vVgcxxP5uQW8feTOi5g8nt1lnYbj88xhnScmU6Q82Q4LOf69Md3oXEDVvbQmsjC6oN8/3aWNac4R0R2/pAeSG03pQT2X/mN1DFscY2iYxpuKq9/7Fpmd6n1z vcloud@dev"]
     }]
 }
