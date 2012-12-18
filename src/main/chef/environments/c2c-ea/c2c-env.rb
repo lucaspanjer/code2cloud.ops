@@ -3,12 +3,18 @@ name "c2c-env"
 # ROLE for Code2Cloud Early access environment properties (https://r.tasktop.com/)
 
 override_attributes \
-:mysql => {
-  :server_root_password => "REDACTED",
-  :server_debian_password => "REDACTED",
-  :server_repl_password => "REDACTED",
+:java => {
+  :java_home => "/usr/lib/jvm/java-6-sun/jre"
+},
+:tomcat => {
+  :second_service => true
 },
 :c2c => {
+  :server => {
+      :s3 => {
+        :access_key_id => "AKIAI6FIC7DBENCWERKA"
+      },
+  },
   :hosts => {
      "hub"           => { :ipaddress => "192.168.0.154", :description => "Hub node" },
      "nexus"         => { :ipaddress => "192.168.0.154",  :description => "Nexus Repository" },
@@ -20,26 +26,17 @@ override_attributes \
      "task"          => { :ipaddress => "192.168.0.154", :description => "Task node" },
      "profile"       => { :ipaddress => "r.tasktop.com", :description => "Public facing profile host" },
    },
-  :mysql_pw => {
-    "profile" => "REDACTED",
-    "tasks" => "REDACTED",
-    "wiki" => "REDACTED",
-  },
   :github => {
-    :consumer_key => "a30115eb45f34f83a4a5",
-    :consumer_secret => "REDACTED"
+    :consumer_key => "a30115eb45f34f83a4a5"
   },
-    #NOTE We don't provide the DMZ role. just manually write it. 
-    # This is because we need it to act as a virtual host for multiple envs
-  :dmz => {
-    :servername => "r.tasktop.com",
-    :go_daddy_bundle_crt => "REDACTED"
-  },
-  :hub => {
+ :hub => {
     :prefix_path => "",
     :invitation_only => true,
     :public_ssh_port => 22,
-    :internal_ssh_port => 22
+    :internal_ssh_port => 22,
+    :remember_me_key => "p928375614k6j/14m43iotgha''423j56;11",
+    :has_internal_services => true,
+
   },
   :nexus => {
     :port => "7070"
