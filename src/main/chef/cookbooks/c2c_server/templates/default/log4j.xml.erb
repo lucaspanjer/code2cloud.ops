@@ -27,30 +27,6 @@
 		</layout>
 	</appender>
 	
-	<% if node.c2c.server.email_log_errors_to_admin %>
-    <!--Provides email logging to admins -->
-    <appender name="EMAIL"  class="org.apache.log4j.net.SMTPAppender">
-        <param name="BufferSize" value="512" />
-        <param name="SMTPHost" value="<%= node.c2c.admin_mail_sender.host %>" />
-        <param name="SMTPPort" value="465" />
-        <param name="SMTPProtocol" value="smtps" />
-        <param name="SMTPUsername" value="<%= node.c2c.admin_mail_sender.username %>" />
-        <param name="SMTPPassword" value="<%= node.c2c.admin_mail_sender.password %>" />
-        <param name="From" value="log4j-appender@code2cloud.com" />
-        <param name="To" value="<%= node.c2c.admin_email %>" />
-        <param name="Subject" value="[SMTPAppender] Code2Cloud error log for <%= c2c_profile_host %>" />
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern"
-              value="[%d{ISO8601}]%n%n%-5p%n%n%c%n%n%m%n%n" />
-        </layout>
-        <filter class="org.apache.log4j.varia.LevelRangeFilter">
-            <param name="LevelMin" value="ERROR"/>
-            <param name="LevelMax" value="FATAL"/>
-        </filter>
-    </appender>
-	<% end %>
-	
-	
 	<!-- ============================== -->
 	<!-- 3rd party loggers -->
 	<!-- ============================== -->
