@@ -7,21 +7,16 @@
 	<!-- ============================== -->
 	<!-- Appenders -->
 	<!-- ============================== -->
-
-	<!-- Provides Console Logging -->
-	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
-		<param name="Target" value="System.out" />
-
-		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%d %-5p [%t] [%c@%L] %m%n" />
-		</layout>
-	</appender>
 	
 	<!--  Provides File Logging  -->
-	<appender name="FILE" class="org.apache.log4j.FileAppender">
-		<param name="File" value="${catalina.base}/logs/code2cloud.log" />
+	<appender name="FILE" class="org.apache.log4j.rolling.RollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/code2cloud-<%= @type %>.log" />
 		<param name="Append" value="true" />
 
+    <rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+      <param name="FileNamePattern" value="${catalina.base}/logs/code2cloud-<%= @type %>.%d.log" />
+    </rollingPolicy>
+		
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d %-5p [%t] [%c@%L] %m%n" />
 		</layout>
@@ -59,11 +54,6 @@
 	<root>
 		<level value="INFO" />
 		<appender-ref ref="FILE" />
-		<% if node.c2c.server.email_log_errors_to_admin %>
-		<appender-ref ref="EMAIL" />
-		<% end %>
-		
-		
 	</root>
 
 </log4j:configuration>

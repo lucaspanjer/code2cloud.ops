@@ -6,6 +6,9 @@ include_recipe "c2c_server"
 tasksPwd=data_bag_item("secrets", "passwords")["tasks"]
 wikiPwd=data_bag_item("secrets", "passwords")["wiki"]
 
+c2c_log4j_config "tasks"
+c2c_log4j_config "wiki"
+  
 template "#{node.c2c.server.opt}/etc/task.properties" do
   source "task.properties.erb"
   variables :tasksPwd => tasksPwd, :wikiPwd => wikiPwd

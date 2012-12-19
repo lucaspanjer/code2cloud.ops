@@ -1,7 +1,9 @@
 
-node.override[:tomcat][:java_options] = node[:c2c][:hudson][:tomcat][:jvm_options] + " -Dlog4j.configuration=file://#{node.c2c.server.opt}/etc/log4j.xml"
+node.override[:tomcat][:java_options] = node[:c2c][:hudson][:tomcat][:jvm_options]
   
 include_recipe "c2c_server"
+
+c2c_log4j_config "hudson"
 
 hudson_war = "#{node.c2c.server.opt}/configuration/template/hudson-war"
 

@@ -70,13 +70,6 @@ directory "#{node.c2c.server.opt}/etc/" do
   action :create
 end
 
-template "#{node.c2c.server.opt}/etc/log4j.xml" do
-  source "log4j.xml.erb"
-  owner node.c2c.user
-  group node.tomcat.group
-  mode 0660
-end
-
 directory "#{node.c2c.server.opt}/bin" do
   owner node.c2c.user
   group node.c2c.group

@@ -4,6 +4,8 @@ node.override[:tomcat][:http_connection_timeout] = "3600000"
 
 include_recipe "c2c_server"
 
+c2c_log4j_config "services"
+
 template "#{node.c2c.server.opt}/etc/scm.properties" do
   source "scm.properties.erb"
   owner node.c2c.user

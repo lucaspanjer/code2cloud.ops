@@ -22,7 +22,7 @@ default[:c2c][:server][:jdbc_type] = "mysql\\:"
 default[:c2c][:server][:jdbc_port] = "3306"
 default[:c2c][:server][:jdbc_path] = ""
   
-override[:tomcat][:java_options] = "-Xmx2048M -Xss192K -XX:MaxPermSize=512M -Dlog4j.configuration=file://#{node.c2c.server.opt}/etc/log4j.xml"
+override[:tomcat][:java_options] = "-Xmx2048M -Xss192K -XX:MaxPermSize=512M"
 
 default[:c2c][:server][:tomcat][:jmx_config] = ""
 default[:c2c][:server][:tomcat][:catalina][:jmx_remote] = ""

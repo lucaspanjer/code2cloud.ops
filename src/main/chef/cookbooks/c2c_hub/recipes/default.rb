@@ -23,6 +23,8 @@ end
 
 include_recipe "c2c_server"
 
+c2c_log4j_config "hub"
+
 profilePwd=data_bag_item("secrets", "passwords")["profile"]
 github_consumer_secret=data_bag_item("secrets", "passwords")["github_consumer_secret"]
 c2c_mail_sender_password=  data_bag_item("secrets", "passwords")["c2c_mail_sender_password"]
