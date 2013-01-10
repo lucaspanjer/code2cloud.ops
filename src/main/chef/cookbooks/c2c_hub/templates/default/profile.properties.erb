@@ -10,7 +10,7 @@ ssh.server.publicPort=<%= node.c2c.hub.public_ssh_port %>
 ssh.server.port=<%= node.c2c.hub.internal_ssh_port %>
 
 alm.database.password=<%= @profilePwd %>
-alm.database.url=jdbc\:<%= node.c2c.server.jdbc_type %>//<%= c2c_role_address("db") %>\:<%= node.c2c.server.jdbc_port %><%= node.c2c.hub.jdbc_path %>
+alm.database.url=jdbc\:<%= node.c2c.server.jdbc_type %><%= node.c2c.server.jdbc_host %>
 alm.database.username=profile
 
 alm.mailSender.javaMailProperties[mail.smtp.starttls.enable]=<%= node.c2c.mail_sender.starttls %>

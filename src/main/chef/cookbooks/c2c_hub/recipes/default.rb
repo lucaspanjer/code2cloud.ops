@@ -11,6 +11,7 @@ include_recipe "openssh"
 #end
 
 node.override[:etchosts][:hub_entry] = node.c2c.hub.etc_hosts_entry
+node.override[:c2c][:server][:jdbc_host] = "//" + node.c2c.hosts.db.ipaddress + "\\:" + node.c2c.server.jdbc_port + node.c2c.hub.jdbc_path
   
 # This is only needed when we deploy the hub on the same VM as other services
 if node.c2c.hub.has_internal_services
