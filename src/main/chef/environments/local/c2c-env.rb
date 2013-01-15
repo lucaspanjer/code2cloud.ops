@@ -8,7 +8,9 @@ override_attributes \
   :bind_address => "0.0.0.0"
 },
 :tomcat => {
-  :second_service => true
+  :second_service => true,
+  :catalina_options => "-Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n"
+
 },
 :c2c => {
   :hosts => {
