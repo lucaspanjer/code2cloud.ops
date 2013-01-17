@@ -34,7 +34,7 @@ foreach my $db (@db_names) {
 
 
 print "Sending backups to s3 \n";
-print `$pass_export $s3_export duplicity --name s3-dbs --archive-dir $archive_dir --encrypt-key $encrypt_key $backup_dir  s3+http://code2cloud.backups/$environment/$hostname/dbs`;
+print `$pass_export $s3_export duplicity --name s3-dbs --archive-dir $archive_dir --encrypt-key $encrypt_key --full-if-older-than 30D $backup_dir  s3+http://code2cloud.backups/$environment/$hostname/dbs`;
 
 `rm -rf $backup_dir/*.backup.sql`;
 
