@@ -118,8 +118,7 @@ if node.c2c.server.backup.enabled
   execute "gpg: import" do
     not_if "sudo -u #{node.c2c.user} gpg --list-keys #{node.c2c.server.backup.key_name}"
     #FIXME should use a property for this sig                                                                                                      
-    command "gpg --import #{node.c2c.server.opt}/etc/backup_pubkey.txt && echo D18422C06DA0E931CBEBE73C99F305CB48F1289B:6: | gpg --import-ownertru\
-  st"
+    command "gpg --import #{node.c2c.server.opt}/etc/backup_pubkey.txt && echo D18422C06DA0E931CBEBE73C99F305CB48F1289B:6: | gpg --import-ownertrust"
     user node.c2c.user
     action :run
   end
