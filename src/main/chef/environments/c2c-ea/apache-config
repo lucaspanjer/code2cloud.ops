@@ -50,8 +50,8 @@ ProxyRequests Off
         ProxyPass /500.html !
         ProxyPass /updateSite !
 
-        ProxyPass / http://192.168.0.154:8081/
-        ProxyPassReverse / http://192.168.0.154:8081/
+        ProxyPass / http://192.168.51.29:8081/
+        ProxyPassReverse / http://192.168.51.29:8081/
 
         # Disabled, because it was over-broad and causing application issues
         ErrorDocument 404 /404.html
@@ -69,8 +69,8 @@ ProxyRequests Off
         ProxyPass /404.html !
         ProxyPass /500.html !
 
-        #ProxyPass / http://192.168.0.151/
-        #ProxyPassReverse / http://192.168.0.151/
+        #ProxyPass / http://192.168.51.27/
+        #ProxyPassReverse / http://192.168.51.27/
 
 	RedirectMatch "^/$" https://q.tasktop.com/alm
         RedirectMatch "^/alm$" https://q.tasktop.com/alm
@@ -94,8 +94,8 @@ ProxyRequests Off
         ProxyPass /404.html !
         ProxyPass /500.html !
 
-        ProxyPass / http://192.168.0.151/
-        ProxyPassReverse / http://192.168.0.151/
+        ProxyPass / http://192.168.51.27/
+        ProxyPassReverse / http://192.168.51.27/
 
 	 RedirectMatch "^/$" https://q.tasktop.com/alm
         RedirectMatch "^/alm$" https://q.tasktop.com/alm
