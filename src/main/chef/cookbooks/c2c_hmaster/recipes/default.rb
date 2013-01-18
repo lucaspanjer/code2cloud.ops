@@ -6,6 +6,27 @@ include_recipe "c2c_server"
 c2c_log4j_config "hudson"
 
 hudson_war = "#{node.c2c.server.opt}/configuration/template/hudson-war"
+slave_options = node[:c2c][:hudson][:slave][:jvm_options]
+      
+if node.c2c.proxy_environment.http_proxy != false 
+  slave_options = slave_options + " -Dhttp.proxyHost=#{node.c2c.proxy_environment.http_proxy}"
+end
+
+if node.c2c.proxy_environment.http_proxy_port != false
+  slave_options = slave_options + " -Dhttp.proxyPort=#{node.c2c.proxy_environment.http_proxy_port}"
+end
+
+if node.c2c.proxy_environment.https_proxy != false
+  slave_options = slave_options + " -Dhttps.proxyHost=#{node.c2c.proxy_environment.https_proxy}"
+end
+
+if node.c2c.proxy_environment.https_proxy_port != false
+  slave_options = slave_options + " -Dhttps.proxyPort=#{node.c2c.proxy_environment.https_proxy_port}"
+end
+
+if node.c2c.proxy_environment.no_proxy_prefix != false
+  slave_options = slave_options + " -Dhttp.nonProxyHosts=#{node.c2c.proxy_environment.no_proxy_prefix}" + c2c_role_address("profile") + "|" + c2c_role_address("profile")
+end
 
 directory hudson_war do
   owner node.tomcat.user
@@ -65,6 +86,7 @@ template "#{hudson_home}/config.xml" do
   source "config.xml.erb"
   owner node.c2c.user
   group node.tomcat.group
+  variables :slave_options => slave_options
   mode 0660
 end
 
