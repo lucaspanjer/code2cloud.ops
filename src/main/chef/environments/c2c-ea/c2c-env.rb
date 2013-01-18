@@ -11,6 +11,9 @@ override_attributes \
 },
 :c2c => {
   :server => {
+      :tomcat => {
+        :authbind => "yes"
+      },
       :s3 => {
         :access_key_id => "AKIAI6FIC7DBENCWERKA"
       },
@@ -41,9 +44,6 @@ override_attributes \
   :nexus => {
     :port => "7070"
     },
-  :tomcat => {
-    :authbind => "yes"
-  },
   :authorized_keys => [{
     :name => "vcloud",
       :keys => ["ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAz6V7/M+Ui5VSmwc/RdyucIYFgPwoILJCRdFs78RnCEWmYxle9oHKz5GhOgsSJBRvddiiy7kliwdmSguLe21OYSzvFnB/kVPNCMUrNEXCZGsQKqp+K9qbf6F+s5kAynWPKp/p/56lU3gJ9+Lc+tX3erAwNHJM3Y7WdHJBSKzUAGTYBtOf47XEJGXDn7ggVQzMO6OETxb6xAIeHbwGdPdFMMQE9iDGu5rfgIxdxYeVH9SXbzd4mXSQpk6Zyv8TcCWbCZxDILynkkBN0j8TOeSGt8tusRGinBdKB4drZajc35s329kFm5DNj/Vikmv2A8D8mb+qDRZdBtTueoZp/gO+IQ== cmorgan",
