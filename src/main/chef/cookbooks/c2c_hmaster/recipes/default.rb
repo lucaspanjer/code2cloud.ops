@@ -25,7 +25,7 @@ if node.c2c.proxy_environment.https_proxy_port != false
 end
 
 if node.c2c.proxy_environment.no_proxy_prefix != false
-  slave_options = slave_options + " -Dhttp.nonProxyHosts=#{node.c2c.proxy_environment.no_proxy_prefix}" + c2c_role_address("profile") + "|" + c2c_role_address("profile")
+  slave_options = slave_options + " -Dhttp.nonProxyHosts=\"#{node.c2c.proxy_environment.no_proxy_prefix}" + c2c_role_address("profile") + "|" + c2c_role_address("profile") + "\""
 end
 
 directory hudson_war do
