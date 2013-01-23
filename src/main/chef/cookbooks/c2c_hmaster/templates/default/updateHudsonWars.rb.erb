@@ -6,14 +6,6 @@ hudsonBaseDir="<%= node.c2c.hmaster.builds_dir %>/"
 hudsonTemplateWar="<%= node.c2c.server.opt %>/configuration/template/hudson-war/hudson.war"
 hudsonWebappsDir="<%= node.c2c.server.opt %>/webapps"
 
-javaHome=`readlink -f <%= node.java.java_home %>`.strip
-if javaHome =~ /jre$/  
-   jarBin="#{javaHome}/../bin/jar"
-else
-   jarBin="#{javaHome}/bin/jar"
-end
-
-
 removePlugins=<%= node.c2c.hudson.update_plugins %>
 if removePlugins
    puts "removing users plugin data"
@@ -35,12 +27,12 @@ Dir.glob("#{hudsonWebappsDir}/*hudson.war") do |webapp|
     tempWarLocation="/tmp/hudson-#{projectId}"
     `mkdir #{tempWarLocation}`
     `cp #{hudsonTemplateWar} #{tempWarLocation}`
-    `cd #{tempWarLocation} && #{jarBin} -xf hudson.war WEB-INF/web.xml`
+    `cd #{tempWarLocation} && unzip hudson.war WEB-INF/web.xml`
     
     # Place the hudson home for this project in the web.xml
     `sed "s,<env-entry-value>,<env-entry-value>#{hudsonBaseDir}#{projectId} ," #{tempWarLocation}/WEB-INF/web.xml > #{tempWarLocation}/WEB-INF/web.xml.mod`
     `mv  #{tempWarLocation}/WEB-INF/web.xml.mod  #{tempWarLocation}/WEB-INF/web.xml`
-    `cd #{tempWarLocation} && #{jarBin} -uf hudson.war WEB-INF/web.xml`
+    `cd #{tempWarLocation} && zip hudson.war WEB-INF/web.xml`
     `mv #{tempWarLocation}/hudson.war #{webapp}`
     `chown <%= node.tomcat.user %>:<%= node.tomcat.user %> #{webapp}` 
     `rm -rf #{tempWarLocation}`
