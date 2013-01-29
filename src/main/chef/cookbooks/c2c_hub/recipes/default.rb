@@ -37,7 +37,7 @@ c2c_mail_sender_password=  data_bag_item("secrets", "passwords")["c2c_mail_sende
     owner node.c2c.user
     group node.tomcat.group
     mode 0660
-    notifies :restart, "service[tomcat]" #fixme should be hub tomcat in some cases
+    notifies :restart, "service[tomcat]" 
   end
 end
 
