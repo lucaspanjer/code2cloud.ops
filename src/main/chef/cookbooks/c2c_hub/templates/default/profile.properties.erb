@@ -9,7 +9,7 @@ profile.serviceProxy.path=<%= node.c2c.hub.service_proxy_path %>
 ssh.server.publicPort=<%= node.c2c.hub.public_ssh_port %>
 ssh.server.port=<%= node.c2c.hub.internal_ssh_port %>
 
-alm.database.password=<%= @profilePwd %>
+alm.database.password=<%= node.c2c.hub.profile_password %>
 alm.database.url=jdbc\:<%= node.c2c.server.jdbc_type %><%= node.c2c.server.jdbc_host %>
 alm.database.username=profile
 
