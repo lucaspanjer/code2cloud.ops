@@ -59,6 +59,14 @@ execute "cp #{node.c2c.user_home}/.ssh/id_rsa #{build_key_file}; chown #{node.to
   creates "#{build_key_file}"
 end
 
+template "#{node.c2c.server.opt}/etc/applicationContext-serviceHosts.xml" do
+  path "#{node.c2c.server.opt}/etc/applicationContext-serviceHosts.xml"
+  owner node.c2c.user
+  group node.tomcat.group
+  mode 0660
+  source "applicationContext-serviceHosts.xml.erb"
+end
+
 directory "#{node.c2c.server.opt}/activeMQ" do
   owner node.tomcat.user
   group node.tomcat.group

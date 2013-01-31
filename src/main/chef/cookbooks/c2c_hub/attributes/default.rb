@@ -1,4 +1,5 @@
 default[:c2c][:service] = "hub"
+default[:c2c][:service_hosts] = []
 default[:c2c][:github][:consumer_key] = nil
 default[:c2c][:hub][:prefix_path] = ""
 default[:c2c][:hub][:protocol] = "https"
@@ -12,10 +13,4 @@ default[:c2c][:hub][:has_internal_services] = false # node[:tomcat][:second_serv
 default[:c2c][:hub][:jdbc_path] = "/profile"
 default[:c2c][:hub][:additional_properties] = []
 default[:c2c][:hub][:etc_hosts_entry] = true
-
-
-
-
-
-
 
