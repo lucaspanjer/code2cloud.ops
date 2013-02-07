@@ -13,4 +13,5 @@ default[:c2c][:hub][:has_internal_services] = false # node[:tomcat][:second_serv
 default[:c2c][:hub][:jdbc_path] = "/profile"
 default[:c2c][:hub][:additional_properties] = []
 default[:c2c][:hub][:etc_hosts_entry] = true
+default[:c2c][:hub][:profile_username] = "profile"
 
