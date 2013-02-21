@@ -70,6 +70,7 @@ remote_directory hudson_home do
   owner node.tomcat.user
   group node.tomcat.user
   mode 0755
+  purge true
 end
 
 c2c_mail_sender_password=  data_bag_item("secrets", "passwords")["c2c_mail_sender_password"]
