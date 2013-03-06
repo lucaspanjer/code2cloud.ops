@@ -69,8 +69,8 @@ ProxyRequests Off
         ProxyPass /404.html !
         ProxyPass /500.html !
 
-        #ProxyPass / http://192.168.51.27/
-        #ProxyPassReverse / http://192.168.51.27/
+        #ProxyPass / http://192.168.51.23/
+        #ProxyPassReverse / http://192.168.51.23/
 
 	RedirectMatch "^/$" https://q.tasktop.com/alm
         RedirectMatch "^/alm$" https://q.tasktop.com/alm
@@ -94,8 +94,8 @@ ProxyRequests Off
         ProxyPass /404.html !
         ProxyPass /500.html !
 
-        ProxyPass / http://192.168.51.27/
-        ProxyPassReverse / http://192.168.51.27/
+        ProxyPass / http://192.168.51.23/
+        ProxyPassReverse / http://192.168.51.23/
 
 	 RedirectMatch "^/$" https://q.tasktop.com/alm
         RedirectMatch "^/alm$" https://q.tasktop.com/alm
