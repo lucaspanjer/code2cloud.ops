@@ -3,42 +3,6 @@
   <version>code2cloud-1.384</version>
   <numExecutors>0</numExecutors>
   <mode>NORMAL</mode>
-  <useSecurity>true</useSecurity>
-  <authorizationStrategy class="hudson.security.GlobalMatrixAuthorizationStrategy">
-    <permission>hudson.model.Hudson.Administer:ROLE_ADMIN</permission>
-    <permission>hudson.model.Hudson.Read:ROLE_ADMIN</permission>
-    <permission>hudson.model.Hudson.Read:ROLE_USER</permission>
-    <permission>hudson.model.Hudson.Read:ROLE_COMMUNITY</permission>
-    <permission>hudson.model.Hudson.Read:ROLE_OBSERVER</permission>
-    <permission>hudson.model.Item.Build:ROLE_ADMIN</permission>
-    <permission>hudson.model.Item.Build:ROLE_USER</permission>
-    <permission>hudson.model.Item.Build:ROLE_COMMUNITY</permission>
-    <permission>hudson.model.Item.Configure:ROLE_ADMIN</permission>
-    <permission>hudson.model.Item.Configure:ROLE_USER</permission>
-    <permission>hudson.model.Item.Configure:ROLE_COMMUNITY</permission>
-    <permission>hudson.model.Item.Create:ROLE_ADMIN</permission>
-    <permission>hudson.model.Item.Create:ROLE_USER</permission>
-    <permission>hudson.model.Item.Create:ROLE_COMMUNITY</permission>
-    <permission>hudson.model.Item.Delete:ROLE_ADMIN</permission>
-    <permission>hudson.model.Item.Delete:ROLE_USER</permission>
-    <permission>hudson.model.Item.Delete:ROLE_COMMUNITY</permission>
-    <permission>hudson.model.Item.Read:ROLE_ADMIN</permission>
-    <permission>hudson.model.Item.Read:ROLE_USER</permission>
-    <permission>hudson.model.Item.Read:ROLE_COMMUNITY</permission>
-    <permission>hudson.model.Item.Read:ROLE_OBSERVER</permission>
-    <permission>hudson.model.Item.Workspace:ROLE_ADMIN</permission>
-    <permission>hudson.model.Item.Workspace:ROLE_USER</permission>
-    <permission>hudson.model.Item.Workspace:ROLE_COMMUNITY</permission>
-    <permission>hudson.model.Run.Delete:ROLE_ADMIN</permission>
-    <permission>hudson.model.Run.Update:ROLE_ADMIN</permission>
-    <permission>hudson.model.View.Configure:ROLE_ADMIN</permission>
-    <permission>hudson.model.View.Create:ROLE_ADMIN</permission>
-    <permission>hudson.model.View.Delete:ROLE_ADMIN</permission>
-    <permission>hudson.scm.SCM.Tag:ROLE_ADMIN</permission>
-    <permission>hudson.scm.SCM.Tag:ROLE_USER</permission>
-    <permission>hudson.scm.SCM.Tag:ROLE_COMMUNITY</permission>
-  </authorizationStrategy>
-  <securityRealm class="com.tasktop.c2c.server.hudson.plugin.auth.AlmPreauthenticationSecurityRealm"/>
   <systemMessage></systemMessage>
   <jdks/>
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
@@ -46,7 +10,7 @@
   <clouds>
       <com.tasktop.c2c.server.hudson.plugin.cloud.C2CSlaveCloud>
 	    <name>Code2Cloud Builders</name>
-	        <slavePoolServiceBaseUrl><%= node.c2c.hub.protocol %>://${profile.hostname}<%= node.c2c.hub.prefix_path %>/hudson</slavePoolServiceBaseUrl>
+	        <slavePoolServiceBaseUrl><%= node.c2c.hub.protocol %>://<%= c2c_role_address("profile") %><%= node.c2c.hub.prefix_path %>/hudson</slavePoolServiceBaseUrl>
 		    <sshUser><%= node.c2c.hslave.build_user %></sshUser>
 		    <sshKeyFilePath>/opt/code2cloud/etc/builder_id_rsa</sshKeyFilePath>
             <projectIdentifier>${profile.application.identifier}</projectIdentifier>
@@ -72,4 +36,5 @@
   <nodeProperties/>
   <globalNodeProperties/>
   <disabledAdministrativeMonitors/>
+  <useBlueBall>true</useBlueBall>
 </hudson>

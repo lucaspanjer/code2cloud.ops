@@ -7,6 +7,7 @@ default[:c2c][:hudson][:tomcat][:jvm_options] = "-Xmx2048M -Xss192K -XX:MaxPermS
 default[:c2c][:hudson][:slave][:jvm_options] = ""
 default[:c2c][:hudson][:update_hudson_wars] = true
 default[:c2c][:hudson][:update_plugins] = true
+default[:c2c][:hudson][:update_config] = true
     
 
 

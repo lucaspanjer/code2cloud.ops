@@ -91,6 +91,13 @@ template "#{hudson_home}/config.xml" do
   mode 0660
 end
 
+template "#{hudson_home}/hudson.plugin.buildlistener.xml" do
+  source "hudson.plugin.buildlistener.xml.erb"
+  owner node.c2c.user
+  group node.tomcat.group
+  mode 0660
+end
+
 c2c_ssh_key "#{node.c2c.user_home}/.ssh/id_rsa"
 build_key_file = "#{node.c2c.server.opt}/etc/builder_id_rsa"
 execute "cp #{node.c2c.user_home}/.ssh/id_rsa #{build_key_file}; chown #{node.tomcat.user}:#{node.tomcat.user} #{build_key_file}" do

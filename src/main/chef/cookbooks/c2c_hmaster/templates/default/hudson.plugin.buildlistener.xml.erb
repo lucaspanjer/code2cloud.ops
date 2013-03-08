@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <com.tasktop.c2c.server.hudson.plugin.buildlistener.Configuration>
-  <baseEventUrl>${profile.url}/api/event</baseEventUrl>
+  <baseEventUrl><%= node.c2c.hub.protocol %>://<%= c2c_role_address("profile") %><%= node.c2c.hub.prefix_path %>/api/event</baseEventUrl>
   <projectIdentifier>${profile.application.identifier}</projectIdentifier>
 </com.tasktop.c2c.server.hudson.plugin.buildlistener.Configuration>
