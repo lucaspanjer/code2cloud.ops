@@ -19,7 +19,7 @@ override_attributes \
       "profile"       => { :ipaddress => "c2c.dev", :description => "Public facing profile host" },
     },
   :service_hosts => [
-      { :service_types => ["BUILD", "TASKS", "WIKI", "SCM", "MAVEN"], :ip_addresses => ["127.0.0.1"] },
+      { :service_types => ["BUILD", "TASKS", "WIKI", "SCM", "MAVEN", "TRUSTED_PROXY"], :ip_addresses => ["127.0.0.1"] },
       { :service_types => ["BUILD_SLAVE"], :ip_addresses => ["127.0.0.1"] }
     ], 
    :server => {
