@@ -99,6 +99,7 @@ end
 
 
 package "zip"
+package "git"
 
 if node.c2c.hudson.update_hudson_wars
   hudson_war_artifact = { "name" => "hudson-war",  "package" => "hudson.web", "war" => "hudson-war",
