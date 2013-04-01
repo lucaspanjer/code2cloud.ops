@@ -28,6 +28,8 @@ github.consumerSecret=<%= @github_consumer_secret %>
 github.textEncryptor.password=ThisIsMyGiantPassword.ItDoesntMakeSenseButThisIsIt
 github.textEncryptor.salt=CAFEBABE00DEADBEEF00214748364700FACE0FFEE7
 
+alm.hudson.perOrg=<%= node.c2c.hudson.perOrg %>
+
 <% for prop in node.c2c.hub.additional_properties %>
 <%= prop %>
 <% end %>

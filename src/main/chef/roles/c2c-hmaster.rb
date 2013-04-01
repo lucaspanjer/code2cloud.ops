@@ -6,7 +6,7 @@ override_attributes(
 :c2c => {
   :server => {
     :backup => {
-      :directories => ["hudson-homes"]
+      :directories => ["hudson"]
     }
   }
 }

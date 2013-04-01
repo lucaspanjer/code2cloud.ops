@@ -1,6 +1,7 @@
 #!/usr/bin/ruby
 
 #Script to update the existing hudson wars with the new template. Container should already be stopped
+# This is only needed for perOrg hudson multi-tenancy, where we refer to projectId, its really orgId
 
 hudsonBaseDir="<%= node.c2c.hmaster.builds_dir %>/"
 hudsonTemplateWar="<%= node.c2c.server.opt %>/configuration/template/hudson-war/hudson.war"
@@ -46,15 +47,7 @@ Dir.glob("#{hudsonWebappsDir}/*hudson.war") do |webapp|
     	puts "Migrating base config for #{projectId}" 
 	    Dir.glob("#{configSourceDir}/*.xml") do |configFile|
 	    	content = File.read(configFile)
-			migrated_content = content.gsub("${profile.application.identifier}", projectId);
-			orgId=nil
-			orgIndex = projectId.index("_")
-			if orgIndex
-				orgId =projectId[0, orgIndex]
-			end
-			if orgId
-				migrated_content = migrated_content.gsub("${profile.organization.identifier}", orgId)
-			end
+			migrated_content = content.gsub("${profile.organization.identifier}", projectId)
 			targetConfigFile = "#{hudsonHomeDir}/#{projectId}/#{File.basename(configFile)}"
     	    File.open(targetConfigFile, 'w') {|f| f.write(migrated_content) }
 	    end

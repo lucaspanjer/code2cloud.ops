@@ -28,11 +28,6 @@ if node.c2c.proxy_environment.no_proxy_prefix != false
   slave_options = slave_options + " -Dhttp.nonProxyHosts=\"#{node.c2c.proxy_environment.no_proxy_prefix}" + c2c_role_address("profile") + "|" + c2c_role_address("profile") + "\""
 end
 
-directory hudson_war do
-  owner node.tomcat.user
-  group node.tomcat.group
-  recursive true
-end
 
 template "#{node.c2c.server.opt}/etc/hmaster.properties" do
   source "hmaster.properties.erb"
@@ -42,11 +37,19 @@ template "#{node.c2c.server.opt}/etc/hmaster.properties" do
   notifies :restart, "service[tomcat]"
 end
 
-template "#{node.c2c.server.opt}/bin/updateHudsonWars.rb" do
-  source "updateHudsonWars.rb.erb"
-  owner node.c2c.user
-  group node.tomcat.group
-  mode 0770
+if !node.c2c.hudson.multi_tenant
+  template "#{node.c2c.server.opt}/bin/updateHudsonWars.rb" do
+    source "updateHudsonWars.rb.erb"
+    owner node.c2c.user
+    group node.tomcat.group
+    mode 0770
+  end
+  
+  directory hudson_war do
+    owner node.tomcat.user
+    group node.tomcat.group
+    recursive true
+  end
 end
 
 directory node.c2c.hmaster.builds_dir do
@@ -60,7 +63,12 @@ directory "#{node.c2c.server.home}/temp" do
   group node.tomcat.group
 end
 
-hudson_home = "#{node.c2c.server.opt}/configuration/template/hudson-home"
+if node.c2c.hudson.multi_tenant
+  hudson_home = "#{node.c2c.server.home}/hudson"
+else
+  hudson_home = "#{node.c2c.server.opt}/configuration/template/hudson-home"
+end
+
 
 remote_directory hudson_home do
   source "hudson-home"
@@ -70,7 +78,7 @@ remote_directory hudson_home do
   owner node.tomcat.user
   group node.tomcat.user
   mode 0755
-  purge true
+  purge !node.c2c.hudson.multi_tenant
 end
 
 c2c_mail_sender_password=  data_bag_item("secrets", "passwords")["c2c_mail_sender_password"]
@@ -108,16 +116,18 @@ end
 package "zip"
 package "git"
 
-if node.c2c.hudson.update_hudson_wars
+if node.c2c.hudson.multi_tenant
+  hudson_war_artifact = { "name" => "hudson",  "package" => "hudson.web", "war" => "hudson-war" } 
+elsif node.c2c.hudson.update_hudson_wars 
   hudson_war_artifact = { "name" => "hudson-war",  "package" => "hudson.web", "war" => "hudson-war",
   "location" => "#{hudson_war}/hudson.war", "script" => "#{node.c2c.server.opt}/bin/updateHudsonWars.rb" } 
-  else
+else
   hudson_war_artifact = { "name" => "hudson-war",  "package" => "hudson.web", "war" => "hudson-war",
   "location" => "#{hudson_war}/hudson.war" } 
 end
 
 c2c_server_deployment "hmaster" do 
-  artifacts [ { "name" => "hudson-config",  "package" => "hudson.configuration.web" }, hudson_war_artifact]
+  artifacts [hudson_war_artifact]
   action :deploy
   provider "c2c_server_#{node.c2c.server.deploy_type}"
 end 

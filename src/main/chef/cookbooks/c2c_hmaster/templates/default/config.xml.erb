@@ -13,7 +13,6 @@
 	        <slavePoolServiceBaseUrl><%= node.c2c.hub.protocol %>://<%= c2c_role_address("profile") %><%= node.c2c.hub.prefix_path %>/hudson</slavePoolServiceBaseUrl>
 		    <sshUser><%= node.c2c.hslave.build_user %></sshUser>
 		    <sshKeyFilePath>/opt/code2cloud/etc/builder_id_rsa</sshKeyFilePath>
-            <projectIdentifier>${profile.application.identifier}</projectIdentifier>
             <remoteFS><%= node.c2c.user_home_prefix %>/c2c/hudson</remoteFS>
 		    <javaOptions><%= @slave_options %></javaOptions>
 	</com.tasktop.c2c.server.hudson.plugin.cloud.C2CSlaveCloud>
