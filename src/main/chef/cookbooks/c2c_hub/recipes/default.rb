@@ -65,6 +65,7 @@ template "#{node.c2c.server.opt}/etc/applicationContext-serviceHosts.xml" do
   group node.tomcat.group
   mode 0660
   source "applicationContext-serviceHosts.xml.erb"
+  notifies :restart, "service[tomcat]"
 end
 
 directory "#{node.c2c.server.opt}/activeMQ" do
