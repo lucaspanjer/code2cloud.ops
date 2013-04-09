@@ -16,7 +16,8 @@ cookbook_file "/etc/ssh/sshd_config" do
   owner "root"
   group "root"
   mode 0644
-  notifies :restart, resources(:service => "ssh")
+  # Restart sshd right away to avoid state where chef gets killed before end of run and sshd is not restarted
+  notifies :restart, resources(:service => "ssh"), :immediately 
 end
 
 m2 = "#{node.c2c.user_home_prefix}/#{node.c2c.hslave.build_user}/.m2"
