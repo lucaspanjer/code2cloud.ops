@@ -18,3 +18,4 @@ default[:c2c][:proxy_environment][:http_proxy_port] = 80
 default[:c2c][:proxy_environment][:https_proxy] = false
 default[:c2c][:proxy_environment][:https_proxy_port] = 80
 default[:c2c][:proxy_environment][:no_proxy_prefix] = false
+default[:c2c][:proxy_environment][:no_proxy_hosts] = ""
