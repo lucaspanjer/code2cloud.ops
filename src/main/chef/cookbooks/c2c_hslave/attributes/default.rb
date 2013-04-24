@@ -1,6 +1,6 @@
 default[:c2c][:service] = "hslave"
 default[:c2c][:hslave][:build_user] = "builder"
-default[:c2c][:hslave][:maven][:url] = "http://mirror.csclub.uwaterloo.ca/apache/maven/maven-3/3.0.4/binaries/apache-maven-3.0.4-bin.tar.gz"
+default[:c2c][:hslave][:maven][:url] = "http://archive.apache.org/dist/maven/binaries/apache-maven-3.0.4-bin.tar.gz"
 default[:c2c][:hslave][:maven][:package] = "apache-maven-3.0.4-bin.tar.gz"
 default[:c2c][:hslave][:maven][:root_dir] = "/usr/local/apache-maven"
 default[:c2c][:hslave][:maven][:bin] = "/usr/local/apache-maven/apache-maven-3.0.4/bin/mvn"
