@@ -93,29 +93,3 @@ c2c_server_deployment "hub" do
   provider "c2c_server_#{node.c2c.server.deploy_type}"
 end                                      
 
-=begin
-table = "SERVICEHOST"
-database = "profile"
-#XXX this could be more dynamic using search()
-ruby_block "update #{database} #{table}" do
-  block do
-    db = Mysql.new node.c2c.hosts.db.ipaddress, database, node.c2c.mysql_pw.profile, "profile"
-    begin
-      if db.list_tables(table).first
-        db.query("select TYPE,INTERNALNETWORKADDRESS from #{table} where INTERNALNETWORKADDRESS = '127.0.0.1'").each do |row|
-          type, ip = row
-          next unless host = node.c2c.hosts[type.downcase]
-          next if ip == host[:ipaddress]
-          query = "UPDATE #{table} SET INTERNALNETWORKADDRESS = '#{host[:ipaddress]}' WHERE TYPE = '#{type}'"
-          Chef::Log.info(query)
-          db.query(query)
-        end
-      else
-        Chef::Log.warn("#{table} table does not exist yet, unable to update.")
-      end
-    ensure
-      db.close
-    end
-  end
-end
-=end
