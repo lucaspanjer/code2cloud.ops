@@ -114,6 +114,7 @@ end
 
 
 package "zip"
+package "unzip"
 package "git"
 
 if node.c2c.hudson.multi_tenant
