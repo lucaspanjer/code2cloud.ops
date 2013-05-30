@@ -81,6 +81,17 @@ remote_directory hudson_home do
   purge !node.c2c.hudson.multi_tenant
 end
 
+remote_directory "#{node.c2c.server.opt}/configuration/hudson-jobs" do
+  source "hudson-jobs"
+  files_owner node.tomcat.user
+  files_group node.tomcat.user
+  files_mode  0644
+  owner node.tomcat.user
+  group node.tomcat.user
+  mode 0755
+  purge true
+end
+
 c2c_mail_sender_password=  data_bag_item("secrets", "passwords")["c2c_mail_sender_password"]
 
 template "#{hudson_home}/hudson.tasks.Mailer.xml" do
