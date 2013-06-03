@@ -90,6 +90,7 @@ remote_directory "#{node.c2c.server.opt}/configuration/hudson-jobs" do
   group node.tomcat.user
   mode 0755
   purge true
+  ignore_failure true
 end
 
 c2c_mail_sender_password=  data_bag_item("secrets", "passwords")["c2c_mail_sender_password"]
