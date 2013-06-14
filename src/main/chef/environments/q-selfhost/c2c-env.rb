@@ -40,9 +40,9 @@ override_attributes \
     :has_internal_services => true,
     :additional_properties => [
       "alm.hudsonSlave.build.directoriesToClean=/tmp,/home/c2c/hudson",
-      "alm.databaseBacked.maxTenantsPerNode=200",
-      "alm.diskBacked.maxTenantsPerNode=200",
-      "alm.hudsonMaster.maxTenantsPerNode=200"
+      "alm.databaseBacked.maxTenantsPerNode=2000",
+      "alm.diskBacked.maxTenantsPerNode=2000",
+      "alm.hudsonMaster.maxTenantsPerNode=2000"
     ]
   },
   :hudson => {
